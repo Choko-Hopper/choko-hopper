@@ -27,7 +27,8 @@ describe('Product model', () => {
         })
     })
 
-    it('has `name` field', () => {
+    it('has `name` field that is a string', () => {
+      expect(hotChocolate.name).to.be.a('string')
       expect(hotChocolate.name).to.equal('Hot Chocolate')
     })
 
@@ -45,7 +46,8 @@ describe('Product model', () => {
 
     });
 
-    it('has `imageUrl` field', () => {
+    it('has `imageUrl` field that is a string', () => {
+      expect(hotChocolate.imageUrl).to.be.a('string')
       expect(hotChocolate.imageUrl).to.equal('https://cafedelites.com/wp-content/uploads/2016/12/Special-Ingredient-Hot-Chocolate-Images-42.jpg')
     })
 
@@ -113,5 +115,5 @@ describe('Product model', () => {
     });
 
   }) // end describe('attributes definition')
-}) // end describe('User model')
+}) // end describe('Product model')
 

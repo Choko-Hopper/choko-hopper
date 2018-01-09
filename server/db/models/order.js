@@ -28,7 +28,7 @@ const Order = db.define('order', {
     get () {
       let total = 0
      this.items.forEach(item => {
-       total += item.unitPrice * item.quantity
+       total += +item.unitPrice * +item.quantity
      })
       return total
     }
