@@ -19,19 +19,17 @@ const Order = db.define('order', {
     }
   },
   items: {
-    type: Sequelize.JSON,
-    defaultValue: {}
-    // {2: [1, 5.25]}  object will have productId as key, and array [quantity, price] as value.
+    type: Sequelize.ARRAY(Sequelize.JSON)
+
+    // [{productId: 1, unitPrice: 5, quantity: 3}]
   },
   totalPrice: {
     type: Sequelize.VIRTUAL,
     get () {
       let total = 0
-      for (product in this.items) {
-        let quantity = this.items[product][0]
-        let unitPrice = this.items[product][1]
-        total += quantity * unitPrice
-      }
+     this.items.forEach(item => {
+       total += item.unitPrice * item.quantity
+     })
       return total
     }
   }
