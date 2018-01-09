@@ -3,36 +3,38 @@ const db = require('../db')
 const Product = require('./product')
 
 const Order = db.define('order', {
-  orderId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+  userEmail: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+      notEmpty: true
+    }
   },
-  quantity: {
-    type: Sequelize.INTEGER,
-    defaultValue: 1
+  shippingAddress: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
-  active: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+  items: {
+    type: Sequelize.JSON,
+    defaultValue: {}
+    // {2: [1, 5.25]}  object will have productId as key, and array [quantity, price] as value.
+  },
+  totalPrice: {
+    type: Sequelize.VIRTUAL,
+    get () {
+      let total = 0
+      for (product in this.items) {
+        let quantity = this.items[product][0]
+        let unitPrice = this.items[product][1]
+        total += quantity * unitPrice
+      }
+      return total
+    }
   }
 })
-
-Order.findTotal = function(orderId, userId) {
-  Order.findAll({
-    where: {
-      userId,
-      orderId
-    },
-    include: [Product]
-  })
-  .then(orders => {
-    let total = 0
-    orders.forEach(function(order) {
-      total += order.product.price * order.quantity
-    })
-    return total
-  })
-  .catch(err => console.error(err))
-}
 
 module.exports = Order
