@@ -11,7 +11,7 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
+  describe('GET /api/users', () => {
     const codysEmail = 'cody@puppybook.com'
 
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe('User routes', () => {
       })
     })
 
-    it('GET /api/users', () => {
+    it('gets all users', () => {
       return request(app)
         .get('/api/users')
         .expect(200)
@@ -30,15 +30,108 @@ describe('User routes', () => {
           expect(res.body[0].email).to.be.equal(codysEmail)
         })
     })
+  })// end describe('GET /api/users/')
 
-    it('GET /api/users/:id', () => {
+  describe('GET /api/users/:id', () => {
+    let selectedUser
+
+    beforeEach(() => {
+      let creatingUsers = [{
+        id: 3,
+        email: 'cody@puppybook.com'
+      }, {
+        id: 4,
+        email: 'mike@puppybook.com'
+      }, {
+        id: 5,
+        email: 'jamie@puppybook.com'
+      }]
+      .map(data => User.create(data));
+
+      return Promise.all(creatingUsers)
+      .then(createdUsers => {
+        selectedUser = createdUsers[2];
+      });
+    })
+
+    it('gets users by id', () => {
       return request(app)
-        .get('/api/users/1')
+        .get('/api/users/' + selectedUser.id)
         .expect(200)
         .then(res => {
+          if (typeof res.body === 'string') {
+            res.body = JSON.parse(res.body);
+          }
           expect(res.body).to.be.an('object')
-          expect(res.body[0].email).to.be.equal(codysEmail)
+          expect(res.body.email).to.be.equal('mikesEmail')
         })
     })
-  }) // end describe('/api/users')
+  }) // end describe('GET /api/users/:id')
+
+  describe('POST /api/users/', () => {
+    it('creates a new user', function () {
+      return request(app)
+      .post('/api/users/')
+      .send({
+        id: 2,
+        email: 'schoolrules@gmail.com'
+      })
+      .expect(201)
+      .expect(function (res) {
+        expect(res.body.id).to.equal(2);
+        expect(res.body.email).to.equal('schoolrules@gmail.com');
+      });
+
+    });
+  })// end describe('POST /api/users/')
+
+  describe('PUT /api/users/:id', () => {
+    let selectedUser
+
+    beforeEach(() => {
+      return User.create({
+        id: 7,
+        email: 'camera@email.com'
+      })
+      .then(createdUser => {
+        selectedUser = createdUser
+      })
+    })
+
+
+    it('updates a user', function () {
+      return request(app)
+      .put('/api/users/' + selectedUser.id)
+      .send({
+        email: 'youreonCANDIDcamera@gmail.com',
+        isAdmin: true
+      })
+      .expect(function (res) {
+        expect(res.body.id).to.equal(7);
+        expect(res.body.email).to.equal('youreonCANDIDcamera@gmail.com');
+        expect(res.body.isAdmin).to.equal(true);
+      });
+
+    });
+  })// end describe('POST /api/users/')
+
+  describe('DELETE /api/users/:id', () => {
+    let selectedUser
+
+    beforeEach(() => {
+      return User.create({
+        id: 10,
+        email: 'callmebaby@email.com'
+      })
+      .then(createdUser => {
+        selectedUser = createdUser
+      })
+    })
+
+    it('deletes a user', function () {
+      return request(app)
+      .delete('/api/users/' + selectedUser.id)
+      .expect(204)
+    });
+  })// end describe('DELETE /api/users/:id')
 }) // end describe('User routes')

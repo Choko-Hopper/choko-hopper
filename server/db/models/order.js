@@ -23,6 +23,10 @@ const Order = db.define('order', {
 
     // [{productId: 1, unitPrice: 5, quantity: 3}]
   },
+  isCompleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+  },
   totalPrice: {
     type: Sequelize.VIRTUAL,
     get () {

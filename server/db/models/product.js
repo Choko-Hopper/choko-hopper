@@ -10,13 +10,21 @@ const Product = db.define("product", {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg'
+      "https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg",
+    validate: {
+      isUrl: true
+    }
   },
   price: {
     type: Sequelize.FLOAT,
     allowNull: false,
     validate: {
       min: 0
+    },
+    get() {
+      let price = this.getDataValue("price")
+      price = "$" + price
+      return /\.\d\d/g.test(price) ? price : price + ".00"
     }
   },
   isInStock: {
@@ -25,6 +33,10 @@ const Product = db.define("product", {
   },
   description: {
     type: Sequelize.TEXT
+  },
+  tags: {
+    type: Sequelize.ARRAY(Sequelize.TEXT),
+    defaultValue: []
   }
 })
 

@@ -6,11 +6,14 @@ import {addProductThunk} from '../store'
  * COMPONENT
  */
 const NewProductForm = (props) => {
-console.log('Here is props.currentUser', props.currentUser.isAdmin)
+console.log('Here is props.currentUser.isAdmin', props.currentUser.isAdmin)
   return (
 
-
     <div>
+    { props.currentUser && !props.currentUser.isAdmin ?
+      <h3>Sorry, you don't have access to this page.</h3> :
+
+
       <form onSubmit={props.handleSubmit} name="newProductForm">
         <div>
           <label htmlFor="name"><small>Product Name</small></label>
@@ -39,6 +42,7 @@ console.log('Here is props.currentUser', props.currentUser.isAdmin)
           <button type="submit">Save New Product</button>
         </div>
       </form>
+    }
     </div>
   )
 }
