@@ -11,6 +11,12 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
+  afterEach(function () {
+    return Promise.all([
+      User.truncate({ cascade: true })
+    ]);
+  });
+
   describe('GET /api/users', () => {
     const codysEmail = 'cody@puppybook.com'
 
@@ -67,7 +73,7 @@ describe('User routes', () => {
             res.body = JSON.parse(res.body);
           }
           expect(res.body).to.be.an('object')
-          expect(res.body.email).to.be.equal('mikesEmail')
+          expect(res.body.email).to.be.equal('jamie@puppybook.com')
         })
     })
   }) // end describe('GET /api/users/:id')
