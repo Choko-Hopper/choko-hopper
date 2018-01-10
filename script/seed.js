@@ -30,16 +30,16 @@ async function seed () {
   ])
 
   const products = await Promise.all([
-    Product.create({name: 'Milk Chocolate', price: 5, description: 'This milk chocolate is very good.'}),
-    Product.create({name: 'Dark Chocolate', price: 6.50, description: 'This dark chocolate is very good.'}),
-    Product.create({name: 'White Chocolate', price: 5.25, description: 'This white chocolate is very good.'}),
-    Product.create({name: 'Dark Chocolate with Nuts', price: 7, description: 'This dark chocolate with nuts is very good.'}),
-    Product.create({name: 'Dark Chocolate with Raspberry', price: 7.50, isInStock: false, description: 'This dark chocolate with raspberry is very good.'}),
-    Product.create({name: 'White Chocolate Crunch', price: 5, description: 'This white chocolate crunch is very good.'}),
-    Product.create({name: 'Fancy Dark Chocolate', price: 12, description: 'This fancy dark chocolate is very good.'}),
-    Product.create({name: 'Fancy Milk Chocolate', price: 12, isInStock: false, description: 'This fancy milk chocolate is very good.'}),
-    Product.create({name: 'Fancy White Chocolate', price: 12, description: 'This fancy white chocolate is very good.'}),
-    Product.create({name: 'Milk Chocolate with Almonds', price: 6, description: 'This milk chocolate with almonds is very good.'}),
+    Product.create({name: 'Milk Chocolate', price: 5, description: 'This milk chocolate is very good.', tags: ['milk chocolate']}),
+    Product.create({name: 'Dark Chocolate', price: 6.50, description: 'This dark chocolate is very good.', tags: ['dark chocolate']}),
+    Product.create({name: 'White Chocolate', price: 5.25, description: 'This white chocolate is very good.', tags: ['white chocolate']}),
+    Product.create({name: 'Dark Chocolate with Nuts', price: 7, description: 'This dark chocolate with nuts is very good.', tags: ['dark chocolate', 'specialty', 'nuts']}),
+    Product.create({name: 'Dark Chocolate with Raspberry', price: 7.50, isInStock: false, description: 'This dark chocolate with raspberry is very good.', tags: ['dark chocolate', 'specialty', 'fruit']}),
+    Product.create({name: 'White Chocolate Crunch', price: 5, description: 'This white chocolate crunch is very good.', tags: ['white chocolate', 'specialty']}),
+    Product.create({name: 'Fancy Dark Chocolate', price: 12, description: 'This fancy dark chocolate is very good.', tags: ['dark chocolate', 'specialty']}),
+    Product.create({name: 'Fancy Milk Chocolate', price: 12, isInStock: false, description: 'This fancy milk chocolate is very good.', tags: ['milk chocolate', 'specialty']}),
+    Product.create({name: 'Fancy White Chocolate', price: 12, description: 'This fancy white chocolate is very good.', tags: ['white chocolate', 'specialty']}),
+    Product.create({name: 'Milk Chocolate with Almonds', price: 6, description: 'This milk chocolate with almonds is very good.', tags: ['milk chocolate', 'specialty', 'nuts']}),
   ])
 
   const orders = await Promise.all([
