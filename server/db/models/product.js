@@ -27,9 +27,16 @@ const Product = db.define("product", {
       return /\.\d\d/g.test(price) ? price : price + ".00"
     }
   },
-  isInStock: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+  quantity: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0
+    },
+    get(){
+      if(this.getDataValue("quantity") === 0){
+        return "Out of Stock"
+      }
+    }
   },
   description: {
     type: Sequelize.TEXT
