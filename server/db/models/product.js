@@ -28,6 +28,9 @@ const Product = db.define("product", {
   },
   description: {
     type: Sequelize.TEXT
+  },
+  tags: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
 
