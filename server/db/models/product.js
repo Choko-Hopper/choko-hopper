@@ -16,15 +16,14 @@ const Product = db.define("product", {
     }
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0
     },
     get() {
       let price = this.getDataValue("price")
-      price = "$" + price
-      return /\.\d\d/g.test(price) ? price : price + ".00"
+      return price / 100
     }
   },
   quantity: {
