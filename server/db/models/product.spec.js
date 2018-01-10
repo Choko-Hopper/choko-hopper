@@ -15,7 +15,7 @@ describe('Product model', () => {
     let hotChocolate
 
     beforeEach(() => {
-      return Product.create({
+      return Product.build({
         name: 'Hot Chocolate',
         imageUrl: 'https://cafedelites.com/wp-content/uploads/2016/12/Special-Ingredient-Hot-Chocolate-Images-42.jpg',
         price: 10.5,
@@ -66,11 +66,6 @@ describe('Product model', () => {
 
     });
 
-    it('has `price` field that is a FLOAT', () => {
-      expect(hotChocolate.price).to.equal(10.5)
-      expect(hotChocolate.price).to.be.a('number')
-    })
-
     it('has a minimum `price` of 0', function () {
 
       hotChocolate.price = -1;
@@ -78,20 +73,6 @@ describe('Product model', () => {
       return hotChocolate.validate()
         .then(function () {
           throw new Error('You cannot have a negative price...');
-        },
-        function (result) {
-          expect(result).to.be.an.instanceOf(Error);
-        });
-
-    });
-
-    it('`price` cannot be null', function () {
-
-      hotChocolate.price = null;
-
-      return hotChocolate.validate()
-        .then(function () {
-          throw new Error('Price cannot be null!');
         },
         function (result) {
           expect(result).to.be.an.instanceOf(Error);
