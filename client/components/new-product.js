@@ -11,7 +11,7 @@ console.log("Inside NewProductForm component!")
     <div>
       <form onSubmit={props.handleSubmit} name="newProductForm">
         <div>
-          <label htmlFor="productName"><small>Product Name</small></label>
+          <label htmlFor="name"><small>Product Name</small></label>
           <input name="name" type="text" />
         </div>
         <div>
@@ -46,6 +46,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleSubmit (evt) {
       evt.preventDefault()
+
       const newProduct = {
         name: evt.target.name.value,
         imageUrl: evt.target.imageUrl.value,
@@ -53,7 +54,7 @@ const mapDispatch = (dispatch) => {
         description: evt.target.description.value,
         isInStock: evt.target.isInStock.value
       }
-      //Dispatch thunk that will send axios request
+
       dispatch(addProductThunk(newProduct))
     }
   }

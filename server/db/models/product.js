@@ -10,10 +10,7 @@ const Product = db.define("product", {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg',
-    validate: {
-      isUrl: true
-    }
+      'https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg'
   },
   price: {
     type: Sequelize.FLOAT,
