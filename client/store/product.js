@@ -5,7 +5,6 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
-const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 /**
  * INITIAL STATE
@@ -16,7 +15,6 @@ const defaultProducts = []
  * ACTION CREATORS
  */
 const getProducts = products => ({type: GET_PRODUCTS, products})
-const removeProduct = () => ({type: REMOVE_PRODUCT})
 
 /**
  * THUNK CREATORS
