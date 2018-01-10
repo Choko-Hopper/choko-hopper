@@ -3,11 +3,14 @@ import { connect } from "react-redux"
 
 const SingleProduct = props => {
   const product = props.products.find(
-    product => product.id === props.match.params.productId
-  )
+    arrProduct => +arrProduct.id === +props.match.params.productId
+  ) || {}
   return (
     <div>
+      <div><img src={product.imageUrl} /></div>
       <h2>{product.name}</h2>
+      <h4>{product.price}</h4>
+      <p>{product.description}</p>
     </div>
   )
 }
