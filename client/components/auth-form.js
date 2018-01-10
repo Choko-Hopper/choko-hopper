@@ -79,7 +79,7 @@ const mapSignup = state => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    handleSubmit(evt, isSignUp) {
+    handleSubmit(evt) {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
