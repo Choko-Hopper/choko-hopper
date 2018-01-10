@@ -22,13 +22,11 @@ const SingleProduct = props => {
 
 
 const mapState = ({ products, user }) => ({ products, user })
-const mapDispatch = (dispatch, ownProps) => {
-  return {
-    handleClick (evt) {
-      evt.preventDefault()
-      const productId = evt.target.id
-      dispatch(deleteProductThunk(productId, ownProps.history))
-    }
+const mapDispatch = (dispatch, ownProps) => ({
+  handleClick (evt) {
+    evt.preventDefault()
+    const productId = evt.target.id
+    dispatch(deleteProductThunk(productId, ownProps.history))
   }
-}
+})
 export default connect(mapState, mapDispatch)(SingleProduct)
