@@ -17,7 +17,7 @@ export const AllProducts = (props) => {
               <div>
                 <div><img src={product.imageUrl} /></div>
                 <p className="meta">{product.name}</p>
-                <p className="meta">$ <span /> {product.price} </p>
+                <p className="meta"> {product.price} </p>
               </div>
             </Link>
           </div>

@@ -32,6 +32,9 @@ const Main = (props) => {
             </div>
         }
         <Link to="/products">Products</Link>
+        { props.user && props.user.isAdmin &&
+            <Link to="/new-product">Add New Product</Link>
+        }
       </nav>
       <hr />
       {children}
@@ -44,7 +47,8 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 
