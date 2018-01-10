@@ -30,7 +30,8 @@ const Product = db.define("product", {
     type: Sequelize.TEXT
   },
   tags: {
-    type: Sequelize.ARRAY(Sequelize.TEXT)
+    type: Sequelize.ARRAY(Sequelize.TEXT),
+    defaultValue: []
   }
 })
 
