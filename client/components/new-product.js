@@ -20,11 +20,11 @@ console.log("Inside NewProductForm component!")
         </div>
         <div>
           <label htmlFor="price"><small>Price</small></label>
-          <input name="price" type="number" />
+          <input name="price" type="text" />
         </div>
         <div>
           <label htmlFor="description"><small>Description</small></label>
-          <input name="description" type="number" />
+          <input name="description" type="text" />
         </div>
         <div>
         <label htmlFor="description"><small>Is this product in stock?</small></label>

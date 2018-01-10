@@ -31,7 +31,7 @@ export const products = () =>
 
 export const addProductThunk = (newProduct) =>
   dispatch =>
-    axios.POST('/api/products')
+    axios.post('/api/products')
       .then(res =>
         dispatch(addProduct(res.data)))
       .catch(err => console.log(err))
