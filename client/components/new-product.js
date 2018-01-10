@@ -6,8 +6,10 @@ import {addProductThunk} from '../store'
  * COMPONENT
  */
 const NewProductForm = (props) => {
-console.log("Inside NewProductForm component!")
+console.log('Here is props.currentUser', props.currentUser.isAdmin)
   return (
+
+
     <div>
       <form onSubmit={props.handleSubmit} name="newProductForm">
         <div>
@@ -41,6 +43,12 @@ console.log("Inside NewProductForm component!")
   )
 }
 
+const mapState = (state) => {
+  return {
+
+    currentUser: state.user
+  }
+}
 
 const mapDispatch = (dispatch) => {
   return {
@@ -60,4 +68,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatch)(NewProductForm)
+export default connect(mapState, mapDispatch)(NewProductForm)
