@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const Product = require('./product')
+const LineItems = require('./lineItems.js')
 
 const Order = db.define('order', {
   userEmail: {
@@ -18,23 +18,19 @@ const Order = db.define('order', {
       notEmpty: true
     }
   },
-  items: {
-    type: Sequelize.ARRAY(Sequelize.JSON)
-
-    // [{productId: 1, unitPrice: 5, quantity: 3}]
-  },
   isCompleted: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   totalPrice: {
     type: Sequelize.VIRTUAL,
-    get () {
-      let total = 0
-     this.items.forEach(item => {
-       total += +item.unitPrice * +item.quantity
-     })
-      return total
+    get() {
+      return LineItems.findAll({
+        where: { orderId: this.getDataValue('id') }
+      }).reduce(
+        (accumulator, lineItem) =>
+          accumulator + lineItem.unitPrice * lineItem.quantity
+      )
     }
   }
 })
