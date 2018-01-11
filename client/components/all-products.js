@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-
+import {deleteProductThunk} from '../store'
 /**
  * COMPONENT
  */
 export const AllProducts = (props) => {
   const { products } = props
-
   return (
     <div>
       {products.map(product => {
@@ -17,9 +16,12 @@ export const AllProducts = (props) => {
               <div>
                 <div><img src={product.imageUrl} /></div>
                 <p className="meta">{product.name}</p>
-                <p className="meta">$ <span /> {product.price} </p>
+                <p className="meta"> ${product.price} </p>
               </div>
             </Link>
+            { props.currentUser && props.currentUser.isAdmin &&
+              <button id={product.id} onClick={props.handleClick}>X</button>
+            }
           </div>
         )
       })}
@@ -32,8 +34,19 @@ export const AllProducts = (props) => {
  */
 const mapState = (state) => {
   return {
-    products: state.products
+    products: state.products,
+    currentUser: state.user
   }
 }
 
-export default connect(mapState)(AllProducts)
+const mapDispatch = (dispatch) => {
+  return {
+    handleClick (evt) {
+      evt.preventDefault()
+      const productId = evt.target.id
+      dispatch(deleteProductThunk(productId))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(AllProducts)

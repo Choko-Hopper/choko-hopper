@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize")
-const db = require("../db")
+const Sequelize = require('sequelize')
+const db = require('../db')
 
-const Product = db.define("product", {
+const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -16,15 +16,26 @@ const Product = db.define("product", {
     }
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0
+    },
+    get() {
+      let price = this.getDataValue('price')
+      return price / 100
     }
   },
-  isInStock: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+  quantity: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0
+    },
+    get() {
+      if (this.getDataValue('quantity') === 0) {
+        return 'Out of Stock'
+      }
+    }
   },
   description: {
     type: Sequelize.TEXT

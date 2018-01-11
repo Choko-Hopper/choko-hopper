@@ -13,7 +13,7 @@ describe('Order model', () => {
       let fakeOrder;
 
       beforeEach(() => {
-        return Order.create({
+        return Order.build({
           userEmail: 'cody@puppybook.com',
           shippingAddress: '10 Doggo Lane, Barktown, Pupperville, 10000',
           items: [
@@ -47,66 +47,11 @@ describe('Order model', () => {
 
       });
 
-      it('`userEmail` cannot be an empty string', function () {
-
-        fakeOrder.userEmail = '';
-
-        return fakeOrder.validate()
-          .then(function () {
-            throw new Error('userEmail cannot be an empty string!');
-          },
-          function (result) {
-            expect(result).to.be.an.instanceOf(Error);
-          });
-
-      });
-
-      it('`userEmail` must be valid email address', function () {
-
-        fakeOrder.userEmail = "BLOOP";
-
-        return fakeOrder.validate()
-          .then(function () {
-            throw new Error('Must provide a valid email address!');
-          },
-          function (result) {
-            expect(result).to.be.an.instanceOf(Error);
-          });
-
-      });
-
       it('has `shippingAddress` field that is a string', () => {
         expect(fakeOrder.shippingAddress).to.be.a('string')
         expect(fakeOrder.shippingAddress).to.equal('10 Doggo Lane, Barktown, Pupperville, 10000')
       })
-      it('requires `shippingAddress` field', function () {
 
-        fakeOrder.shippingAddress = null;
-
-        return fakeOrder.validate()
-          .then(function () {
-            throw new Error('shippingAddress cannot be null!');
-          },
-          function (result) {
-            expect(result).to.be.an.instanceOf(Error);
-          });
-
-      });
-
-      it('`shippingAddress` cannot be an empty string', function () {
-
-        fakeOrder.shippingAddress = '';
-
-        return fakeOrder.validate()
-          .then(function () {
-            throw new Error('shippingAddress cannot be an empty string!');
-          },
-          function (result) {
-            expect(result).to.be.an.instanceOf(Error);
-          });
-
-      });
-    })
 
       describe('`totalPrice` virtual field', function(){
         it('adds up the total price of the objects in the `items` array', function () {
@@ -127,3 +72,4 @@ describe('Order model', () => {
       })
   }) // end describe(attributes and options definition')
 }) // end describe('User model')
+})
