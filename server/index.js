@@ -99,7 +99,7 @@ const syncDb = () => db.sync()
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
-  sessionStore.sync({force: true})
+  sessionStore.sync()
     .then(syncDb)
     .then(createApp)
     .then(startListening)
