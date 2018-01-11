@@ -20,7 +20,10 @@ export const AllProducts = (props) => {
               </div>
             </Link>
             { props.currentUser && props.currentUser.isAdmin &&
+              <div>
               <button id={product.id} onClick={props.handleClick}>X</button>
+              <Link to={`/edit-product/${product.id}`}><button id={product.id} >Edit</button></Link>
+              </div>
             }
           </div>
         )

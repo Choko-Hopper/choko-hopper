@@ -7,6 +7,7 @@ import history from '../history'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const ADD_PRODUCT = 'ADD_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 /**
  * INITIAL STATE
  */
@@ -18,6 +19,7 @@ const defaultProducts = []
 const getProducts = products => ({ type: GET_PRODUCTS, products })
 const removeProduct = productId => ({ type: REMOVE_PRODUCT, productId })
 const addProduct = product => ({ type: ADD_PRODUCT, product })
+const updateProduct = product => ({ type: UPDATE_PRODUCT, product })
 
 /**
  * THUNK CREATORS
@@ -29,12 +31,20 @@ export const products = () =>
         dispatch(getProducts(res.data)))
       .catch(err => console.log(err))
 
-export const addProductThunk = (newProduct) =>
-  dispatch =>
-    axios.post('/api/products', newProduct)
+export const addOrEditProductThunk = (product, productId) =>
+  dispatch => {
+    if (!productId) {
+      axios.post('/api/products', product)
+        .then(res =>
+          dispatch(addProduct(res.data)))
+        .catch(err => console.log(err))
+    } else {
+      axios.put(`/api/products/${productId}`, product)
       .then(res =>
-        dispatch(addProduct(res.data)))
+        dispatch(updateProduct(res.data)))
       .catch(err => console.log(err))
+    }
+  }
 
 export const deleteProductThunk = (productId, history) =>
   dispatch =>
@@ -56,10 +66,16 @@ export default function (state = defaultProducts, action) {
     case ADD_PRODUCT:
       return [...products, ...action.product]
 
-      case REMOVE_PRODUCT:
+    case REMOVE_PRODUCT:
       return state.filter(product => {
         return product.id !== +action.productId
       })
+
+    case UPDATE_PRODUCT:
+      const stateWithoutProduct = state.filter(product => {
+        return product.id !== +action.productId
+      })
+      return [...stateWithoutProduct, ...action.product]
 
       default:
         return state
