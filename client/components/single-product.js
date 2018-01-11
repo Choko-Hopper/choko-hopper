@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import {withRouter, Link} from 'react-router-dom'
 import {deleteProductThunk} from '../store'
 
 const SingleProduct = props => {
@@ -14,7 +15,10 @@ const SingleProduct = props => {
       <h4>{product.price}</h4>
       <p>{product.description}</p>
       { props.user && props.user.isAdmin &&
-        <button id={product.id} onClick={props.handleClick}>X</button>
+        <div>
+              <button id={product.id} onClick={props.handleClick}>X</button>
+              <Link to={`/edit-product/${product.id}`}><button id={product.id} >Edit</button></Link>
+              </div>
       }
     </div>
   )
