@@ -1,15 +1,6 @@
 const router = require('express').Router()
+const isAdmin = require('./isAdmin')
 module.exports = router
-
-const isAdmin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
-    next()
-  } else {
-    let error = new Error('Unauthorized Action')
-    error.status = 403
-    next(error)
-  }
-}
 
 router.use('/users', isAdmin, require('./users'))
 router.use('/products', require('./products'))

@@ -1,16 +1,7 @@
 const router = require('express').Router()
 const { Product } = require('../db/models')
+const isAdmin = require('./isAdmin')
 module.exports = router
-
-function isAdmin(req, res, next){
-    if (req.user && req.user.isAdmin){
-        next()
-    } else {
-        const err = new Error('Not authorized')
-        err.status = 403
-        next(err)
-    }
-}
 
 router.get('/', (req, res, next) => {
     Product.findAll()
