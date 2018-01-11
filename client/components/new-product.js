@@ -6,7 +6,7 @@ import {addOrEditProductThunk} from '../store'
  * COMPONENT
  */
 const ProductForm = (props) => {
-console.log('Here is props.currentUser.isAdmin', props.currentUser.isAdmin)
+
 const product = props.products.find(
   arrProduct => +arrProduct.id === +props.match.params.productId
 ) || {}
