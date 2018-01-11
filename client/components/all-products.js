@@ -30,7 +30,7 @@ class AllProducts extends Component {
 
   handleReset(evt) {
     this.setState({searchInput: '', category: 0})
-    this.refs.category.value = 0
+
   }
 
   render() {
@@ -48,7 +48,7 @@ class AllProducts extends Component {
     </form>
 
     <div>
-    <select name="category" onChange= {this.handleCategory} ref='category'>
+    <select name="category" value={this.state.category} onChange= {this.handleCategory} ref='category'>
     <option value ="0" >All Categories</option>
     <option value ="1" >Milk chocolate</option>
     <option value ="2" >Dark chocolate</option>
