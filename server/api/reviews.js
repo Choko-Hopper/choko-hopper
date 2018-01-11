@@ -11,10 +11,10 @@ router.get('/:productId', (req, res, next) => {
 
 router.post('/:productId', (req, res, next) => {
   const { productId } = req.params
-  const { rating, text } = req.body
+  const { rating, title, text } = req.body
   if (req.user) {
     const userId = req.user.id || null
-    Review.create({ productId, rating, text, userId })
+    Review.create({ productId, rating, title, text, userId })
       .then(review => res.status(201).json(review))
       .catch(next)
   } else {
@@ -26,11 +26,11 @@ router.post('/:productId', (req, res, next) => {
 
 router.put('/:reviewId', (req, res, next) => {
   const { reviewId } = req.params
-  const { rating, text } = req.body
+  const { rating, title, text } = req.body
   Review.findById(reviewId)
     .then(review => {
       if (req.user && req.user.id === review.userId) {
-        return review.update({ rating, text })
+        return review.update({ rating, title, text })
       } else {
         const err = new Error('Must be logged in correct user to update')
         err.status = 401
