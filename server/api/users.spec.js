@@ -11,13 +11,20 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
+  afterEach(function () {
+    return Promise.all([
+      User.truncate({ cascade: true })
+    ]);
+  });
+
   describe('GET /api/users', () => {
     const codysEmail = 'cody@puppybook.com'
 
     beforeEach(() => {
       return User.create({
         id: 1,
-        email: codysEmail
+        email: codysEmail,
+        isAdmin: true
       })
     })
 
@@ -38,13 +45,16 @@ describe('User routes', () => {
     beforeEach(() => {
       let creatingUsers = [{
         id: 3,
-        email: 'cody@puppybook.com'
+        email: 'cody@puppybook.com',
+        isAdmin: true
       }, {
         id: 4,
-        email: 'mike@puppybook.com'
+        email: 'mike@puppybook.com',
+        isAdmin: true
       }, {
         id: 5,
-        email: 'jamie@puppybook.com'
+        email: 'jamie@puppybook.com',
+        isAdmin: true
       }]
       .map(data => User.create(data));
 
@@ -63,7 +73,7 @@ describe('User routes', () => {
             res.body = JSON.parse(res.body);
           }
           expect(res.body).to.be.an('object')
-          expect(res.body.email).to.be.equal('mikesEmail')
+          expect(res.body.email).to.be.equal('jamie@puppybook.com')
         })
     })
   }) // end describe('GET /api/users/:id')
@@ -74,7 +84,8 @@ describe('User routes', () => {
       .post('/api/users/')
       .send({
         id: 2,
-        email: 'schoolrules@gmail.com'
+        email: 'schoolrules@gmail.com',
+        isAdmin: true
       })
       .expect(201)
       .expect(function (res) {
@@ -91,7 +102,8 @@ describe('User routes', () => {
     beforeEach(() => {
       return User.create({
         id: 7,
-        email: 'camera@email.com'
+        email: 'camera@email.com',
+        isAdmin: true
       })
       .then(createdUser => {
         selectedUser = createdUser
@@ -121,7 +133,8 @@ describe('User routes', () => {
     beforeEach(() => {
       return User.create({
         id: 10,
-        email: 'callmebaby@email.com'
+        email: 'callmebaby@email.com',
+        isAdmin: true
       })
       .then(createdUser => {
         selectedUser = createdUser
