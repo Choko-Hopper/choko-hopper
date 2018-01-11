@@ -7,7 +7,7 @@ const SingleProduct = props => {
   const product = props.products.find(
     arrProduct => +arrProduct.id === +props.match.params.productId
   ) || {}
-  console.log('ownProps', props.ownProps)
+
   return (
     <div>
       <div><img src={product.imageUrl} /></div>

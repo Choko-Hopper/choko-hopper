@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User, Product, Order} = require('../server/db/models')
+const {User, Product, Order, Category} = require('../server/db/models')
 async function seed () {
   await db.sync({force: true})
   console.log('db synced!')
@@ -19,29 +19,27 @@ async function seed () {
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'}),
-    User.create({email: 'jazzy@jazzy.com', password: '123'}),
-    User.create({email: 'katy@katy.com', password: '123'}),
-    User.create({email: 'lemona@lemona.com', password: '123'}),
-    User.create({email: 'annabel@annabel.com', password: '123'}),
+    User.create({email: 'jazzy@jazzy.com', password: '123', isAdmin: true}),
+    User.create({email: 'katy@katy.com', password: '123', isAdmin: true}),
+    User.create({email: 'lemona@lemona.com', password: '123', isAdmin: true}),
+    User.create({email: 'annabel@annabel.com', password: '123', isAdmin: true}),
     User.create({email: 'dan@dan.com', password: '123'}),
     User.create({email: 'tom@tom.com', password: '123'}),
     User.create({email: 'kate@kate.com', password: '123'}),
     User.create({email: 'leah@leah.com', password: '123'}),
   ])
-
   const products = await Promise.all([
-    Product.create({name: 'Milk Chocolate', price: 500, description: 'This milk chocolate is very good.', tags: ['milk chocolate']}),
-    Product.create({name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', tags: ['dark chocolate']}),
-    Product.create({name: 'White Chocolate', price: 525, description: 'This white chocolate is very good.', tags: ['white chocolate']}),
-    Product.create({name: 'Dark Chocolate with Nuts', price: 700, description: 'This dark chocolate with nuts is very good.', tags: ['dark chocolate', 'specialty', 'nuts']}),
-    Product.create({name: 'Dark Chocolate with Raspberry', price: 750, isInStock: false, description: 'This dark chocolate with raspberry is very good.', tags: ['dark chocolate', 'specialty', 'fruit']}),
-    Product.create({name: 'White Chocolate Crunch', price: 500, description: 'This white chocolate crunch is very good.', tags: ['white chocolate', 'specialty']}),
-    Product.create({name: 'Fancy Dark Chocolate', price: 1200, description: 'This fancy dark chocolate is very good.', tags: ['dark chocolate', 'specialty']}),
-    Product.create({name: 'Fancy Milk Chocolate', price: 1200, isInStock: false, description: 'This fancy milk chocolate is very good.', tags: ['milk chocolate', 'specialty']}),
-    Product.create({name: 'Fancy White Chocolate', price: 1200, description: 'This fancy white chocolate is very good.', tags: ['white chocolate', 'specialty']}),
-    Product.create({name: 'Milk Chocolate with Almonds', price: 600, description: 'This milk chocolate with almonds is very good.', tags: ['milk chocolate', 'specialty', 'nuts']}),
+    Product.create({name: 'Milk Chocolate', price: 500, description: 'This milk chocolate is very good.', categoryId: 1, quantity: 5}),
+    Product.create({name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 32}),
+    Product.create({name: 'White Chocolate', price: 525, description: 'This white chocolate is very good.', categoryId: 3, quantity: 30}),
+    Product.create({name: 'Dark Chocolate with Nuts', price: 700, description: 'This dark chocolate with nuts is very good.', categoryId: 2, quantity: 75}),
+    Product.create({name: 'Dark Chocolate with Raspberry', price: 750, isInStock: false, description: 'This dark chocolate with raspberry is very good.', categoryId: 2, quantity: 50}),
+    Product.create({name: 'White Chocolate Crunch', price: 500, description: 'This white chocolate crunch is very good.', categoryId: 3, quantity: 78}),
+    Product.create({name: 'Fancy Dark Chocolate', price: 1200, description: 'This fancy dark chocolate is very good.', categoryId: 2, quantity: 50}),
+    Product.create({name: 'Fancy Milk Chocolate', price: 1200, isInStock: false, description: 'This fancy milk chocolate is very good.', categoryId: 1, quantity: 43}),
+    Product.create({name: 'Fancy White Chocolate', price: 1200, description: 'This fancy white chocolate is very good.', categoryId: 3, quantity: 72}),
+    Product.create({name: 'Milk Chocolate with Almonds', price: 600, description: 'This milk chocolate with almonds is very good.', categoryId: 1, quantity: 20}),
   ])
-
   const orders = await Promise.all([
     Order.create({userEmail: 'katy@katy.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 1}]}),
     Order.create({userEmail: 'jazzy@jazzy.com', shippingAddress: '6 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 3, unitPrice: 5, quantity: 2}]}),
@@ -51,15 +49,19 @@ async function seed () {
     Order.create({userEmail: 'kate@kate.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 7, unitPrice: 12, quantity: 1}]}),
     Order.create({userEmail: 'dan@dan.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 4}]}),
   ])
-
+  const categories = await Promise.all([
+    Category.create({name: 'milk chocolate'}),
+    Category.create({name: 'dark chocolate'}),
+    Category.create({name: 'white chocolate'})
+  ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${orders.length} orders`)
+  console.log(`seeded ${categories.length} categories`)
   console.log(`seeded successfully`)
 }
-
 // Execute the `seed` function
 // `Async` functions always return a promise, so we can use `catch` to handle any errors
 // that might occur inside of `seed`
