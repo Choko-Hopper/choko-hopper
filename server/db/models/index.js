@@ -39,10 +39,6 @@ module.exports = {
   User,
   Product,
   Order,
-<<<<<<< HEAD
-  Tag,
-  Review
-=======
+  Review,
   Category
->>>>>>> b3e7afa589dcc5bb1de42009737bbfa075b221b0
 }
