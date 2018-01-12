@@ -10,9 +10,12 @@ class AllProducts extends Component {
   constructor() {
     super();
     this.state = {
-      searchInput: ""
+      searchInput: '',
+      category: 0
     };
     this.handleChange = this.handleChange.bind(this)
+    this.handleCategory = this.handleCategory.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   handleChange(evt){
@@ -20,19 +23,43 @@ class AllProducts extends Component {
     this.setState({searchInput})
   }
 
+  handleCategory(evt) {
+    let category = +evt.target.value
+    this.setState({category})
+  }
+
+  handleReset(evt) {
+    this.setState({searchInput: '', category: 0})
+
+  }
 
   render() {
-    const productsToDisplay = this.props.products.filter((product) => product.name.toLowerCase().match(this.state.searchInput.toLowerCase()))
+    let productsToDisplay = this.props.products.filter((product) => product.name.toLowerCase().match(this.state.searchInput.toLowerCase()))
+    if (this.state.category) { productsToDisplay = productsToDisplay.filter((product) => product.categoryId === this.state.category) }
 
     return (
       <div>
-      <label htmlFor="search">SEARCH</label>
+      <label htmlFor="search"><small>Search By Name</small></label>
       <form>
       <input
         onChange= {this.handleChange}
         placeholder="Enter Product Name"
       />
     </form>
+
+    <div>
+    <select name="category" value={this.state.category} onChange= {this.handleCategory} ref='category'>
+    <option value ="0" >All Categories</option>
+    <option value ="1" >Milk chocolate</option>
+    <option value ="2" >Dark chocolate</option>
+    <option value ="3" >White chocolate</option>
+  </select>
+  </div>
+
+  <div>
+    <button id="reset" onClick={this.handleReset}>Reset</button>
+  </div>
+
         {productsToDisplay.map(product => {
           return (
             <div className="col-3" key={product.id}>
