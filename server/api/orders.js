@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order } = require('../db/models')
+const { Order, LineItems } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -15,8 +15,22 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    Order.create(req.body)
-        .then(order => res.status(201).json(order))
+  //Incoming reqBody is going to be
+  //{userEmail, shippingAddress, cart}
+  let orderInfo = {
+    userEmail: req.body.userEmail,
+    shippingAddress: req.body.shippingAddress
+  }
+  let cart = req.body.cart
+
+    Order.create(orderInfo)
+        .then(order => {
+          let orderId = order.id
+          cart.forEach(item => {
+            LineItems.create({...item, orderId})
+          })
+          res.json(order)
+        })
         .catch(next)
 })
 
