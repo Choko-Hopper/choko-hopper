@@ -16,10 +16,10 @@ const defaultProducts = []
 /**
  * ACTION CREATORS
  */
-const getProducts = products => ({ type: GET_PRODUCTS, products })
-const removeProduct = productId => ({ type: REMOVE_PRODUCT, productId })
-const addProduct = product => ({ type: ADD_PRODUCT, product })
-const updateProduct = product => ({ type: UPDATE_PRODUCT, product })
+export const getProducts = products => ({ type: GET_PRODUCTS, products })
+export const removeProduct = productId => ({ type: REMOVE_PRODUCT, productId })
+export const addProduct = product => ({ type: ADD_PRODUCT, product })
+export const updateProduct = product => ({ type: UPDATE_PRODUCT, product })
 
 /**
  * THUNK CREATORS
