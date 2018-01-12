@@ -84,7 +84,7 @@ const mapDispatch = (dispatch, ownProps) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const password2 = evt.target.password2.value
+      const password2 = evt.target.password2 ? evt.target.password2.value : password
       if (formName === "signup" && password !== password2) {
         this.setState({ passwordError: "Passwords Do Not Match" })
       } else {
