@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, SingleProduct, NewProductForm, EditProductForm, AllUsers} from './components'
-import {me, products, users} from './store'
+import {Main, Login, Signup, UserHome, AllProducts, SingleProduct, NewProductForm, EditProductForm, AllUsers, Cart} from './components'
+import {me, products, users, cart} from './store'
 
 /**
  * COMPONENT
@@ -26,6 +26,7 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/edit-product/:productId" component={EditProductForm} />
             <Route exact path="/products" component={AllProducts} />
+            <Route exact path="/cart" component={Cart} />
             <Route path="/products/:productId" component={SingleProduct} />
             <Route exact path="/new-product" component={NewProductForm} />
             <Route exact path="/users" component={AllUsers} />
@@ -65,6 +66,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       dispatch(products())
       dispatch(users())
+      dispatch(cart())
     }
   }
 }
