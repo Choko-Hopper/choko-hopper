@@ -6,6 +6,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.put('/update', (req, res, next) => {
+  console.log("Inside put /update")
   const { cart } = req.session
   const currentItemIndex = cart.findIndex(lineItem => {
     return lineItem.productId === req.body.productId

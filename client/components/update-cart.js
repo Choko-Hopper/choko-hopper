@@ -23,7 +23,7 @@ class UpdateCart extends Component {
 
     handleSubmit(evt){
         evt.preventDefault()
-        axios.put('/cart/update', this.state)
+        axios.put('/api/cart/update', this.state)
     }
 
     render(){
