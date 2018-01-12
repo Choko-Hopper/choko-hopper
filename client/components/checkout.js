@@ -6,7 +6,7 @@ import {submitCart} from '../store'
  * COMPONENT
  */
 const Checkout = (props) => {
-
+ console.log("Rendering CHECKOUT component")
 
   return (
 
@@ -50,7 +50,6 @@ const mapDispatch = (dispatch) => {
         userEmail: evt.target.userEmail.value,
         shippingAddress: evt.target.shippingAddress.value,
       }
-      console.log("orderInfo object", orderInfo)
       dispatch(submitCart(orderInfo))
     }
   }

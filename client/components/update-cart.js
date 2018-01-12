@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import axios from 'axios'
+import {updateCart} from '../store'
 
 class UpdateCart extends Component {
     constructor(props){
@@ -21,10 +22,10 @@ class UpdateCart extends Component {
         this.setState({ quantity: evt.target.value })
     }
 
-    handleSubmit(evt){
-        evt.preventDefault()
-        axios.put('/api/cart/update', this.state)
-    }
+    handleSubmit (evt) {
+      evt.preventDefault()
+      this.props.runThunk(this.state)
+  }
 
     render(){
         return (
@@ -40,4 +41,12 @@ class UpdateCart extends Component {
     }
 }
 
-export default UpdateCart
+const mapDispatch = (dispatch) => {
+  return {
+    runThunk (updatedItem) {
+      dispatch(updateCart(updatedItem))
+    }
+  }
+}
+
+export default connect(null, mapDispatch)(UpdateCart)

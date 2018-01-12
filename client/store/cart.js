@@ -27,12 +27,22 @@ export const cart = () =>
         dispatch(getCart(res.data || defaultCart)))
       .catch(err => console.log(err))
 
+export const updateCart = (updatedItem) =>
+dispatch =>
+axios.put('/api/cart/update', updatedItem)
+  .then(res =>
+    axios.get('/api/cart')
+    )
+    .then(res => dispatch(getCart(res.data)))
+  .catch(err => console.log(err))
+
 export const submitCart = (orderInfo) =>
   (dispatch, getState) =>
-    axios.post('/api/cart', {...orderInfo, cart: getState().cart} )
+    axios.post('/api/orders', {...orderInfo, cart: getState().cart} )
       .then(res =>
-        dispatch(resetCart()))
         axios.delete('/api/cart')
+      )
+      .then(dispatch(resetCart()))
       .catch(err => console.log(err))
 
 /**
@@ -43,7 +53,7 @@ export default function (state = defaultCart, action) {
     case GET_CART:
       return action.cart
     case RESET_CART:
-      return state
+      return []
     default:
       return state
   }
