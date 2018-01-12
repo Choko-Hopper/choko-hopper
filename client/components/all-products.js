@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {deleteProductThunk} from '../store'
-import AddToCart  from './add-to-cart'
+import UpdateCart  from './update-cart'
 
 /**
  * COMPONENT
@@ -76,7 +76,7 @@ class AllProducts extends Component {
                 <div>
                 <button id={product.id} onClick={this.props.handleClick}>X</button>
                 <Link to={`/edit-product/${product.id}`}><button id={product.id} >Edit</button></Link>
-                <AddToCart product={product} />
+                <UpdateCart product={product} />
                 </div>
               }
             </div>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import axios from 'axios'
 
-class AddToCart extends Component {
+class UpdateCart extends Component {
     constructor(props){
         super()
         const { product } = props
@@ -23,7 +23,7 @@ class AddToCart extends Component {
 
     handleSubmit(evt){
         evt.preventDefault()
-        axios.put('/cart/add', this.state)
+        axios.put('/cart/update', this.state)
     }
 
     render(){
@@ -40,4 +40,4 @@ class AddToCart extends Component {
     }
 }
 
-export default AddToCart
+export default UpdateCart
