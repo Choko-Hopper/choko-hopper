@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { cart } = req.session
+
 
 router.get('/', (req, res, next) => {
   const { cart } = req.session
@@ -17,6 +17,7 @@ router.put('/update', (req, res, next) => {
     res.send(200)
     console.log('NEW CART', cart)
 })
+
 
 router.put('/delete', (req, res, next) => {
   const { cart } = req.session
