@@ -12,4 +12,12 @@ router.put('/update', (req, res, next) => {
     console.log('NEW CART', cart)
 })
 
+router.put('/delete', (req, res, next) => {
+  const { cart } = req.session
+  const currentItemIndex = cart.findIndex(lineItem => {
+    return lineItem.productId === req.body.productId
+  })
+
+})
+
 module.exports = router
