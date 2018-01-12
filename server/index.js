@@ -52,9 +52,16 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  app.use((req, res, next) => {
+    if (!req.session.cart) req.session.cart = []
+    console.log('CART', req.session.cart)
+    next()
+  })
+
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+  app.use('/cart', require('./cart'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
