@@ -7,24 +7,15 @@ import { deleteProductThunk, fetchProductReviews } from '../store'
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
-    this.reviews = []
   }
 
   componentDidMount() {
-    const reviews = this.props.reviews.filter(
-      arrReview => +arrReview.productId === +this.props.match.params.productId
-    )
-    if (reviews.length) this.reviews = reviews
-    else this.props.handleFetchReviews()
+    if (!this.props.reviews.length) this.props.handleFetchReviews()
   }
 
   render() {
-    const product =
-      this.props.products.find(
-        arrProduct => +arrProduct.id === +this.props.match.params.productId
-      ) || {}
-
-    const reviews = this.reviews.length ? this.reviews : this.props.reviews
+    const product = this.props.product || {}
+    const reviews = this.props.reviews || []
 
     const isLoggedIn = !!this.props.user.id
     return (
@@ -59,7 +50,15 @@ class SingleProduct extends Component {
   }
 }
 
-const mapState = ({ products, user, reviews }) => ({ products, user, reviews })
+const mapState = ({ products, user, reviews }, ownProps) => ({
+  product: products.find(
+        arrProduct => +arrProduct.id === +ownProps.match.params.productId
+      ),
+  user,
+  reviews: reviews.filter(
+      arrReview => +arrReview.productId === +ownProps.match.params.productId
+    )
+})
 const mapDispatch = (dispatch, ownProps) => ({
   handleClick(evt) {
     evt.preventDefault()
