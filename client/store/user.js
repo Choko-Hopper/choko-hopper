@@ -6,17 +6,23 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const GET_USERS = 'GET_USERS'
 
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+//const defaultUser = {}
+const initialState = {
+  defaultUser: {},
+  users: []
+}
 
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+const getUser = user => ({ type: GET_USER, user })
+const removeUser = () => ({ type: REMOVE_USER })
+const getUsers = users => ({ type: GET_USERS, users })
 
 /**
  * THUNK CREATORS
@@ -35,7 +41,7 @@ export const auth = (email, password, method) =>
         dispatch(getUser(res.data))
         history.push('/home')
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
-        dispatch(getUser({error: authError}))
+        dispatch(getUser({ error: authError }))
       })
       .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr))
 
@@ -48,15 +54,24 @@ export const logout = () =>
       })
       .catch(err => console.log(err))
 
+export const users = () =>
+  dispatch =>
+    axios.get('/api/users')
+      .then(res =>
+        dispatch(getUsers(res.data)))
+      .catch(err => console.log(err))
+
 /**
  * REDUCER
  */
-export default function (state = defaultUser, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case GET_USERS:
+      return [...users, ...action.users]
     default:
       return state
   }
