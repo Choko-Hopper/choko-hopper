@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
-import {AllProducts} from '../components'
+import {AllProducts, AllUsers} from '../components'
 
 /**
  * COMPONENT
@@ -35,6 +35,9 @@ const Main = (props) => {
         { props.user && props.user.isAdmin &&
             <Link to="/new-product">Add New Product</Link>
         }
+        { props.user && props.user.isAdmin &&
+          <Link to="/users">All Users</Link>
+      }
       </nav>
       <hr />
       {children}

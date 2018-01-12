@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, SingleProduct, NewProductForm, EditProductForm} from './components'
-import {me, products} from './store'
+import {Main, Login, Signup, UserHome, AllProducts, SingleProduct, NewProductForm, EditProductForm, AllUsers} from './components'
+import {me, products, users} from './store'
 
 /**
  * COMPONENT
@@ -28,6 +28,7 @@ class Routes extends Component {
             <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:productId" component={SingleProduct} />
             <Route exact path="/new-product" component={NewProductForm} />
+            <Route exact path="/users" component={AllUsers} />
             {
               isLoggedIn &&
                 <Switch>
@@ -53,7 +54,8 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    currentUser: state.user
+    currentUser: state.user,
+    users: state.users
   }
 }
 
@@ -62,6 +64,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       dispatch(products())
+      dispatch(users())
     }
   }
 }
