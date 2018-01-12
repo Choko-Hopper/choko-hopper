@@ -2,6 +2,8 @@ const router = require('express').Router()
 const User = require('../db/models/user')
 module.exports = router
 
+router.use('/checkout', require('./checkout'))
+
 router.post('/login', (req, res, next) => {
   User.findOne({where: {email: req.body.email}})
     .then(user => {
