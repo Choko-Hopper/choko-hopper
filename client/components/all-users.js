@@ -8,11 +8,11 @@ function AllUsers(props) {
         <div>
             <h1>All Users</h1>
             <ul>
-                {props.users && props.currentUser && props.currentUser.isAdmin &&
-                    props.users.map(user => {
+                {props.currentUser && props.currentUser.isAdmin &&
+                    props.allUsers.map(user => {
                         return (
                             <li key={user.id}>
-                                <span>{user.name}</span>
+                                <span>{user.email}</span>
                             </li>
                         )
                     })
@@ -24,7 +24,7 @@ function AllUsers(props) {
 
 const mapState = function(state) {
     return {
-        users: state.users,
+        allUsers: state.allUsers,
         currentUser: state.user
     }
 }
