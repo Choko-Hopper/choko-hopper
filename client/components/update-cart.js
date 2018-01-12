@@ -18,7 +18,7 @@ class UpdateCart extends Component {
     }
 
     handleChange (evt) {
-        this.setState({ [evt.target.name]: evt.target.value })
+        this.setState({ quantity: evt.target.value })
     }
 
     handleSubmit(evt){
