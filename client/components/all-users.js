@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 
 function AllUsers(props) {
-    console.log(props, "PROPS!!!!")
+    console.log(props.currentUser, "PROPS.CURRENTUSER!!!!")
     return (
         <div>
             <h1>All Users</h1>
