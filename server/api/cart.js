@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { cart } = req.session
 
 router.get('/', (req, res, next) => {
   const { cart } = req.session
@@ -22,7 +23,13 @@ router.put('/delete', (req, res, next) => {
   const currentItemIndex = cart.findIndex(lineItem => {
     return lineItem.productId === req.body.productId
   })
-
 })
+
+router.delete('/', (req, res, next) => {
+  req.session.cart =[]
+  res.send(204)
+})
+
+
 
 module.exports = router
