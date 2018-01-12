@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { auth } from "../store"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { auth } from '../store'
 
 /**
  * COMPONENT
@@ -10,13 +10,13 @@ class AuthForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      passwordError: ""
+      passwordError: ''
     }
   }
   render() {
     const { name, displayName, error } = this.props
     const handleSubmit = this.props.handleSubmit.bind(this)
-    const isSignUp = this.props.name === "signup"
+    const isSignUp = this.props.name === 'signup'
 
     return (
       <div>
@@ -63,16 +63,16 @@ class AuthForm extends Component {
  */
 const mapLogin = state => {
   return {
-    name: "login",
-    displayName: "Login",
+    name: 'login',
+    displayName: 'Login',
     error: state.user.error
   }
 }
 
 const mapSignup = state => {
   return {
-    name: "signup",
-    displayName: "Sign Up",
+    name: 'signup',
+    displayName: 'Sign Up',
     error: state.user.error
   }
 }
@@ -84,9 +84,8 @@ const mapDispatch = (dispatch, ownProps) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const password2 = evt.target.password2.value
-      if (formName === "signup" && password !== password2) {
-        this.setState({ passwordError: "Passwords Do Not Match" })
+      if (formName === 'signup' && password !== evt.target.password2.value) {
+        this.setState({ passwordError: 'Passwords Do Not Match' })
       } else {
         dispatch(auth(email, password, formName))
       }

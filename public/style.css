@@ -19,3 +19,19 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+#reviewRadios {
+  display: flex;
+}
+#reviewForm {
+  display: flex;
+  flex-direction: column;
+}
+#reviewForm div {
+  display: flex;
+}
+#reviewForm textarea {
+  resize: none;
+}
+#reviewSubmit {
+  justify-content: flex-end;
+}

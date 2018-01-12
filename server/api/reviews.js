@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/:productId', (req, res, next) => {
   const { productId } = req.params
-  Review.findAll({ where: { productId } })
+  Review.findAll({ where: { productId }, order: [['createdAt', 'DESC']] })
     .then(reviews => res.json(reviews))
     .catch(next)
 })

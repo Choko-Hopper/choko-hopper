@@ -1,30 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteProductThunk } from '../store'
-import axios from 'axios'
+import ReviewForm from './review-form'
+import { deleteProductThunk, fetchProductReviews } from '../store'
 
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      reviews: []
-    }
+    this.reviews = []
   }
 
   componentDidMount() {
-    const { productId } = this.props.match.params
-    axios
-      .get(`/api/reviews/${productId}`)
-      .then(res => res.data)
-      .then(reviews => this.setState({ reviews }))
-      .catch(err => console.error(err))
+    const reviews = this.props.reviews.filter(
+      arrReview => +arrReview.productId === +this.props.match.params.productId
+    )
+    if (reviews.length) this.reviews = reviews
+    else this.props.handleFetchReviews()
   }
+
   render() {
     const product =
       this.props.products.find(
         arrProduct => +arrProduct.id === +this.props.match.params.productId
       ) || {}
+
+    const reviews = this.reviews.length ? this.reviews : this.props.reviews
+
+    const isLoggedIn = !!this.props.user.id
     return (
       <div>
         <div>
@@ -44,25 +46,8 @@ class SingleProduct extends Component {
               </Link>
             </div>
           )}
-        <form>
-          <div id="reviewRadios">
-            <label>Rating: </label>
-            <input type="radio" id="1" value="1" name="rating" />
-            <label htmlFor="1">1</label>
-            <input type="radio" id="2" value="2" name="rating" />
-            <label htmlFor="2">2</label>
-            <input type="radio" id="3" value="3" name="rating" />
-            <label htmlFor="3">3</label>
-            <input type="radio" id="4" value="4" name="rating" />
-            <label htmlFor="4">4</label>
-            <input type="radio" id="5" value="5" name="rating" />
-            <label htmlFor="5">5</label>
-          </div>
-          <input type="text" name="title" />
-          <textarea placeholder="Leave a Review..." />
-          <button type="submit">Submit</button>
-        </form>
-        {this.state.reviews.map(review => (
+        {isLoggedIn && <ReviewForm />}
+        {reviews.map(review => (
           <div key={review.id}>
             <h4>{review.title}</h4>
             <h5>Rating: {review.rating}</h5>
@@ -74,12 +59,15 @@ class SingleProduct extends Component {
   }
 }
 
-const mapState = ({ products, user }) => ({ products, user })
+const mapState = ({ products, user, reviews }) => ({ products, user, reviews })
 const mapDispatch = (dispatch, ownProps) => ({
   handleClick(evt) {
     evt.preventDefault()
     const productId = evt.target.id
     dispatch(deleteProductThunk(productId, ownProps.history))
+  },
+  handleFetchReviews() {
+    dispatch(fetchProductReviews(ownProps.match.params.productId))
   }
 })
 export default connect(mapState, mapDispatch)(SingleProduct)
