@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const { cart } = req.session
 
 router.get('/', (req, res, next) => {
   const { cart } = req.session
