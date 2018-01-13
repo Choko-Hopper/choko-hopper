@@ -17,6 +17,7 @@ router.put('/update', (req, res, next) => {
     console.log('NEW CART', cart)
 })
 
+
 router.put('/delete', (req, res, next) => {
   const { cart } = req.session
   const currentItemIndex = cart.findIndex(lineItem => {
@@ -25,10 +26,8 @@ router.put('/delete', (req, res, next) => {
 })
 
 router.delete('/', (req, res, next) => {
-  req.session.cart =[]
-  res.send(204)
+  req.session.cart = []
+  res.sendStatus(204)
 })
-
-
 
 module.exports = router

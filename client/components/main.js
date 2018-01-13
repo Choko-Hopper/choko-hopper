@@ -32,6 +32,8 @@ const Main = (props) => {
             </div>
         }
         <Link to="/products">Products</Link>
+        <Link to="/cart">My Cart</Link>
+        <Link to="/checkout">Checkout</Link>
         { props.user && props.user.isAdmin &&
             <Link to="/new-product">Add New Product</Link>
         }
