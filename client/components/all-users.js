@@ -3,9 +3,15 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 
 function AllUsers(props) {
-    console.log(props.currentUser, "PROPS.CURRENTUSER!!!!")
+
     return (
+      <div>
+      {props.currentUser && !props.currentUser.isAdmin ?
+        <h3>Sorry, you don't have access to this page.</h3> :
+
+        
         <div>
+        
             <h1>All Users</h1>
             <ul>
                 {props.currentUser && props.currentUser.isAdmin &&
@@ -18,6 +24,8 @@ function AllUsers(props) {
                     })
                 }
             </ul>
+            </div>
+            }
         </div>
     )
 }
