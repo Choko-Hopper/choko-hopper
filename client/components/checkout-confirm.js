@@ -15,7 +15,6 @@ const CheckoutConfirm = (props) => {
       <p>You have successfully submitted your order. Your order number is #{thisOrder.id}.</p>
       <p>A confirmation email has been sent to {thisOrder.userEmail}.</p>
       </div>
-
     }
     </div>
   )
