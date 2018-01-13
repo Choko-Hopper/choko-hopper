@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ReviewForm from './review-form'
 import { deleteProductThunk, fetchProductReviews } from '../store'
+import UpdateCart  from './update-cart'
 
 class SingleProduct extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   componentDidMount() {
@@ -26,6 +27,7 @@ class SingleProduct extends Component {
         <h2>{product.name}</h2>
         <h4>{product.price}</h4>
         <p>{product.description}</p>
+        <UpdateCart product={product} />
         {this.props.user &&
           this.props.user.isAdmin && (
             <div>
