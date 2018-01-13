@@ -72,11 +72,12 @@ class AllProducts extends Component {
                   <p className="meta"> ${product.price} </p>
                 </div>
               </Link>
+              <UpdateCart product={product} />
               { this.props.currentUser && this.props.currentUser.isAdmin &&
                 <div>
                 <button id={product.id} onClick={this.props.handleClick}>X</button>
                 <Link to={`/edit-product/${product.id}`}><button id={product.id} >Edit</button></Link>
-                <UpdateCart product={product} />
+
                 </div>
               }
             </div>
