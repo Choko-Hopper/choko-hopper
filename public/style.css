@@ -35,3 +35,16 @@ form div {
 #reviewSubmit {
   justify-content: flex-end;
 }
+.line-item-img {
+  width: 150px;
+}
+.line-item img {
+  max-width: 100%
+}
+.update-quantity {
+  flex-flow: row!important;
+}
+.update-quantity input {
+  width: 50px!important;
+  margin-right: .5rem!important;
+}

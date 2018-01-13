@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import axios from 'axios'
 import {updateCart} from '../store'
 
 class UpdateCart extends Component {
@@ -10,7 +9,7 @@ class UpdateCart extends Component {
         const { product } = props
         this.state = {
             productId: product.id,
-            quantity: '0',
+            quantity: props.quantity ? props.quantity : '0',
             unitPrice: product.price,
         }
 
@@ -28,14 +27,12 @@ class UpdateCart extends Component {
   }
 
     render(){
+        const icon = !this.props.quantity ? 'Add To Cart' : <i className="fa fa-refresh" aria-hidden="true" />
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group col-6">
-                    <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
-                </div>
-                <div className="form-group col-6">
-                    <button type="submit" className="btn btn-default">Add To Cart</button>
-                </div>
+            <form className="update-quantity form-inline" onSubmit={this.handleSubmit}>
+                <label className="sr-only" htmlFor="quantity">Quantity</label>
+                <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
+                <button type="submit" className="btn btn-default">{icon}</button>
             </form>
         )
     }
