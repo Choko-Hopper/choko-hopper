@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {submitCart} from '../store'
-
+import { withRouter, Link } from 'react-router-dom'
 /**
  * COMPONENT
  */
 const Checkout = (props) => {
- console.log("Rendering CHECKOUT component")
+ console.log("orderId that is on state", props.orderId)
 
   return (
 
@@ -36,8 +36,9 @@ const Checkout = (props) => {
 
 const mapState = (state) => {
   return {
-    cart: state.cart,
-    currentUser: state.user
+    cart: state.cart.cart,
+    currentUser: state.user,
+    orderId: state.cart.orderId
   }
 }
 
