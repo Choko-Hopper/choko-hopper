@@ -2,11 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {submitCart} from '../store'
 import { withRouter, Link } from 'react-router-dom'
+
 /**
  * COMPONENT
  */
 const Checkout = (props) => {
- console.log("orderId that is on state", props.orderId)
 
   return (
 
@@ -52,6 +52,7 @@ const mapDispatch = (dispatch) => {
         shippingAddress: evt.target.shippingAddress.value,
       }
       dispatch(submitCart(orderInfo))
+
     }
   }
 }
