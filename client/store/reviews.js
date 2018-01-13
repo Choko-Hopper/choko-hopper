@@ -4,8 +4,8 @@ const GOT_PRODUCT_REVIEWS = 'GOT_PRODUCT_REVIEWS'
 const POSTED_REVIEW = 'POSTED_REVIEW'
 
 //ACTION CREATORS
-const gotProductReviews = reviews => ({ type: GOT_PRODUCT_REVIEWS, reviews })
-const postedReview = review => ({ type: POSTED_REVIEW, review })
+export const gotProductReviews = reviews => ({ type: GOT_PRODUCT_REVIEWS, reviews })
+export const postedReview = review => ({ type: POSTED_REVIEW, review })
 
 //THUNK CREATOR
 export const fetchProductReviews = productId => dispatch => {
