@@ -42,8 +42,9 @@ class AllProducts extends Component {
     return (
       <div>
       <label htmlFor="search"><small>Search By Name</small></label>
-      <form>
+      <form  >
       <input
+      value={this.state.searchInput}
         onChange= {this.handleChange}
         placeholder="Enter Product Name"
       />
