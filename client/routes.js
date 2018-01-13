@@ -4,7 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, AllProducts, SingleProduct, NewProductForm, EditProductForm, AllUsers, Cart, Checkout, CheckoutConfirm} from './components'
-import {me, products, users, cart} from './store'
+import {me, products, users, cart, categories} from './store'
 
 /**
  * COMPONENT
@@ -69,6 +69,7 @@ const mapDispatch = (dispatch) => {
       dispatch(products())
       dispatch(users())
       dispatch(cart())
+      dispatch(categories())
     }
   }
 }
