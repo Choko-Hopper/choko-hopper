@@ -57,7 +57,7 @@ const mapState = function (state) {
   return {
     products: state.products,
     currentUser: state.user,
-    cart: state.cart
+    cart: state.cart.cart
   }
 }
 
