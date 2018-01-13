@@ -10,7 +10,7 @@ const GET_CART_ORDER = 'GET_CART_ORDER'
 /**
  * INITIAL STATE
  */
-const defaultCart = {cart: [], orderId: null}
+const defaultCart = {cart: [], lastOrder: null}
 
 
 /**
@@ -18,7 +18,7 @@ const defaultCart = {cart: [], orderId: null}
  */
 const getCart = cart => ({ type: GET_CART, cart })
 const resetCart = () => ({ type: RESET_CART })
-const getCartOrder = orderId => ({ type: GET_CART_ORDER, orderId })
+const getCartOrder = lastOrder => ({ type: GET_CART_ORDER, lastOrder })
 /**
  * THUNK CREATORS
  */
@@ -39,23 +39,16 @@ axios.put('/api/cart/update', updatedItem)
   .catch(err => console.log(err))
 
 export const submitCart = (orderInfo) =>
-  (dispatch, getState) => {
-    let orderId = null
-    return axios.post('/api/orders', {...orderInfo, cart: getState().cart.cart} )
-
+  (dispatch, getState) =>
+  axios.post('/api/orders', {...orderInfo, cart: getState().cart.cart} )
       .then(res => {
-        orderId = res.data.id
-        console.log("what is orderId", orderId)
-        dispatch(getCartOrder(res.data.id))
+        dispatch(getCartOrder(res.data))
+        return res.data
       })
-      .then(
-      history.push(`/checkout-confirm/` + orderId)
-
-      )
+      .then(order => history.push(`/checkout-confirm/${order.id}`))
       .then(axios.delete('/api/cart'))
       .then(dispatch(resetCart()))
       .catch(err => console.log(err))
-    }
 
 /**
  * REDUCER
@@ -67,7 +60,7 @@ export default function (state = defaultCart, action) {
     case RESET_CART:
       return Object.assign({}, defaultCart, {cart: []})
     case GET_CART_ORDER:
-      return Object.assign({}, defaultCart, {orderId: action.orderId})
+      return Object.assign({}, defaultCart, {lastOrder: action.lastOrder})
 
     default:
       return state

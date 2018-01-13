@@ -6,10 +6,17 @@ import {submitCart} from '../store'
  * COMPONENT
  */
 const CheckoutConfirm = (props) => {
+  console.log('heres props.order on CheckoutConfirm', props.order)
+  let thisOrder = props.order
   return (
-
     <div>
-    You have successfully submitted your order.
+    { thisOrder &&
+      <div>
+      <p>You have successfully submitted your order. Your order number is #{thisOrder.id}.</p>
+      <p>A confirmation email has been sent to {thisOrder.userEmail}.</p>
+      </div>
+
+    }
     </div>
   )
 }
@@ -17,7 +24,8 @@ const CheckoutConfirm = (props) => {
 const mapState = (state) => {
   return {
     cart: state.cart.cart,
-    currentUser: state.user
+    currentUser: state.user,
+    order: state.cart.lastOrder
   }
 }
 
