@@ -16,7 +16,28 @@ router.get('/:orderId', (req, res, next) => {
       if (req.user && req.user.id === order.userId) {
         res.json(order)
       } else {
-        const err = new Error('This order belongs to another')
+        const err = new Error('This order is not associated with your account.')
+        err.status = 401
+        next(err)
+      }
+    })
+    .catch(next)
+})
+
+router.get('/my-orders/:userId', (req, res, next) => {
+  const { userId } = req.params
+
+  Order.findAll({
+    where: {
+      userId
+    }
+  })
+    .then(orders => {
+      if (!orders.length) {res.send('No orders associated with that userId.')}
+      if (req.user && req.user.id === orders[0].userId) {
+        res.json(orders)
+      } else {
+        const err = new Error('These orders are not associated with your account.')
         err.status = 401
         next(err)
       }

@@ -15,7 +15,8 @@ import {
   AllUsers,
   Cart,
   Checkout,
-  CheckoutConfirm
+  CheckoutConfirm,
+  OrderHistory
 } from './components'
 import { me, products, cart, categories } from './store'
 
@@ -47,6 +48,7 @@ class Routes extends Component {
             <Route exact path="/new-product" component={NewProductForm} />
             <Route exact path="/users" component={AllUsers} />
             <Route exact path="/checkout" component={Checkout} />
+            <Route exact path="/order-history/:userId" component={OrderHistory} />
             <Route
               exact
               path="/checkout-confirm/:orderId"
