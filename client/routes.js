@@ -55,6 +55,7 @@ class Routes extends Component {
               path="/checkout-confirm/:orderId"
               component={CheckoutConfirm}
             />
+            <Route component={Homepage} />
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
@@ -63,8 +64,9 @@ class Routes extends Component {
             )}
 
             {/* Displays our Login component as a fallback */}
-            <Route component={Homepage} />
+            
             <Route component={Login} />
+            
           </Switch>
         </Main>
       </Router>
