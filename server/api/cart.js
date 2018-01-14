@@ -1,6 +1,5 @@
 const router = require('express').Router()
 
-
 router.get('/', (req, res, next) => {
   const { cart } = req.session
   res.json(cart)
@@ -27,10 +26,8 @@ router.put('/delete', (req, res, next) => {
 })
 
 router.delete('/', (req, res, next) => {
-  req.session.cart =[]
-  res.send(204)
+  req.session.cart = []
+  res.sendStatus(204)
 })
-
-
 
 module.exports = router
