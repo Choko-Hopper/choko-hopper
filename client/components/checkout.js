@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {submitCart} from '../store'
 import { withRouter, Link } from 'react-router-dom'
+import StripeCheckoutComponent from './stripeCheckout'
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ const Checkout = (props) => {
 
         <div>
           <button type="submit">SUBMIT MY ORDER</button>
+          <StripeCheckoutComponent name="chocolate" description="mmmmmm" amount={100} />
         </div>
       </form>
       </div>
@@ -58,4 +60,3 @@ const mapDispatch = (dispatch) => {
 }
 
 export default connect(mapState, mapDispatch)(Checkout)
-
