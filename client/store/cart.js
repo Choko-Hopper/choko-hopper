@@ -19,6 +19,7 @@ const defaultCart = {cart: [], lastOrder: null}
 const getCart = cart => ({ type: GET_CART, cart })
 const resetCart = () => ({ type: RESET_CART })
 const getCartOrder = lastOrder => ({ type: GET_CART_ORDER, lastOrder })
+
 /**
  * THUNK CREATORS
  */
@@ -37,6 +38,17 @@ axios.put('/api/cart/update', updatedItem)
     )
     .then(res => dispatch(getCart(res.data)))
   .catch(err => console.log(err))
+
+export const deleteLineItem = (productId) =>
+dispatch =>
+axios.put('/api/cart/delete', {productId})
+  .then(res =>
+    axios.get('/api/cart')
+    )
+    .then(res => dispatch(getCart(res.data)))
+  .catch(err => console.log(err))
+
+
 
 export const submitCart = (orderInfo) =>
   (dispatch, getState) =>
