@@ -4,15 +4,20 @@ const keyPublishable = process.env.STRIPE_PUBLISHABLE_KEY
 
 module.exports = router
 
-router.get("/", (req, res) =>
-  res.render("index.pug", {keyPublishable}))
+const postStripeCharge = res => (stripeErr, stripeRes) => {
+  if (stripeErr) {
+    res.status(500).send({ error: stripeErr });
+  } else {
+    res.status(200).send({ success: stripeRes });
+  }
+}
 
-
-router.post('/auth/checkout', (req, res, next) => {
-  const {amount, description} = req.body
+router.post('/', (req, res, next) => {
+  const {amount, source, description, currency} = req.body
   stripe.charges.create({
     amount,
-    currency: 'usd',
+    source,
+    currency,
     description
-  })
+  }, postStripeCharge(res))
 })

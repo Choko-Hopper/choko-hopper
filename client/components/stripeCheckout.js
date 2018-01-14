@@ -4,8 +4,8 @@ import StripeCheckout from 'react-stripe-checkout'
 
 const STRIPE_PUBLISHABLE = 'pk_test_BjdBrWKAZMF0Lwo9Pncz4SxF'
 const PAYMENT_SERVER_URL = process.env.NODE_ENV === 'production'
-  ? 'http://choko-hopper.herokuapp.com'
-  : 'http://localhost:8080'
+  ? 'http://choko-hopper.herokuapp.com/auth/checkout'
+  : 'http://localhost:8080/auth/checkout'
 
 const CURRENCY = 'USD'
 
