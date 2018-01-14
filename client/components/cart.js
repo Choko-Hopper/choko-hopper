@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import UpdateCart  from './update-cart'
+import {deleteLineItem} from '../store'
 
 function Cart(props) {
 
@@ -18,6 +19,7 @@ function Cart(props) {
             <th scope="col">Quantity</th>
             <th scope="col">Each</th>
             <th scope="col">Total</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +39,7 @@ function Cart(props) {
                     <td className="col-3"><UpdateCart product={singleProduct} quantity={cartItem.quantity} /></td>
                     <td className="col-1">${cartItem.unitPrice}</td>
                     <td className="col-1">${cartItem.unitPrice * cartItem.quantity}</td>
+                    <td className="col-1"><button value={cartItem.productId} onClick={props.handleClick}>Delete</button></td>
                   </tr>
                 )
               })
@@ -46,6 +49,8 @@ function Cart(props) {
       </div>
       <div className="col-3">
         <Link to="/checkout">Checkout</Link>
+      </div>
+      <div className="col-3">
       </div>
     </div>
   )
@@ -61,4 +66,15 @@ const mapState = function (state) {
   }
 }
 
-export default connect(mapState, null)(Cart)
+const mapDispatch = (dispatch) => {
+  return {
+    handleClick (evt) {
+      evt.preventDefault()
+      let productId = evt.target.value
+      dispatch(deleteLineItem(productId))
+
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart)

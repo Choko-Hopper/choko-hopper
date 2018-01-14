@@ -19,10 +19,11 @@ router.put('/update', (req, res, next) => {
 
 
 router.put('/delete', (req, res, next) => {
-  const { cart } = req.session
-  const currentItemIndex = cart.findIndex(lineItem => {
-    return lineItem.productId === req.body.productId
+  let newCart = req.session.cart.filter(lineItem => {
+    return +lineItem.productId !== +req.body.productId
   })
+  req.session.cart = newCart
+  res.send(200)
 })
 
 router.delete('/', (req, res, next) => {
