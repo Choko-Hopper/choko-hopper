@@ -25,7 +25,7 @@ class SingleProduct extends Component {
           <img src={product.imageUrl} />
         </div>
         <h2>{product.name}</h2>
-        <h4>{product.price}</h4>
+        <h4>${product.price}</h4>
         <p>{product.description}</p>
         <UpdateCart product={product} />
         {this.props.user &&
