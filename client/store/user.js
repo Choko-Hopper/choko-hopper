@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import { fetchAllUsers } from './allUsers'
+import { fetchAllUsers, removeAllUsers } from './allUsers'
 
 /**
  * ACTION TYPES
@@ -52,6 +52,7 @@ export const logout = () => dispatch =>
     .post('/auth/logout')
     .then(_ => {
       dispatch(removeUser())
+      dispatch(removeAllUsers())
       history.push('/login')
     })
     .catch(err => console.log(err))
