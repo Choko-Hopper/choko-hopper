@@ -18,27 +18,13 @@ class OrderHistory extends Component {
 
   render() {
 
-
     const isLoggedIn = !!this.props.user.id
-    return (
-    <div>
-    {!isLoggedIn &&
-    <div>
-    You must be a registered User to see your Order History.
-    </div>
-    }
-    { isLoggedIn && this.props.orderHistory && !this.props.orderHistory.length &&
-      <div>
-      There are currently no order in your Order History.
-      </div>
-    }
-    { isLoggedIn && this.props.orderHistory && this.props.orderHistory.length &&
-      <div>
-      {this.props.orderHistory}
-    </div>
-    }
-    </div>
-    )
+   if (!isLoggedIn) {
+     return <div>You gotta login</div>
+   }
+   else {
+
+   }
   }
 }
 
