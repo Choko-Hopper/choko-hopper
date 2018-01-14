@@ -33,8 +33,8 @@ router.get('/my-orders/:userId', (req, res, next) => {
     }
   })
     .then(orders => {
-      if (!orders.length) {res.send('No orders associated with that userId.')}
-      if (req.user && req.user.id === orders[0].userId) {
+      if (!orders.length) {res.json([])}
+      else if (req.user && req.user.id === orders[0].userId) {
         res.json(orders)
       } else {
         const err = new Error('These orders are not associated with your account.')
