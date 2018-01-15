@@ -40,14 +40,11 @@ axios.put('/api/cart/update', updatedItem)
   .catch(err => console.log(err))
 
 export const deleteLineItem = (productId) =>
-dispatch =>
-axios.put('/api/cart/delete', {productId})
-  .then(res =>
-    axios.get('/api/cart')
-    )
+  dispatch =>
+  axios.put('/api/cart/delete', {productId})
+    .then(() => axios.get('/api/cart'))
     .then(res => dispatch(getCart(res.data)))
   .catch(err => console.log(err))
-
 
 
 export const submitCart = (orderInfo) =>
