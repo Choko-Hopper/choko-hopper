@@ -16,7 +16,8 @@ import {
   Cart,
   Checkout,
   CheckoutConfirm,
-  Homepage
+  Homepage,
+  OrderHistory
 } from './components'
 import { me, products, cart, categories } from './store'
 
@@ -32,7 +33,7 @@ class Routes extends Component {
     const { isLoggedIn, currentUser } = this.props
 
     return (
-      
+
       <Router history={history}>
         <Main>
           <Switch>
@@ -50,6 +51,7 @@ class Routes extends Component {
             <Route exact path="/new-product" component={NewProductForm} />
             <Route exact path="/users" component={AllUsers} />
             <Route exact path="/checkout" component={Checkout} />
+            <Route exact path="/order-history/:userId" component={OrderHistory} />
             <Route
               exact
               path="/checkout-confirm/:orderId"
@@ -64,9 +66,9 @@ class Routes extends Component {
             )}
 
             {/* Displays our Login component as a fallback */}
-            
+
             <Route component={Login} />
-            
+
           </Switch>
         </Main>
       </Router>
