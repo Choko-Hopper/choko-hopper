@@ -19,7 +19,7 @@ import {
   Homepage,
   OrderHistory
 } from './components'
-import { me, products, cart, categories } from './store'
+import { me, products, fetchCart, categories } from './store'
 
 /**
  * COMPONENT
@@ -94,7 +94,7 @@ const mapDispatch = (dispatch, ownProps) => {
     loadInitialData() {
       dispatch(me())
       dispatch(products())
-      dispatch(cart())
+      dispatch(fetchCart())
       dispatch(categories())
     }
   }

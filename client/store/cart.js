@@ -10,8 +10,12 @@ const GET_CART_ORDER = 'GET_CART_ORDER'
 /**
  * INITIAL STATE
  */
-const defaultCart = {cart: [], lastOrder: null}
-
+const defaultCart = {
+  cart: [],
+  shippingAddress: '',
+  userEmail: '',
+  lastOrder: null
+}
 
 /**
  * ACTION CREATORS
@@ -23,53 +27,49 @@ const getCartOrder = lastOrder => ({ type: GET_CART_ORDER, lastOrder })
 /**
  * THUNK CREATORS
  */
-export const cart = () =>
-  dispatch =>
-    axios.get('/api/cart')
-      .then(res =>
-        dispatch(getCart(res.data || defaultCart)))
-      .catch(err => console.log(err))
+export const fetchCart = () => dispatch =>
+  axios
+    .get('/api/cart')
+    .then(res => dispatch(getCart(res.data || defaultCart)))
+    .catch(err => console.log(err))
 
-export const updateCart = (updatedItem) =>
-dispatch =>
-axios.put('/api/cart/update', updatedItem)
-  .then(res =>
-    axios.get('/api/cart')
-    )
+export const updateCart = updatedItem => dispatch =>
+  axios
+    .put('/api/cart/update', updatedItem)
+    .then(res => axios.get('/api/cart'))
     .then(res => dispatch(getCart(res.data)))
-  .catch(err => console.log(err))
+    .catch(err => console.log(err))
 
-export const deleteLineItem = (productId) =>
-  dispatch =>
-  axios.put('/api/cart/delete', {productId})
+export const deleteLineItem = productId => dispatch =>
+  axios
+    .put('/api/cart/delete', { productId })
     .then(() => axios.get('/api/cart'))
     .then(res => dispatch(getCart(res.data)))
-  .catch(err => console.log(err))
+    .catch(err => console.log(err))
 
-
-export const submitCart = (orderInfo) =>
-  (dispatch, getState) =>
-  axios.post('/api/orders', {...orderInfo, cart: getState().cart.cart} )
-      .then(res => {
-        dispatch(getCartOrder(res.data))
-        return res.data
-      })
-      .then(order => history.push(`/checkout-confirm/${order.id}`))
-      .then(axios.delete('/api/cart'))
-      .then(dispatch(resetCart()))
-      .catch(err => console.log(err))
+export const submitCart = orderInfo => (dispatch, getState) =>
+  axios
+    .post('/api/orders', { ...orderInfo, cart: getState().cart.cart })
+    .then(res => {
+      dispatch(getCartOrder(res.data))
+      return res.data
+    })
+    .then(order => history.push(`/checkout-confirm/${order.id}`))
+    .then(axios.delete('/api/cart'))
+    .then(dispatch(resetCart()))
+    .catch(err => console.log(err))
 
 /**
  * REDUCER
  */
-export default function (state = defaultCart, action) {
+export default function(state = defaultCart, action) {
   switch (action.type) {
     case GET_CART:
-      return {cart: action.cart, orderId: null}
+      return { cart: action.cart, orderId: null }
     case RESET_CART:
-      return Object.assign({}, defaultCart, {cart: []})
+      return Object.assign({}, defaultCart, { cart: [] })
     case GET_CART_ORDER:
-      return Object.assign({}, defaultCart, {lastOrder: action.lastOrder})
+      return Object.assign({}, defaultCart, { lastOrder: action.lastOrder })
 
     default:
       return state
