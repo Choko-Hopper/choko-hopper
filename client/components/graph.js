@@ -38,7 +38,7 @@ class Graph extends Component {
     if (this.props.lineItems && !this.props.lineItems.length) {
       return <div>No lineItems just yet...</div>
     }
-    else if (this.props.lineItems && this.props.lineItems.length) {
+    else if (this.props.lineItems && this.props.lineItems.length && this.props.products) {
       //Iterate through array of lineItems
       this.props.lineItems.forEach(lineItem => {
         let index = graphData.findIndex(item => {
