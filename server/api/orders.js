@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, LineItems } = require('../db/models')
+const { Order, LineItems, Product } = require('../db/models')
 const isAdmin = require('./isAdmin')
 module.exports = router
 
@@ -30,7 +30,8 @@ router.get('/my-orders/:userId', (req, res, next) => {
   Order.findAll({
     where: {
       userId
-    }
+    },
+    include: [{model: Product, attributes: ['name', 'imageUrl']}]
   })
     .then(orders => {
       if (!orders.length) {res.json([])}
