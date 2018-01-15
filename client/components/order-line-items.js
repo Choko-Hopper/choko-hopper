@@ -1,52 +1,55 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
+import { fetchOrderHistory } from '../store'
 
-function OrderLineItems(props) {
+class OrderLineItems extends Component {
+  componentDidMount() { 
+    this.props.handleFetchOrderHistory()
+  }
+  
+  render(){
+  console.log('i am props', this.props)
+  let orderId = +this.props.match.params.orderId
+  let orderHistory = this.props.orderHistory
+  let currentOrder = orderHistory.find(order => order.id === orderId)
+    console.log('currentOrder', currentOrder)
 
-let lineItemTable = props.cart.map(cartItem => {
-    let singleProduct = props.products.find((product) => +product.id === +cartItem.productId)
-    let itemTotal = cartItem.unitPrice * cartItem.quantity
-    orderSubtotal += itemTotal
-    orderTotal = orderSubtotal - discount
-
+  return (
+    <div>
+    <h4>HEY!</h4>
+    {currentOrder &&
+    currentOrder.products.map(product => {
+    let productId = product.lineItem.productId
+    let itemTotal = product.lineItem.unitPrice * product.lineItem.quantity
+    console.log('!!!!!!!!', product)
     return (
-      singleProduct &&
-      <tr key={cartItem.productId} className="line-item" >
+      product &&
+      <tr key={product.id} className="line-item" >
         <th scope="row" className="line-item-img col-2">
-          <Link to={`/products/${cartItem.productId}`} >
-            <img src={singleProduct.imageUrl} />
+          <Link to={`/products/${productId}`} >
+            <img src={product.imageUrl} />
           </Link>
         </th>
-        <td className="col-5">{singleProduct.name}</td>
-        <td className="col-1">${cartItem.unitPrice.toFixed(2)}</td>
-        <td className="col-1">${itemTotal.toFixed(2)}</td>
-        <td className="col-1"><button type="button" className="deleteButton btn btn-link fa fa-times" value={cartItem.productId} onClick={props.handleClick} /></td>
+        <td className="col-5">{product.name}</td>
+        <td className="col-1">$</td>
+        <td className="col-1">$</td>
       </tr>
     )
-  })
+  })}
+  </div>)
+}
 }
 
   /**
  * CONTAINER
  */
-const mapState = (state) => {
-    return {
-      products: state.products,
-      currentUser: state.user,
-      cart: state.cart.cart
-    }
+const mapState = ({ user, orderHistory }) => ({user, orderHistory})
+const mapDispatch = (dispatch, ownProps) => ({
+  handleFetchOrderHistory() {
+    console.log('im the id', +ownProps.match.params.userId )
+    dispatch(fetchOrderHistory(+ownProps.match.params.userId))
   }
-  
-  const mapDispatch = (dispatch) => {
-    return {
-      handleClick(evt) {
-        evt.preventDefault()
-        const productId = evt.target.id
-        dispatch(deleteProductThunk(productId))
-      }
-    }
-  }
-  
-  
-  export default connect(mapState, mapDispatch)(AllProducts)
+})
+
+export default connect(mapState, mapDispatch)(OrderLineItems)

@@ -39,7 +39,7 @@ const Main = (props) => {
               </li>
             }
             { isLoggedIn
-                ? <li>
+                ? <div>
                   {/* The navbar will show these links after you log in */}
                   <li className="dropdown">
                     <a className="dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,12 +50,12 @@ const Main = (props) => {
                     </div>
                   </li>
                   <li><a href="#" onClick={handleClick}>Logout</a></li>
-                </li>
-                : <li>
+                </div>
+                : <div>
                   {/* The navbar will show these links before you log in */}
                   <Link to="/login">Login</Link>
                   <Link to="/signup">Sign Up</Link>
-                </li>
+                </div>
             }
           </ul>
         </div>

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, LineItems, Product } = require('../db/models')
+const { Order, LineItem, Product } = require('../db/models')
 const isAdmin = require('./isAdmin')
 module.exports = router
 
@@ -60,7 +60,7 @@ router.post('/', (req, res, next) => {
         .then(order => {
           let orderId = order.id
           cart.forEach(item => {
-            LineItems.create({...item, orderId})
+            LineItem.create({...item, orderId})
           })
           res.json(order)
         })

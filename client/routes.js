@@ -18,15 +18,16 @@ import {
   CheckoutConfirm,
   Homepage,
   OrderHistory,
-  AllOrders
+  AllOrders,
+  OrderLineItems
 } from './components'
-import { me, products, cart, categories, fetchAllOrders } from './store'
+import { me, products, cart, categories, fetchAllOrders, fetchOrderHistory } from './store'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
+  componentDidMount() { 
     this.props.loadInitialData()
   }
 
@@ -54,6 +55,7 @@ class Routes extends Component {
             <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/order-history/:userId" component={OrderHistory} />
+            <Route exact path="/order-history/:userId/:orderId" component={OrderLineItems} />
 
             <Route
               exact
