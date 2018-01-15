@@ -36,7 +36,7 @@ class Graph extends Component {
     let graphData = []
     let message;
     if (this.props.lineItems && !this.props.lineItems.length) {
-      message = <div>No lineItems just yet...</div>
+      return <div>No lineItems just yet...</div>
     }
     else if (this.props.lineItems && this.props.lineItems.length) {
       //Iterate through array of lineItems
@@ -51,21 +51,35 @@ class Graph extends Component {
         })} else {
           graphData[index].quantity += lineItem.quantity
         }
-        graphData.forEach(object => {
-         console.log('Iterated through an object!')
-        })
+
       })
-      message = <div>
-      <h2>Bar Example (custom size)</h2>
+      return (
+        <div>
+      <h2>Products Purchased</h2>
       <Bar
-        data={data}
+        data={
+          {
+            labels: graphData.map(obj => obj.productId),
+            datasets: [
+              {
+                label: 'My First dataset',
+                backgroundColor: 'rgba(255,99,132,0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+                data: graphData.map(obj => obj.quantity)
+              }
+            ]
+          }
+        }
         width={100}
         height={50}
         options={{
           maintainAspectRatio: false
         }}
       />
-    </div>
+      </div>)
     }
     console.log("graphData array", graphData)
 
@@ -79,7 +93,7 @@ class Graph extends Component {
   }
 }
 
-const mapState = ({ user, lineItems }, ownProps) => ({user, lineItems})
+const mapState = ({ user, products, lineItems }, ownProps) => ({user, products, lineItems})
 const mapDispatch = (dispatch, ownProps) => ({
 
   handleFetchLineItems() {
