@@ -38,7 +38,6 @@ class AllProducts extends Component {
   render() {
     let productsToDisplay = this.props.products.filter((product) => product.name.toLowerCase().match(this.state.searchInput.toLowerCase()))
     if (this.state.category) { productsToDisplay = productsToDisplay.filter((product) => product.categoryId === this.state.category) }
-    console.log(this.props)
     return (
       <div className="container">
         <label htmlFor="search"><small>Search By Name</small></label>
