@@ -77,15 +77,28 @@ img {
   letter-spacing: 1px;
   padding: 1em;
 }
-.product-card a:hover {
+.product-card:hover {
+  border: solid 1px #491119;
+}
+.product-card:hover a {
   text-decoration: none;
 }
-.product-card a:hover .meta {
+.product-card:hover .meta,
+.product-card:hover .quantity {
   background-color: #491119;
   color: #FBF0DA;
 }
+.product-card .quantity {
+  padding-bottom: 1em;
+}
 .product-card .meta p:last-child {
   margin-bottom: 0;
+}
+.product-card label {
+  margin-right: 10px;
+}
+.line-item label {
+  display:none!important
 }
 .hr-nav {
   margin-top: 0

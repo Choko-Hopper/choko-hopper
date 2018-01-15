@@ -63,7 +63,7 @@ class AllProducts extends Component {
           <button id="reset" onClick={this.handleReset}>Reset</button>
         </div>
 
-        <div className="row">
+        <div className="row align-items-center">
           {productsToDisplay.map(product => {
             let itemInCart = this.props.cart.find(lineItem => +lineItem.productId === product.id)
             let quantity
@@ -74,12 +74,14 @@ class AllProducts extends Component {
                   <div>
                     <div><img src={product.imageUrl} /></div>
                     <div className="meta">
-                    <p>{product.name}</p>
-                    <p> ${product.price.toFixed(2)}</p>
+                      <p>{product.name}</p>
+                      <p> ${product.price.toFixed(2)}</p>
                     </div>
                   </div>
                 </Link>
-                <span>Quantity:</span><UpdateCart product={product} quantity={quantity} />
+                <div className="quantity d-flex justify-content-center">
+                  <UpdateCart product={product} quantity={quantity} />
+                </div>
                 {this.props.currentUser && this.props.currentUser.isAdmin &&
                   <div>
                     <button id={product.id} onClick={this.props.handleClick}>X</button>

@@ -5,6 +5,34 @@ import UpdateCart  from './update-cart'
 import {deleteLineItem} from '../store'
 
 function Cart(props) {
+  let cartTable
+  if (props.cart.length === 0) {
+    cartTable = (
+      <tr className="line-item" >
+        <th scope="row" className="line-item-img col-2" />
+        <td className="col-5">Your cart is empty</td>
+      </tr>
+    )} else {
+    cartTable = props.cart.map(cartItem => {
+      let singleProduct = props.products.find((product) => +product.id === +cartItem.productId)
+
+      return (
+        singleProduct &&
+        <tr key={cartItem.productId} className="line-item" >
+          <th scope="row" className="line-item-img col-2">
+            <Link to={`/products/${cartItem.productId}`} >
+              <img src={singleProduct.imageUrl} />
+            </Link>
+          </th>
+          <td className="col-5">{singleProduct.name}</td>
+          <td className="col-3"><UpdateCart product={singleProduct} quantity={cartItem.quantity} /></td>
+          <td className="col-1">${cartItem.unitPrice.toFixed(2)}</td>
+          <td className="col-1">${(cartItem.unitPrice * cartItem.quantity).toFixed(2)}</td>
+          <td className="col-1"><button value={cartItem.productId} onClick={props.handleClick}>Delete</button></td>
+        </tr>
+      )
+    })
+  }
 
   return (
     <div>
@@ -23,27 +51,7 @@ function Cart(props) {
           </tr>
         </thead>
         <tbody>
-            {props.currentUser &&
-              props.cart.map(cartItem => {
-                let singleProduct = props.products.find((product) => +product.id === +cartItem.productId)
-
-                return (
-                  singleProduct &&
-                  <tr key={cartItem.productId} className="line-item" >
-                    <th scope="row" className="line-item-img col-2">
-                      <Link to={`/products/${cartItem.productId}`} >
-                        <img src={singleProduct.imageUrl} />
-                      </Link>
-                    </th>
-                    <td className="col-5">{singleProduct.name}</td>
-                    <td className="col-3"><UpdateCart product={singleProduct} quantity={cartItem.quantity} /></td>
-                    <td className="col-1">${cartItem.unitPrice.toFixed(2)}</td>
-                    <td className="col-1">${(cartItem.unitPrice * cartItem.quantity).toFixed(2)}</td>
-                    <td className="col-1"><button value={cartItem.productId} onClick={props.handleClick}>Delete</button></td>
-                  </tr>
-                )
-              })
-            }
+            {props.currentUser && cartTable}
         </tbody>
         </table>
       </div>

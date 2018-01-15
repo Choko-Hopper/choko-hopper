@@ -27,13 +27,14 @@ class UpdateCart extends Component {
     }
 
     render(){
-        const icon = this.props.quantity === (undefined || '0') ? <i className="fa fa-cart-plus" aria-hidden="true" /> : <i className="fa fa-refresh" aria-hidden="true" />
+        const icon = this.props.quantity === undefined || this.props.quantity === '0' ? <i className="fa fa-cart-plus" aria-hidden="true" /> : <i className="fa fa-refresh" aria-hidden="true" />
+
         return (
-            <form className="update-quantity form-inline" onSubmit={this.handleSubmit}>
-                <label className="sr-only" htmlFor="quantity">Quantity</label>
-                <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
-                <button type="submit" className="btn btn-default">{icon}</button>
-            </form>
+        <form className="update-quantity form-inline" onSubmit={this.handleSubmit}>
+            <label htmlFor="quantity">Quantity</label>
+            <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
+            <button type="submit" className="btn btn-default">{icon}</button>
+        </form>
         )
     }
 }
