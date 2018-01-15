@@ -12,7 +12,7 @@ import {AllProducts, AllUsers, Homepage} from '../components'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+  const {children, handleClick, isLoggedIn, cart} = props
 
   return (
     <div>
@@ -25,8 +25,7 @@ const Main = (props) => {
         <div className="collapse navbar-collapse d-flex justify-content-end" id="top-nav">
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/products">Products</Link></li>
-            <li><Link to="/cart">My Cart</Link></li>
-            <li><Link to="/checkout">Checkout</Link></li>
+            <li><Link to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true" />({cart.length})</Link></li>
             { props.user && props.user.isAdmin &&
               <li className="dropdown">
                 <a className="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +63,8 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    cart: state.cart.cart
   }
 }
 

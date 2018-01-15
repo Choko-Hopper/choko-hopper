@@ -103,6 +103,12 @@ img {
 .line-item .deleteButton {
   color: #491119;
 }
+.deleteButton:hover {
+  text-decoration: none;
+}
 .hr-nav {
   margin-top: 0
+}
+.cart-title {
+  text-align: center;
 }
