@@ -12,7 +12,7 @@ import {AllProducts, AllUsers, Homepage, AllOrders} from '../components'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn, cart} = props
+  const {children, handleClick, isLoggedIn, cart, user} = props
 
   return (
     <div>
@@ -41,7 +41,15 @@ const Main = (props) => {
             { isLoggedIn
                 ? <div>
                   {/* The navbar will show these links after you log in */}
-                  <a href="#" onClick={handleClick}>Logout</a>
+                  <li className="dropdown">
+                    <a className="dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i className="fa fa-cog" aria-hidden="true" />
+                    </a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
+                      <Link to={`/order-history/${user.id}`}>Previous Orders</Link>
+                    </div>
+                  </li>
+                  <li><a href="#" onClick={handleClick}>Logout</a></li>
                 </div>
                 : <div>
                   {/* The navbar will show these links before you log in */}

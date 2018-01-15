@@ -15,7 +15,6 @@ class OrderHistory extends Component {
     console.log('sent off fetch for OrderHistory')
   }
 
-
   render() {
 
     const isLoggedIn = !!this.props.user.id
@@ -38,7 +37,7 @@ class OrderHistory extends Component {
              return (
               <tr key={order.id} className="line-item" >
               <th scope="row" className="col-2">
-                <Link to={`/past-order/${order.id}`} >
+                <Link to={`/order-history/${this.props.user.id}/${order.id}`} >
                   # {order.id}
                 </Link>
               </th>
