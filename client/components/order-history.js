@@ -19,16 +19,30 @@ class OrderHistory extends Component {
   render() {
 
     const isLoggedIn = !!this.props.user.id
-   if (!isLoggedIn) {
-     return <div>You gotta login</div>
-   }
-   else {
+    let message;
+      if (!isLoggedIn) {message = <div>You must be logged in to see your Order History.</div>}
 
-   }
+      else if (this.props.orderHistory && this.props.orderHistory.length) {message =
+        (<div>
+          <ul>
+        {this.props.orderHistory && this.props.orderHistory.map(order => {
+         return (
+           <div key={order.id} >
+           <li>Order ID: {order.id}</li>
+           <li>User email: {order.userEmail}</li>
+           <li>Shipping address: {order.shippingAddress}</li>
+           </div>
+         )
+        })}
+        </ul>
+        </div>)
+      }
+      else {message = <div>There are no orders associated with this account yet.</div>}
+    return message
   }
 }
 
-const mapState = ({ products, user, reviews, orderHistory }, ownProps) => ({user})
+const mapState = ({ user, orderHistory }, ownProps) => ({user, orderHistory})
 const mapDispatch = (dispatch, ownProps) => ({
 
   handleFetchOrderHistory() {

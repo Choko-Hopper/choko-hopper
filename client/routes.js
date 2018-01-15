@@ -16,7 +16,8 @@ import {
   Cart,
   Checkout,
   CheckoutConfirm,
-  Homepage
+  Homepage,
+  OrderHistory
 } from './components'
 import { me, products, cart, categories } from './store'
 
