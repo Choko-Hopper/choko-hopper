@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import StripeCheckout from 'react-stripe-checkout'
 import { submitCart } from '../store'
@@ -12,7 +13,7 @@ const CURRENCY = 'USD'
 
 const fromUSDToCent = amount => amount * 100
 
-const onToken = (amount, description, handleSuccess) => token =>
+const onToken = (amount, description, handleSuccess, cart) => token =>
   axios
     .post(PAYMENT_SERVER_URL, {
       description,
@@ -21,26 +22,26 @@ const onToken = (amount, description, handleSuccess) => token =>
       amount: fromUSDToCent(amount)
     })
     .then(() => {
-      handleSuccess()
+      handleSuccess(cart)
       alert('Payment Successful')
     })
     .catch(() => alert('Payment Error'))
 
-const Checkout = ({ name, description, amount, handleSuccess}) => (
+const Checkout = ({ description, amount, handleSuccess, cart}) => (
   <StripeCheckout
-    name={name}
-    description={description}
-    amount={fromUSDToCent(amount)}
-    token={onToken(amount, description, handleSuccess)}
+    name='mmmm'
+    description='still chocolate'
+    amount={fromUSDToCent(100)}
+    token={onToken(amount, description, handleSuccess, cart)}
     currency={CURRENCY}
     stripeKey={STRIPE_PUBLISHABLE}
   />
 )
 
 const mapState = ({ products, cart }) => ({ products, cart })
-const mapDispatch = (dispatch) => ({
-  handleSuccess: () => {
-    dispatch(submitCart(orderInfo))
+const mapDispatch = dispatch => ({
+  handleSuccess: (cart) => {
+    dispatch(submitCart(cart))
   }
 })
-export default Checkout
+export default connect(mapState, mapDispatch)(Checkout)

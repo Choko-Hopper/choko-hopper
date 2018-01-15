@@ -110,7 +110,6 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick (evt) {
       evt.preventDefault()
-      console.log('!!!!!! in handleClick', evt.target.value)
       let productId = evt.target.value
       dispatch(deleteLineItem(productId))
     }

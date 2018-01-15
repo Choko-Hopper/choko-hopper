@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { submitCart } from '../store'
+import { submitCart, updateUserInfo } from '../store'
 import { withRouter, Link } from 'react-router-dom'
 import StripeCheckoutComponent from './stripeCheckout'
 
@@ -11,7 +11,7 @@ const Checkout = props => {
   return (
     <div>
       <h3>Checkout Information</h3>
-      <form onSubmit={props.handleSubmit} name="checkoutForm">
+      <form onSubmit={evt => props.handleSubmit(evt, props.cart)} name="checkoutForm">
         <div>
           <label htmlFor="userEmail">
             <small>Your email address: </small>
@@ -20,6 +20,8 @@ const Checkout = props => {
             name="userEmail"
             type="text"
             placeholder="yourName@domain.com"
+            value={props.userEmail}
+            onChange={props.handleChange}
           />
         </div>
         <div>
@@ -30,27 +32,10 @@ const Checkout = props => {
             name="shippingAddress"
             type="text"
             placeholder="123 Main Street, New York, NY 10021"
+            value={props.shippingAddress}
+            onChange={props.handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="city">
-            <small>City:</small>
-          </label>
-          <input name="city" type="text" placeholder="New York" />
-        </div>
-        <div>
-          <label htmlFor="state">
-            <small>State:</small>
-          </label>
-          <input name="state" type="text" placeholder="NY" />
-        </div>
-        <div>
-          <label htmlFor="zip">
-            <small>Zip Code:</small>
-          </label>
-          <input name="zip" type="text" placeholder="10021" />
-        </div>
-
         <div>
           <button type="submit">SUBMIT MY ORDER</button>
         </div>
@@ -61,19 +46,19 @@ const Checkout = props => {
 }
 
 const mapState = ({ cart }) => ({
-  cart: cart.cart,
+  cart,
+  shippingAddress: cart.shippingAddress,
+  userEmail: cart.userEmail,
   orderId: cart.orderId
 })
 
-const mapDispatch = dispatch => ({
-  handleSubmit: (evt) => {
+const mapDispatch = (dispatch) => ({
+  handleChange: evt => {
+    dispatch(updateUserInfo({[evt.target.name]: evt.target.value}))
+  },
+  handleSubmit: (evt, cart) => {
       evt.preventDefault()
-
-      const orderInfo = {
-        userEmail: evt.target.userEmail.value,
-        shippingAddress: evt.target.shippingAddress.value
-      }
-      dispatch(submitCart(orderInfo))
+      dispatch(submitCart(cart))
     }
 })
 
