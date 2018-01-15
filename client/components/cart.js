@@ -19,7 +19,7 @@ function Cart(props) {
             <th scope="col">Quantity</th>
             <th scope="col">Each</th>
             <th scope="col">Total</th>
-            <th scope="col"></th>
+            <th scope="col" />
           </tr>
         </thead>
         <tbody>
@@ -37,8 +37,8 @@ function Cart(props) {
                     </th>
                     <td className="col-5">{singleProduct.name}</td>
                     <td className="col-3"><UpdateCart product={singleProduct} quantity={cartItem.quantity} /></td>
-                    <td className="col-1">${cartItem.unitPrice}</td>
-                    <td className="col-1">${cartItem.unitPrice * cartItem.quantity}</td>
+                    <td className="col-1">${cartItem.unitPrice.toFixed(2)}</td>
+                    <td className="col-1">${(cartItem.unitPrice * cartItem.quantity).toFixed(2)}</td>
                     <td className="col-1"><button value={cartItem.productId} onClick={props.handleClick}>Delete</button></td>
                   </tr>
                 )
@@ -72,7 +72,6 @@ const mapDispatch = (dispatch) => {
       evt.preventDefault()
       let productId = evt.target.value
       dispatch(deleteLineItem(productId))
-
     }
   }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {withRouter, Link} from 'react-router-dom'
-import {deleteProductThunk} from '../store'
-import UpdateCart  from './update-cart'
+import { withRouter, Link } from 'react-router-dom'
+import { deleteProductThunk } from '../store'
+import UpdateCart from './update-cart'
 
 /**
  * COMPONENT
@@ -20,76 +20,80 @@ class AllProducts extends Component {
     this.handleReset = this.handleReset.bind(this)
   }
 
-  handleChange(evt){
+  handleChange(evt) {
     let searchInput = evt.target.value
-    this.setState({searchInput})
+    this.setState({ searchInput })
   }
 
   handleCategory(evt) {
     let category = +evt.target.value
-    this.setState({category})
+    this.setState({ category })
   }
 
   handleReset(evt) {
-    this.setState({searchInput: '', category: 0})
+    this.setState({ searchInput: '', category: 0 })
 
   }
 
   render() {
     let productsToDisplay = this.props.products.filter((product) => product.name.toLowerCase().match(this.state.searchInput.toLowerCase()))
     if (this.state.category) { productsToDisplay = productsToDisplay.filter((product) => product.categoryId === this.state.category) }
-
+    console.log(this.props)
     return (
-      <div>
-      <label htmlFor="search"><small>Search By Name</small></label>
-      <form  >
-      <input
-      value={this.state.searchInput}
-        onChange= {this.handleChange}
-        placeholder="Enter Product Name"
-      />
-    </form>
+      <div className="container">
+        <label htmlFor="search"><small>Search By Name</small></label>
+        <form  >
+          <input
+            value={this.state.searchInput}
+            onChange={this.handleChange}
+            placeholder="Enter Product Name"
+          />
+        </form>
 
-    <div>
-    <select name="category" value={this.state.category} onChange= {this.handleCategory} ref='category'>
-    <option value ="0" >All Categories</option>
-    <option value ="1" >Milk chocolate</option>
-    <option value ="2" >Dark chocolate</option>
-    <option value ="3" >White chocolate</option>
-  </select>
-  </div>
+        <div>
+          <select name="category" value={this.state.category} onChange={this.handleCategory} ref='category'>
+            <option value="0" >All Categories</option>
+            <option value="1" >Milk chocolate</option>
+            <option value="2" >Dark chocolate</option>
+            <option value="3" >White chocolate</option>
+          </select>
+        </div>
 
-  <div>
-    <button id="reset" onClick={this.handleReset}>Reset</button>
-  </div>
+        <div>
+          <button id="reset" onClick={this.handleReset}>Reset</button>
+        </div>
 
-        {productsToDisplay.map(product => {
-          return (
-            <div className="col-3" key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <div>
-                  <div><img src={product.imageUrl} /></div>
-                  <p className="meta">{product.name}</p>
-                  <p className="meta"> ${product.price} </p>
-                </div>
-              </Link>
-              <UpdateCart product={product} />
-              { this.props.currentUser && this.props.currentUser.isAdmin &&
-                <div>
-                <button id={product.id} onClick={this.props.handleClick}>X</button>
-                <Link to={`/edit-product/${product.id}`}><button id={product.id} >Edit</button></Link>
-
-                </div>
-              }
-            </div>
-          )
-        })}
+        <div className="row">
+          {productsToDisplay.map(product => {
+            let itemInCart = this.props.cart.find(lineItem => +lineItem.productId === product.id)
+            let quantity
+            if (itemInCart) quantity = itemInCart.quantity
+            return (
+              <div className="product-card col-3" key={product.id}>
+                <Link to={`/products/${product.id}`}>
+                  <div>
+                    <div><img src={product.imageUrl} /></div>
+                    <div className="meta">
+                    <p>{product.name}</p>
+                    <p> ${product.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+                </Link>
+                <span>Quantity:</span><UpdateCart product={product} quantity={quantity} />
+                {this.props.currentUser && this.props.currentUser.isAdmin &&
+                  <div>
+                    <button id={product.id} onClick={this.props.handleClick}>X</button>
+                    <Link to={`/edit-product/${product.id}`}><button id={product.id} >Edit</button></Link>
+                  </div>
+                }
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
 }
-
-
 
 /**
  * CONTAINER
@@ -97,13 +101,14 @@ class AllProducts extends Component {
 const mapState = (state) => {
   return {
     products: state.products,
-    currentUser: state.user
+    currentUser: state.user,
+    cart: state.cart.cart
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick (evt) {
+    handleClick(evt) {
       evt.preventDefault()
       const productId = evt.target.id
       dispatch(deleteProductThunk(productId))
