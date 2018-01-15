@@ -49,7 +49,7 @@ export const deleteLineItem = productId => dispatch =>
 
 export const submitCart = orderInfo => (dispatch, getState) =>
   axios
-    .post('/api/orders', { ...orderInfo, cart: getState().cart.cart })
+    .post('/api/orders', orderInfo)
     .then(res => {
       dispatch(getCartOrder(res.data))
       return res.data
@@ -65,9 +65,9 @@ export const submitCart = orderInfo => (dispatch, getState) =>
 export default function(state = defaultCart, action) {
   switch (action.type) {
     case GET_CART:
-      return { cart: action.cart, orderId: null }
+      return Object.assign({}, state, { cart: action.cart })
     case RESET_CART:
-      return Object.assign({}, defaultCart, { cart: [] })
+      return Object.assign({}, defaultCart)
     case GET_CART_ORDER:
       return Object.assign({}, defaultCart, { lastOrder: action.lastOrder })
 
