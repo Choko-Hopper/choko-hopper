@@ -19,9 +19,10 @@ import {
   Homepage,
   OrderHistory,
   AllOrders,
-  Graph
+  Graph,
+  OrderLineItems
 } from './components'
-import { me, products, cart, categories, fetchAllOrders } from './store'
+import { me, products, fetchCart, categories, fetchAllOrders } from './store'
 
 /**
  * COMPONENT
@@ -56,6 +57,7 @@ class Routes extends Component {
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/order-history/:userId" component={OrderHistory} />
             <Route exact path="/graph" component={Graph} />
+            <Route exact path="/order-history/:userId/:orderId" component={OrderLineItems} />
 
             <Route
               exact
@@ -99,7 +101,7 @@ const mapDispatch = (dispatch, ownProps) => {
     loadInitialData() {
       dispatch(me())
       dispatch(products())
-      dispatch(cart())
+      dispatch(fetchCart())
       dispatch(categories())
       dispatch(fetchAllOrders())
     }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import history from '../history'
 import { fetchAllUsers, removeAllUsers } from './allUsers'
+import { updateUserInfo } from './cart'
 
 /**
  * ACTION TYPES
@@ -28,6 +29,7 @@ export const me = () => dispatch =>
     .then(res => {
       dispatch(getUser(res.data || defaultUser))
       if (res.data.isAdmin) dispatch(fetchAllUsers())
+        dispatch(updateUserInfo({userEmail: res.data.email}))
     })
     .catch(err => console.log(err))
 
@@ -38,6 +40,7 @@ export const auth = (email, password, method) => dispatch =>
       res => {
         dispatch(getUser(res.data))
         if (res.data.isAdmin) dispatch(fetchAllUsers())
+        dispatch(updateUserInfo({userEmail: res.data.email}))
         history.push('/home')
       },
       authError => {
@@ -53,6 +56,7 @@ export const logout = () => dispatch =>
     .then(_ => {
       dispatch(removeUser())
       dispatch(removeAllUsers())
+      dispatch(updateUserInfo({userEmail: ''}))
       history.push('/login')
     })
     .catch(err => console.log(err))

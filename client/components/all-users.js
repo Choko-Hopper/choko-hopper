@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import {deleteUserThunk} from '../store'
+import {deleteUserThunk, makeUserAdminThunk} from '../store'
 
 function AllUsers(props) {
 
@@ -19,8 +19,8 @@ function AllUsers(props) {
                             <li key={user.id}>
                                 <span>{user.email}     </span>
                                
-                                <button id={user.id} onClick={props.handleClick}>Delete</button>
-                               
+                                <button id={user.id} onClick={props.handleClick}>X</button>
+                                {(!user.isAdmin) && <button id={user.id} onClick={props.handleSubmit}>Make Admin</button>}
                             </li>
                         )
                     })
@@ -45,8 +45,15 @@ const mapDispatch = function(dispatch) {
             evt.preventDefault()
             const userId = evt.target.id
             dispatch(deleteUserThunk(userId))
+        },
+        handleSubmit(evt){
+            evt.preventDefault()
+            const userId = evt.target.id
+            console.log(userId)
+            dispatch(makeUserAdminThunk(userId))
         }
     }
+
 }
 
 export default connect(mapState, mapDispatch)(AllUsers)
