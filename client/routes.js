@@ -15,7 +15,8 @@ import {
   AllUsers,
   Cart,
   Checkout,
-  CheckoutConfirm
+  CheckoutConfirm,
+  Homepage
 } from './components'
 import { me, products, cart, categories } from './store'
 
@@ -31,10 +32,12 @@ class Routes extends Component {
     const { isLoggedIn, currentUser } = this.props
 
     return (
+      
       <Router history={history}>
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route path="/home" component={Homepage} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route
@@ -52,15 +55,18 @@ class Routes extends Component {
               path="/checkout-confirm/:orderId"
               component={CheckoutConfirm}
             />
+            <Route component={Homepage} />
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
-                <Route path="/home" component={UserHome} />
+                <Route path="/user-home" component={UserHome} />
               </Switch>
             )}
 
             {/* Displays our Login component as a fallback */}
+            
             <Route component={Login} />
+            
           </Switch>
         </Main>
       </Router>
