@@ -35,8 +35,8 @@ const Checkout = props => {
             onChange={props.handleChange}
           />
         </div>
-        <StripeCheckoutComponent />
       </form>
+      <StripeCheckoutComponent />
     </div>
   )
 }
