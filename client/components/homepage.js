@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 
 export default function Homepage(props){
-    console.log("hitting the homepage")
     return(
         <div>
             {
