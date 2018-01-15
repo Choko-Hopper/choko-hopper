@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateUserInfo } from '../store'
+import { updateUserInfo, validateCode } from '../store'
 import StripeCheckoutComponent from './stripeCheckout'
 
 /**
@@ -35,7 +35,7 @@ const Checkout = props => {
             onChange={props.handleChange}
           />
         </div>
-      <StripeCheckoutComponent />
+        <StripeCheckoutComponent />
       </form>
     </div>
   )
@@ -46,9 +46,14 @@ const mapState = ({ cart }) => ({
   userEmail: cart.userEmail
 })
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
   handleChange: evt => {
-    dispatch(updateUserInfo({[evt.target.name]: evt.target.value}))
+    dispatch(updateUserInfo({ [evt.target.name]: evt.target.value }))
+  },
+  promoSubmit: evt => {
+    evt.preventDefault()
+    const code = evt.target.code.value
+    dispatch(validateCode(code))
   }
 })
 

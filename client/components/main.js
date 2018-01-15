@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
-import {AllProducts, AllUsers, Homepage} from '../components'
+import {AllProducts, AllUsers, Homepage, AllOrders} from '../components'
 
 /**
  * COMPONENT
@@ -34,6 +34,7 @@ const Main = (props) => {
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <Link to="/new-product">Add New Product</Link>
                   <Link to="/users">All Users</Link>
+                  <Link to="/orders">All Orders</Link>
                 </div>
               </li>
             }

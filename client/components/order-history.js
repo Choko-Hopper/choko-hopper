@@ -23,19 +23,34 @@ class OrderHistory extends Component {
       if (!isLoggedIn) {message = <div>You must be logged in to see your Order History.</div>}
 
       else if (this.props.orderHistory && this.props.orderHistory.length) {message =
-        (<div>
-          <ul>
-        {this.props.orderHistory && this.props.orderHistory.map(order => {
-         return (
-           <div key={order.id} >
-           <li>Order ID: {order.id}</li>
-           <li>User email: {order.userEmail}</li>
-           <li>Shipping address: {order.shippingAddress}</li>
-           </div>
-         )
-        })}
-        </ul>
-        </div>)
+        (
+           <table className="table">
+           <thead className="thead-dark">
+             <tr>
+               <th scope="col">Order ID</th>
+               <th scope="col">Date</th>
+               <th scope="col">Shipping Address</th>
+               <th scope="col">Status</th>
+             </tr>
+           </thead>
+           <tbody>
+           {this.props.orderHistory && this.props.orderHistory.map(order => {
+             return (
+              <tr key={order.id} className="line-item" >
+              <th scope="row" className="col-2">
+                <Link to={`/past-order/${order.id}`} >
+                  # {order.id}
+                </Link>
+              </th>
+              <td className="col-1">{order.createdAt.slice(0, 10)}</td>
+              <td className="col-5">{order.shippingAddress}</td>
+              <td className="col-1">{order.status}</td>
+            </tr>
+             )
+           })}
+           </tbody>
+         </table>
+        )
       }
       else {message = <div>There are no orders associated with this account yet.</div>}
     return message
