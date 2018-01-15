@@ -28,7 +28,7 @@ function Cart(props) {
           <td className="col-3"><UpdateCart product={singleProduct} quantity={cartItem.quantity} /></td>
           <td className="col-1">${cartItem.unitPrice.toFixed(2)}</td>
           <td className="col-1">${(cartItem.unitPrice * cartItem.quantity).toFixed(2)}</td>
-          <td className="col-1"><button value={cartItem.productId} onClick={props.handleClick}>Delete</button></td>
+          <td className="col-1"><button type="button" className="deleteButton btn btn-link" value={cartItem.productId} onClick={props.handleClick}><i className="fa fa-times" aria-hidden="true" /></button></td>
         </tr>
       )
     })
