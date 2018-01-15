@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 a {
@@ -38,7 +38,7 @@ form div {
 .line-item-img {
   width: 150px;
 }
-.line-item img {
+img {
   max-width: 100%
 }
 .update-quantity {
@@ -47,4 +47,68 @@ form div {
 .update-quantity input {
   width: 50px!important;
   margin-right: .5rem!important;
+}
+#title {
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-size: 50px;
+  margin: .1em 1em;
+  line-height: .5;
+  padding-top: 15px;
+  padding-bottom: 0;
+}
+.navbar {
+  background-color: #FBF0DA!important;
+}
+#top-nav a {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  color: #491119;
+  font-weight: 300;
+}
+.product-card {
+  margin-bottom: 2em;
+  padding: 1em;
+  text-align: center;
+}
+.product-card .meta {
+  color: #491119;
+  font-size: 15px;
+  letter-spacing: 1px;
+  padding: 1em;
+}
+.product-card:hover {
+  border: solid 1px #491119;
+}
+.product-card:hover a {
+  text-decoration: none;
+}
+.product-card:hover .meta,
+.product-card:hover .quantity {
+  background-color: #491119;
+  color: #FBF0DA;
+}
+.product-card .quantity {
+  padding-bottom: 1em;
+}
+.product-card .meta p:last-child {
+  margin-bottom: 0;
+}
+.product-card label {
+  margin-right: 10px;
+}
+.line-item label {
+  display:none!important
+}
+.line-item .deleteButton {
+  color: #491119;
+}
+.deleteButton:hover {
+  text-decoration: none;
+}
+.hr-nav {
+  margin-top: 0
+}
+.cart-title {
+  text-align: center;
 }

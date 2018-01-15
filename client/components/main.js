@@ -12,39 +12,47 @@ import {AllProducts, AllUsers, Homepage} from '../components'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+  const {children, handleClick, isLoggedIn, cart} = props
 
   return (
     <div>
-      <Link to="/home"><h1>Choko-Hopper</h1></Link>
-      <nav>
-        {
-          isLoggedIn
-            ? <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/user-home">My Account</Link>
-              <a href="#" onClick={handleClick}>Logout</a>
-            </div>
-            : <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/home">Home</Link>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-        }
-        <Link to="/products">Products</Link>
-        <Link to="/cart">My Cart</Link>
-        <Link to="/checkout">Checkout</Link>
-        { props.user && props.user.isAdmin &&
-            <Link to="/new-product">Add New Product</Link>
-        }
-        { props.user && props.user.isAdmin &&
-          <Link to="/users">All Users</Link>
-      }
-      </nav>
-      <hr />
-       {children}
+      <nav className="navbar navbar-expand-lg navbar-light">
+        <Link className="navbar-brand" to="/home" id="title">Choko</Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#top-nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
 
+        <div className="collapse navbar-collapse d-flex justify-content-end" id="top-nav">
+          <ul className="nav navbar-nav navbar-right">
+            <li><Link to="/products">Products</Link></li>
+            <li><Link to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true" />({cart.length})</Link></li>
+            { props.user && props.user.isAdmin &&
+              <li className="dropdown">
+                <a className="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <Link to="/new-product">Add New Product</Link>
+                  <Link to="/users">All Users</Link>
+                </div>
+              </li>
+            }
+            { isLoggedIn
+                ? <div>
+                  {/* The navbar will show these links after you log in */}
+                  <a href="#" onClick={handleClick}>Logout</a>
+                </div>
+                : <div>
+                  {/* The navbar will show these links before you log in */}
+                  <Link to="/login">Login</Link>
+                  <Link to="/signup">Sign Up</Link>
+                </div>
+            }
+          </ul>
+        </div>
+      </nav>
+      <hr className="hr-nav" />
+      {children}
     </div>
   )
 }
@@ -55,7 +63,8 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    cart: state.cart.cart
   }
 }
 

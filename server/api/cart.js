@@ -19,6 +19,7 @@ router.put('/update', (req, res, next) => {
 
 
 router.put('/delete', (req, res, next) => {
+  console.log(req.body)
   let newCart = req.session.cart.filter(lineItem => {
     return +lineItem.productId !== +req.body.productId
   })
