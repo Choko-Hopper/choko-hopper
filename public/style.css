@@ -112,3 +112,31 @@ img {
 .cart-title {
   text-align: center;
 }
+.banner {
+  height:85vh;
+}
+.banner img {
+  object-fit: cover;
+}
+.banner div:last-child {
+  padding-left: 0!important;
+}
+.banner-text {
+  position: absolute;
+  background-color: #FBF0DA;
+  z-index: 100;
+  padding: 3em;
+  text-transform: uppercase;
+  font-size: 15px;
+  opacity: .9;
+  left: 33em;
+  top: 20em;
+  color: #491119;
+  letter-spacing: 1px;
+}
+
+.banner-text a {
+  color: #491119;
+  margin-left: 5px;
+  font-weight: bolder
+}
