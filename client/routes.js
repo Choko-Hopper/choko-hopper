@@ -18,7 +18,8 @@ import {
   CheckoutConfirm,
   Homepage,
   OrderHistory,
-  AllOrders
+  AllOrders,
+  Graph
 } from './components'
 import { me, products, cart, categories, fetchAllOrders } from './store'
 
@@ -54,6 +55,7 @@ class Routes extends Component {
             <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/order-history/:userId" component={OrderHistory} />
+            <Route exact path="/graph" component={Graph} />
 
             <Route
               exact
