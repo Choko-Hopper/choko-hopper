@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { submitCart, updateUserInfo } from '../store'
-import { withRouter, Link } from 'react-router-dom'
+import { updateUserInfo } from '../store'
 import StripeCheckoutComponent from './stripeCheckout'
 
 /**
@@ -11,7 +10,7 @@ const Checkout = props => {
   return (
     <div>
       <h3>Checkout Information</h3>
-      <form onSubmit={evt => props.handleSubmit(evt, props.cart)} name="checkoutForm">
+      <form name="checkoutForm">
         <div>
           <label htmlFor="userEmail">
             <small>Your email address: </small>
@@ -36,30 +35,21 @@ const Checkout = props => {
             onChange={props.handleChange}
           />
         </div>
-        <div>
-          <button type="submit">SUBMIT MY ORDER</button>
-        </div>
-      </form>
       <StripeCheckoutComponent />
+      </form>
     </div>
   )
 }
 
 const mapState = ({ cart }) => ({
-  cart,
   shippingAddress: cart.shippingAddress,
-  userEmail: cart.userEmail,
-  orderId: cart.orderId
+  userEmail: cart.userEmail
 })
 
 const mapDispatch = (dispatch) => ({
   handleChange: evt => {
     dispatch(updateUserInfo({[evt.target.name]: evt.target.value}))
-  },
-  handleSubmit: (evt, cart) => {
-      evt.preventDefault()
-      dispatch(submitCart(cart))
-    }
+  }
 })
 
 export default connect(mapState, mapDispatch)(Checkout)

@@ -32,7 +32,7 @@ const Checkout = ({ description, amount, handleSuccess, cart }) => (
   <div>
     <StripeCheckout
       name="Your Chocolate Order"
-      description="still chocolate"
+      description={description}
       amount={fromUSDToCent(amount)}
       token={onToken(amount, description, handleSuccess, cart)}
       currency={CURRENCY}
@@ -57,6 +57,7 @@ const findDescription = (cart, products) => {
 const mapState = ({ products, cart }) => ({
   products,
   cart,
+  amount: cart.orderTotal,
   description: findDescription(cart, products)
 })
 const mapDispatch = dispatch => ({
