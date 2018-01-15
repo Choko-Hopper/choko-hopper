@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { submitCart } from '../store'
+import { submitCart, validateCode } from '../store'
 import { withRouter, Link } from 'react-router-dom'
 import StripeCheckoutComponent from './stripeCheckout'
 
@@ -39,6 +39,13 @@ const Checkout = props => {
               <button type="submit">SUBMIT MY ORDER</button>
             </div>
           </form>
+          <form onSubmit={props.promoSubmit}>
+            <label>
+              <small>Promo Code: </small>
+            </label>
+            <input type="text" name="code" placeholder="Enter Promo Code..." />
+            <button>Apply Code</button>
+          </form>
           <StripeCheckoutComponent
             name="chocolate"
             description="mmmmmm"
@@ -58,18 +65,20 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-
-      const orderInfo = {
-        userEmail: evt.target.userEmail.value,
-        shippingAddress: evt.target.shippingAddress.value
-      }
-      dispatch(submitCart(orderInfo))
+const mapDispatch = dispatch => ({
+  handleSubmit: (evt) => {
+    evt.preventDefault()
+    const orderInfo = {
+      userEmail: evt.target.userEmail.value,
+      shippingAddress: evt.target.shippingAddress.value
     }
-  }
-}
+    dispatch(submitCart(orderInfo))
+  },
+  promoSubmit: evt => {
+    evt.preventDefault()
+    const code = evt.target.code.value
+    dispatch(validateCode(code))
+  } 
+})
 
 export default connect(mapState, mapDispatch)(Checkout)
