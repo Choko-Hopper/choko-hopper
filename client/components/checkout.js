@@ -10,57 +10,63 @@ import StripeCheckoutComponent from './stripeCheckout'
 const Checkout = props => {
   return (
     <div>
-      {props.currentUser && (
+      <h3>Checkout Information</h3>
+      <form onSubmit={props.handleSubmit} name="checkoutForm">
         <div>
-          <h3>Checkout Information</h3>
-          <form onSubmit={props.handleSubmit} name="checkoutForm">
-            <div>
-              <label htmlFor="userEmail">
-                <small>Your email address: </small>
-              </label>
-              <input
-                name="userEmail"
-                type="text"
-                placeholder="yourName@domain.com"
-              />
-            </div>
-            <div>
-              <label htmlFor="shippingAddress">
-                <small>Shipping address:</small>
-              </label>
-              <input
-                name="shippingAddress"
-                type="text"
-                placeholder="123 Main Street, New York, NY 10021"
-              />
-            </div>
-
-            <div>
-              <button type="submit">SUBMIT MY ORDER</button>
-            </div>
-          </form>
-          <StripeCheckoutComponent
-            name="chocolate"
-            description="mmmmmm"
-            amount={100}
+          <label htmlFor="userEmail">
+            <small>Your email address: </small>
+          </label>
+          <input
+            name="userEmail"
+            type="text"
+            placeholder="yourName@domain.com"
           />
         </div>
-      )}
+        <div>
+          <label htmlFor="shippingAddress">
+            <small>Shipping address:</small>
+          </label>
+          <input
+            name="shippingAddress"
+            type="text"
+            placeholder="123 Main Street, New York, NY 10021"
+          />
+        </div>
+        <div>
+          <label htmlFor="city">
+            <small>City:</small>
+          </label>
+          <input name="city" type="text" placeholder="New York" />
+        </div>
+        <div>
+          <label htmlFor="state">
+            <small>State:</small>
+          </label>
+          <input name="state" type="text" placeholder="NY" />
+        </div>
+        <div>
+          <label htmlFor="zip">
+            <small>Zip Code:</small>
+          </label>
+          <input name="zip" type="text" placeholder="10021" />
+        </div>
+
+        <div>
+          <button type="submit">SUBMIT MY ORDER</button>
+        </div>
+      </form>
+      <StripeCheckoutComponent />
     </div>
   )
 }
 
-const mapState = state => {
-  return {
-    cart: state.cart.cart,
-    currentUser: state.user,
-    orderId: state.cart.orderId
-  }
-}
+const mapState = ({ cart }) => ({
+  cart: cart.cart,
+  orderId: cart.orderId
+})
 
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
+const mapDispatch = dispatch => ({
+  handleSubmit: (evt) => {
       evt.preventDefault()
 
       const orderInfo = {
@@ -69,7 +75,6 @@ const mapDispatch = dispatch => {
       }
       dispatch(submitCart(orderInfo))
     }
-  }
-}
+})
 
 export default connect(mapState, mapDispatch)(Checkout)
