@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {withRouter, Link} from 'react-router-dom'
-import {updateCart} from '../store'
+import { updateCart, deleteLineItem } from '../store'
 
 class UpdateCart extends Component {
     constructor(props){
@@ -23,17 +22,19 @@ class UpdateCart extends Component {
 
     handleSubmit (evt) {
       evt.preventDefault()
-      this.props.runThunk(this.state)
-  }
+      if (this.state.quantity === '0') this.props.runRemoveFromCartThunk(this.state.productId)
+      else this.props.runThunk(this.state)
+    }
 
     render(){
-        const icon = !this.props.quantity ? 'Add To Cart' : <i className="fa fa-refresh" aria-hidden="true" />
+        const icon = this.props.quantity === undefined || this.props.quantity === '0' ? <i className="fa fa-cart-plus" aria-hidden="true" /> : <i className="fa fa-refresh" aria-hidden="true" />
+
         return (
-            <form className="update-quantity form-inline" onSubmit={this.handleSubmit}>
-                <label className="sr-only" htmlFor="quantity">Quantity</label>
-                <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
-                <button type="submit" className="btn btn-default">{icon}</button>
-            </form>
+        <form className="update-quantity form-inline" onSubmit={this.handleSubmit}>
+            <label htmlFor="quantity">Quantity</label>
+            <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
+            <button type="submit" className="btn btn-default">{icon}</button>
+        </form>
         )
     }
 }
@@ -41,7 +42,10 @@ class UpdateCart extends Component {
 const mapDispatch = (dispatch) => {
   return {
     runThunk (updatedItem) {
-      dispatch(updateCart(updatedItem))
+        dispatch(updateCart(updatedItem))
+    },
+    runRemoveFromCartThunk (updatedItemId) {
+        dispatch(deleteLineItem(updatedItemId))
     }
   }
 }
