@@ -54,7 +54,6 @@ const createApp = () => {
 
   app.use((req, res, next) => {
     if (!req.session.cart) req.session.cart = []
-    console.log('CART', req.session.cart)
     next()
   })
 
