@@ -1,9 +1,9 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { withRouter, Link } from "react-router-dom"
-import UpdateCart from "./update-cart"
-import { deleteLineItem, updateOrderSubTotal, updateOrderTotal } from "../store"
-import Checkout from "./checkout"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Link } from 'react-router-dom'
+import UpdateCart from './update-cart'
+import { deleteLineItem, updateOrderSubTotal, updateOrderTotal } from '../store'
+import Checkout from './checkout'
 
 class Cart extends Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class Cart extends Component {
     if (cart.length) {
       const newSubTotal = cart
         .map(cartItem => {
-          console.log('HELLO', cartItem)
           return +cartItem.unitPrice * +cartItem.quantity
         })
         .reduce((a, b) => a + b)
@@ -46,7 +45,7 @@ class Cart extends Component {
       )
     } else {
       cartTable = props.cart.map(cartItem => {
-        const singleProduct = cartItem.product
+        const singleProduct = cartItem.cartProduct
         let itemTotal = cartItem.unitPrice * cartItem.quantity
 
         return (
@@ -151,10 +150,10 @@ const mapState = state => ({
   discount: state.cart.discount,
   orderTotal: state.cart.orderTotal,
   cart: state.cart.cart.map(cartItem => {
-    const product = state.products.find(
+    const cartProduct = state.products.find(
       product => +product.id === +cartItem.productId
     )
-    return Object.assign({}, cartItem, product)
+    return Object.assign({}, cartItem, { cartProduct })
   })
 })
 
