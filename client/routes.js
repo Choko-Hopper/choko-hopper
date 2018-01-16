@@ -60,19 +60,18 @@ class Routes extends Component {
             <Route exact path="/graph" component={Graph} />
             <Route exact path="/order-history/:userId/:orderId" component={OrderLineItems} />
             <Route exact path="/checkout-confirm/:orderId" component={CheckoutConfirm} />
-            <Route component={Homepage} />
             {isLoggedIn && (
               <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route exact path="/account" component={Dashboard} />
               <Route exact path="/account/orders" component={Dashboard} />
               <Route exact path="/account/orders/:orderId" component={Dashboard} />
-              <Route path="/user-home" component={UserHome} />
+              <Route component={Homepage} />
               </Switch>
             )}
             
             {/* Displays our Login component as a fallback */}
-            <Route path="/" component={Homepage} />
+            <Route component={Homepage} />
 
           </Switch>
         </Main>
