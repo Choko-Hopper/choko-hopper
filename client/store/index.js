@@ -10,9 +10,10 @@ import cart from './cart'
 import allCategories from './allCategories'
 import orderHistory from './orderHistory'
 import allOrders from './allOrders'
+import lineItems from './lineItems'
 
 
-export const reducer = combineReducers({ user, products, reviews, allUsers, cart, allCategories, orderHistory, allOrders })
+export const reducer = combineReducers({ user, products, reviews, allUsers, cart, allCategories, orderHistory, allOrders, lineItems })
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -28,3 +29,4 @@ export * from './cart'
 export * from './allCategories'
 export * from './orderHistory'
 export * from './allOrders'
+export * from './lineItems'

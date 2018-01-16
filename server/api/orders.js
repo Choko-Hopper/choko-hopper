@@ -9,12 +9,11 @@ router.get('/', isAdmin, (req, res, next) => {
         .catch(next)
 })
 
-router.get('/line-items', (req, res, next) => {
-  LineItem.findAll({include:[{
-    model: Product
-  }]})
-  .then(lineItems => res.json(lineItems))
-  .catch(next)
+
+router.get('/line-items', isAdmin, (req, res, next) => {
+  LineItem.findAll()
+      .then(lineItems => res.json(lineItems))
+      .catch(next)
 })
 
 router.get('/:orderId', (req, res, next) => {
@@ -73,6 +72,15 @@ router.post('/', (req, res, next) => {
           res.json(order)
         })
         .catch(next)
+})
+
+router.put('/update-status/:id', isAdmin, (req, res, next) => {
+  Order.findById(req.params.id)
+      .then(order => order.update({status: req.body.status})
+    )
+      .then(updatedOrder => 
+        res.json(updatedOrder))
+      .catch(next)
 })
 
 router.put('/:id', isAdmin, (req, res, next) => {
