@@ -30,11 +30,6 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     validate: {
       min: 0
-    },
-    get() {
-      if (this.getDataValue('quantity') === 0) {
-        return 'Out of Stock'
-      }
     }
   },
   description: {
