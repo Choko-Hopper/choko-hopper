@@ -20,12 +20,14 @@ function AllOrders(props) {
                                 <p><b>Shipping Address:</b> {order.shippingAddress}</p>
                                 <p><b>Status:</b> {order.status}</p>
                                 <div>
-                                <select key={order.id} id={order.id} name="status" onChange={props.handleClick}>
+                                { order.status !== 'Completed' &&
+                                  <select key={order.id} id={order.id} name="status" onChange={props.handleClick}>
                                   <option key="0" value="Created" >Created</option>
                                   <option key="1" value="Processing" >Processing</option>
                                   <option key="2" value="Cancelled" >Cancelled</option>
                                   <option key="3" value="Completed" >Completed</option>
                                 </select>
+                              }
                               </div>
                             </li>
                         )
@@ -51,6 +53,8 @@ const mapDispatch = function(dispatch) {
             evt.preventDefault()
             const orderId = evt.target.id
             const status = evt.target.value
+            console.log('orderId', orderId)
+            console.log('orderStatus', status)
             dispatch(updateOrderStatusThunk(orderId, status))
         }
     }

@@ -19,12 +19,8 @@ export const fetchAllOrders = () => dispatch => {
 }
 
 export const updateOrderStatusThunk = (orderId, status) => dispatch => {
-  axios
-    .put(`/api/orders/update-status/${orderId}`, {status})
-    .then(res => {
-      console.log('Inside of the updateOrderStatusThunk')
-      dispatch(updateOrderStatus(res.data))
-    })
+  axios.put(`/api/orders/update-status/${orderId}`, {status})
+    .then(res => dispatch(updateOrderStatus(res.data)))
     .then(dispatch(products()))
     .catch(err => console.log(err))
 }
