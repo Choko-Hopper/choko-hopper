@@ -9,6 +9,14 @@ router.get('/', isAdmin, (req, res, next) => {
         .catch(next)
 })
 
+router.get('/line-items', (req, res, next) => {
+  LineItem.findAll({include:[{
+    model: Product
+  }]})
+  .then(lineItems => res.json(lineItems))
+  .catch(next)
+})
+
 router.get('/:orderId', (req, res, next) => {
   const { orderId } = req.params
   Order.findById(orderId)
