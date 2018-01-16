@@ -4,7 +4,6 @@ import { withRouter, Link } from 'react-router-dom'
 import {deleteUserThunk, makeUserAdminThunk, removeAdminStatusThunk} from '../store'
 
 function AllUsers(props) {
-
     return (
       <div>
       {props.currentUser && !props.currentUser.isAdmin ?
