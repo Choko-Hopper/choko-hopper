@@ -5,7 +5,9 @@ body {
 a {
   text-decoration: none;
 }
-
+i {
+  margin-right: 5px;
+}
 label {
   display: block;
 }
@@ -134,9 +136,27 @@ img {
   color: #491119;
   letter-spacing: 1px;
 }
-
 .banner-text a {
   color: #491119;
   margin-left: 5px;
   font-weight: bolder
+}
+.sidebar {
+  border-right: 1px solid rgba(0,0,0,.1);
+}
+.admin-panel {
+  min-height: 80vh;
+}
+.order-heading {
+  font-size: 14px;
+}
+h4.order-heading{
+  text-align: center;
+}
+.order-heading b {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.order-header {
+  margin: 2em auto;
 }

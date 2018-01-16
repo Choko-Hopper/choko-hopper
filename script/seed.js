@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User, Product, Order, Category} = require('../server/db/models')
+const {User, Product, Order, Category, LineItem} = require('../server/db/models')
 async function seed () {
   await db.sync({force: true})
   console.log('db synced!')
@@ -47,13 +47,22 @@ async function seed () {
     Product.create({name: 'Milk Chocolate with Almonds', price: 600, description: 'This milk chocolate with almonds is very good.', categoryId: 1, quantity: 20}),
   ])
   const orders = await Promise.all([
-    Order.create({userEmail: 'katy@katy.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 1}]}),
-    Order.create({userEmail: 'jazzy@jazzy.com', shippingAddress: '6 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 3, unitPrice: 5, quantity: 2}]}),
-    Order.create({userEmail: 'annabel@annabel.com', shippingAddress: '7 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 10, unitPrice: 6, quantity: 3}]}),
-    Order.create({userEmail: 'lemona@lemona.com', shippingAddress: '9 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 7, unitPrice: 12, quantity: 1}]}),
-    Order.create({userEmail: 'tom@tom.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 3, unitPrice: 5, quantity: 2}]}),
-    Order.create({userEmail: 'kate@kate.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 7, unitPrice: 12, quantity: 1}]}),
-    Order.create({userEmail: 'dan@dan.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 4}]}),
+    Order.create({userId: 4, userEmail: 'katy@katy.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 1}]}),
+    Order.create({userId: 3, userEmail: 'jazzy@jazzy.com', shippingAddress: '6 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 3, unitPrice: 5, quantity: 2}]}),
+    Order.create({userId: 6, userEmail: 'annabel@annabel.com', shippingAddress: '7 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 10, unitPrice: 6, quantity: 3}]}),
+    Order.create({userId: 5, userEmail: 'lemona@lemona.com', shippingAddress: '9 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 7, unitPrice: 12, quantity: 1}]}),
+    Order.create({userId: 8, userEmail: 'tom@tom.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 3, unitPrice: 5, quantity: 2}]}),
+    Order.create({userId: 9, userEmail: 'kate@kate.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 7, unitPrice: 12, quantity: 1}]}),
+    Order.create({userId: 7, userEmail: 'dan@dan.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 4}]}),
+  ])
+  const lineItems = await Promise.all([
+    LineItem.create({orderId: 1, productId: 2, unitPrice: 6.5, quantity: 1}),
+    LineItem.create({orderId: 2, productId: 3, unitPrice: 5, quantity: 2}),
+    LineItem.create({orderId: 3, productId: 10, unitPrice: 6, quantity: 3}),
+    LineItem.create({orderId: 4, productId: 7, unitPrice: 12, quantity: 1}),
+    LineItem.create({orderId: 5, productId: 3, unitPrice: 5, quantity: 2}),
+    LineItem.create({orderId: 6, productId: 7, unitPrice: 12, quantity: 1}),
+    LineItem.create({orderId: 7, productId: 2, unitPrice: 6.5, quantity: 4}),
   ])
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
@@ -62,6 +71,7 @@ async function seed () {
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${orders.length} orders`)
   console.log(`seeded ${categories.length} categories`)
+  console.log(`seeded ${lineItems.length} line items`)
   console.log(`seeded successfully`)
 }
 // Execute the `seed` function

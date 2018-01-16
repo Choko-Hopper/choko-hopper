@@ -41,15 +41,7 @@ const Main = (props) => {
             { isLoggedIn
                 ? <div>
                   {/* The navbar will show these links after you log in */}
-                  <li className="dropdown">
-                    <a className="dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i className="fa fa-cog" aria-hidden="true" />
-                    </a>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
-                      <Link to={`/order-history/${user.id}`}>Previous Orders</Link>
-                      <Link to={`/graph`}>Product Graph</Link>
-                    </div>
-                  </li>
+                  <li><Link to="/account"><i className="fa fa-cog" aria-hidden="true" /></Link></li>
                   <li><a href="#" onClick={handleClick}>Logout</a></li>
                 </div>
                 : <div>

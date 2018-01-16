@@ -19,6 +19,7 @@ import {
   Homepage,
   OrderHistory,
   AllOrders,
+  Dashboard,
   Graph,
   OrderLineItems
 } from './components'
@@ -58,23 +59,19 @@ class Routes extends Component {
             <Route exact path="/order-history/:userId" component={OrderHistory} />
             <Route exact path="/graph" component={Graph} />
             <Route exact path="/order-history/:userId/:orderId" component={OrderLineItems} />
-
-            <Route
-              exact
-              path="/checkout-confirm/:orderId"
-              component={CheckoutConfirm}
-            />
-            <Route component={Homepage} />
+            <Route exact path="/checkout-confirm/:orderId" component={CheckoutConfirm} />
             {isLoggedIn && (
               <Switch>
-                {/* Routes placed here are only available after logging in */}
-                <Route path="/user-home" component={UserHome} />
+              {/* Routes placed here are only available after logging in */}
+              <Route exact path="/account" component={Dashboard} />
+              <Route exact path="/account/orders" component={Dashboard} />
+              <Route exact path="/account/orders/:orderId" component={Dashboard} />
+              <Route path="/user-home" component={UserHome} />
               </Switch>
             )}
-
+            
             {/* Displays our Login component as a fallback */}
-
-            <Route component={Login} />
+            <Route component={Homepage} />
 
           </Switch>
         </Main>
