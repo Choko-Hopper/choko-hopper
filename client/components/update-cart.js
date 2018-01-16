@@ -32,7 +32,7 @@ class UpdateCart extends Component {
         return (
         <form className="update-quantity form-inline" onSubmit={this.handleSubmit}>
             <label htmlFor="quantity">Quantity</label>
-            <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" name="quantity" className="form-control" />
+            <input onChange={this.handleChange} value={this.state.quantity} type="number" step="1" max={this.props.product.quantity} name="quantity" className="form-control" />
             <button type="submit" className="btn btn-default">{icon}</button>
         </form>
         )
