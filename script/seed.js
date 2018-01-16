@@ -68,6 +68,7 @@ async function seed () {
     PromoCode.create({code: '25OFF', percentOff: 25}),
     PromoCode.create({code: '30OFF', percentOff: 30}),
     PromoCode.create({code: '50OFF', percentOff: 50}),
+    PromoCode.create({code: 'OOPSIES', percentOff: 20})
   ])
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator

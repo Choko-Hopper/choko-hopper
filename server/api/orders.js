@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const emailSender = require('./mailer')
 const { Order, LineItem, Product } = require('../db/models')
 const isAdmin = require('./isAdmin')
 module.exports = router
@@ -61,6 +62,9 @@ router.post('/', (req, res, next) => {
     shippingAddress: req.body.shippingAddress,
     userId: req.user.id
   }
+
+  emailSender(orderInfo.userEmail, 'Created')
+
   let cart = req.body.cart
 
     Order.create(orderInfo)
@@ -75,8 +79,12 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/update-status/:id', isAdmin, (req, res, next) => {
+  const { status } = req.body
   Order.findById(req.params.id)
-      .then(order => order.update({status: req.body.status})
+    .then(order => {
+      emailSender(order.userEmail, status)
+      return order.update({ status })
+    }
     )
       .then(updatedOrder => 
         res.json(updatedOrder))
