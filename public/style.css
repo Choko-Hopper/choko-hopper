@@ -160,3 +160,9 @@ h4.order-heading{
 .order-header {
   margin: 2em auto;
 }
+
+.alert {
+  color: red;
+  font-style: italic;
+}
+
