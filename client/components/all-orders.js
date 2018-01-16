@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
+import { updateOrderStatusThunk } from '../store'
 
 function AllOrders(props) {
 
@@ -18,7 +19,14 @@ function AllOrders(props) {
                                 <p><b>Email:</b> {order.userEmail} </p>
                                 <p><b>Shipping Address:</b> {order.shippingAddress}</p>
                                 <p><b>Status:</b> {order.status}</p>
-                               
+                                <div>
+                                <select key={order.id} id={order.id} name="status" onChange={props.handleClick}>
+                                  <option key="0" value="Created" >Created</option>
+                                  <option key="1" value="Processing" >Processing</option>
+                                  <option key="2" value="Cancelled" >Cancelled</option>
+                                  <option key="3" value="Completed" >Completed</option>
+                                </select>
+                              </div>
                             </li>
                         )
                     })
@@ -37,14 +45,18 @@ const mapState = function(state) {
     }
 }
 
-// const mapDispatch = function(dispatch) {
-//     return {
-//         handleClick(evt){
-//             evt.preventDefault()
-//             const userId = evt.target.id
-//             dispatch(deleteUserThunk(userId))
-//         }
-//     }
-// }
+const mapDispatch = function(dispatch) {
+    return {
+        handleClick(evt){
+            evt.preventDefault()
+            console.log(evt.target.value, "EVENT.target.value")
+            const orderId = evt.target.id
+            const status = evt.target.value
+            console.log(status, "status in mapDispatch")
+            console.log(orderId, "orderId in mapDispatch")
+            dispatch(updateOrderStatusThunk(orderId, status))
+        }
+    }
+}
 
-export default connect(mapState, null)(AllOrders)
+export default connect(mapState, mapDispatch)(AllOrders)

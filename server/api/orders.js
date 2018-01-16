@@ -9,6 +9,7 @@ router.get('/', isAdmin, (req, res, next) => {
         .catch(next)
 })
 
+
 router.get('/:orderId', (req, res, next) => {
   const { orderId } = req.params
   Order.findById(orderId)
@@ -65,6 +66,15 @@ router.post('/', (req, res, next) => {
           res.json(order)
         })
         .catch(next)
+})
+
+router.put('/update-status/:id', isAdmin, (req, res, next) => {
+  Order.findById(req.params.id)
+      .then(order => order.update({status: req.body.status})
+    )
+      .then(updatedOrder => 
+        res.json(updatedOrder))
+      .catch(next)
 })
 
 router.put('/:id', isAdmin, (req, res, next) => {
