@@ -108,9 +108,10 @@ router.put('/update-status/:id', isAdmin, (req, res, next) => {
           .then(updatedProducts => {
             return Promise.all(updatedProducts)
           })
-          .catch(next)
+          .then(res.json(updatedOrder))
+      } else {
+        res.json(updatedOrder)
       }
-      res.json({ updatedOrder })
     })
     .catch(next)
 })
