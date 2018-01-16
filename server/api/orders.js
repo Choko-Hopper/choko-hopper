@@ -80,14 +80,48 @@ router.post('/', (req, res, next) => {
 
 router.put('/update-status/:id', isAdmin, (req, res, next) => {
   const { status } = req.body
+  let quantities = []
   Order.findById(req.params.id)
     .then(order => {
       emailSender(order.userEmail, status)
       return order.update({ status })
     }
     )
-      .then(updatedOrder => 
-        res.json(updatedOrder))
+      .then(updatedOrder => {
+        if (updatedOrder.status === 'Completed') {
+
+
+          return LineItem.findAll({where: {orderId: updatedOrder.id}})
+          .then(arrayOfLineItems => {
+            console.log('arrayOfLineItems', arrayOfLineItems)
+            return arrayOfLineItems.map(lineItem => {
+              quantities.push(lineItem.quantity)
+              return Product.findById(lineItem.productId)
+            })
+          })
+          .then(arrayOfPromises => {
+            console.log('arrayOfPromises', arrayOfPromises)
+            return Promise.all(arrayOfPromises)
+          })
+          .then(arrayOfResolvedProductPromises => {
+            console.log('arrayOfResolvedProductPromises', arrayOfResolvedProductPromises)
+            return arrayOfResolvedProductPromises.map((oneProduct, i) => {
+              let stock = oneProduct.quantity
+              return oneProduct.update({quantity: stock - quantities[i]})
+            })
+          })
+          .then(arrayOfUpdatedProductPromises => {
+            console.log('arrayOfUpdatedProductPromises', arrayOfUpdatedProductPromises)
+            return Promise.all(arrayOfUpdatedProductPromises)
+          })
+          .catch(next)
+
+
+
+
+        }
+        res.json({updatedOrder})
+      })
       .catch(next)
 })
 

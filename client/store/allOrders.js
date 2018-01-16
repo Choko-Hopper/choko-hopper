@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-
+import {products} from './product'
 const allOrders = []
 
 const GET_ORDERS = 'GET_ORDERS'
@@ -21,7 +21,11 @@ export const fetchAllOrders = () => dispatch => {
 export const updateOrderStatusThunk = (orderId, status) => dispatch => {
   axios
     .put(`/api/orders/update-status/${orderId}`, {status})
-    .then(res => dispatch(updateOrderStatus(res.data)))
+    .then(res => {
+      console.log('Inside of the updateOrderStatusThunk')
+      dispatch(updateOrderStatus(res.data))
+    })
+    .then(dispatch(products()))
     .catch(err => console.log(err))
 }
 
@@ -37,7 +41,7 @@ export default function(state = allOrders, action) {
     let copyOrders = state.slice(0)
         copyOrders[index] = action.order
         return copyOrders
-    
+
     default:
       return state
   }
