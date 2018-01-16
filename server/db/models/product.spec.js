@@ -15,11 +15,11 @@ describe('Product model', () => {
     let hotChocolate
 
     beforeEach(() => {
-      return Product.build({
+      return Product.create({
         name: 'Hot Chocolate',
         imageUrl: 'https://cafedelites.com/wp-content/uploads/2016/12/Special-Ingredient-Hot-Chocolate-Images-42.jpg',
-        price: 10.5,
-        isInStock: true,
+        price: 105,
+        quantity: 100,
         description: 'Warm up with this rich and flavorful Belgian hot chocolate!'
       })
         .then(product => {
@@ -51,20 +51,6 @@ describe('Product model', () => {
       expect(hotChocolate.imageUrl).to.equal('https://cafedelites.com/wp-content/uploads/2016/12/Special-Ingredient-Hot-Chocolate-Images-42.jpg')
     })
 
-    it('has defaultValue for `imageUrl` field', function () {
-
-      return Product.create({
-        name: 'New Chocolate',
-        price: 5,
-        description: 'So great'
-      })
-        .then(
-        function (newChocolate) {
-          expect(newChocolate.imageUrl).to.equal('https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg');
-          expect(newChocolate.isInStock).to.equal(true);
-        });
-
-    });
 
     it('has a minimum `price` of 0', function () {
 
@@ -80,20 +66,24 @@ describe('Product model', () => {
 
     });
 
-    it('can handle long `description`', function() {
+    it('has a price getter that divides the incoming price by 100', function () {
+      expect(hotChocolate.price).to.equal(1.05)
+    })
 
-      let megaLongDescription = 'SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!'
+    it('can handle long `description`', function () {
 
-      hotChocolate.description = megaLongDescription
+        let megaLongDescription = 'SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!SO HOT AND AMAZING!'
 
-      return hotChocolate.validate()
-      .then(function(result) {
-        expect(result).to.be.an('object');
-        expect(result.name).to.equal('Hot Chocolate');
-        expect(result.description).to.equal(megaLongDescription);
+        hotChocolate.description = megaLongDescription
+
+        return hotChocolate.validate()
+          .then(function (result) {
+            expect(result).to.be.an('object');
+            expect(result.name).to.equal('Hot Chocolate');
+            expect(result.description).to.equal(megaLongDescription);
+          });
+
       });
-
-    });
 
   }) // end describe('attributes definition')
 }) // end describe('Product model')
