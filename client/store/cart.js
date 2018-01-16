@@ -8,8 +8,7 @@ const GET_CART = 'GET_CART'
 const RESET_CART = 'RESET_CART'
 const GET_CART_ORDER = 'GET_CART_ORDER'
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
-const UPDATE_ORDER_TOTAL = 'UPDATE_ORDER_TOTAL'
-const UPDATE_ORDER_SUBTOTAL = 'UPDATE_ORDER_SUBTOTAL'
+const GOT_ORDER_TOTALS = 'GOT_ORDER_TOTALS'
 /**
  * INITIAL STATE
  */
@@ -30,13 +29,9 @@ const getCart = cart => ({ type: GET_CART, cart })
 const resetCart = () => ({ type: RESET_CART })
 const getCartOrder = lastOrder => ({ type: GET_CART_ORDER, lastOrder })
 export const updateUserInfo = userInfo => ({ type: UPDATE_USER_INFO, userInfo })
-export const updateOrderSubTotal = orderSubTotal => ({
-  type: UPDATE_ORDER_SUBTOTAL,
-  orderSubTotal
-})
-export const updateOrderTotal = orderTotal => ({
-  type: UPDATE_ORDER_TOTAL,
-  orderTotal
+export const gotOrderTotals = orderTotals => ({
+  type: GOT_ORDER_TOTALS,
+  orderTotals
 })
 
 /**
@@ -48,11 +43,17 @@ export const fetchCart = () => dispatch =>
     .then(res => dispatch(getCart(res.data || defaultCart)))
     .catch(err => console.log(err))
 
+export const fetchTotals = () => dispatch =>
+  axios
+    .get('api/cart/totals')
+    .then(res => dispatch(gotOrderTotals(res.data)))
+    .catch(err => console.error(err))
+
 export const updateCart = updatedItem => dispatch =>
   axios
     .put('/api/cart/update', updatedItem)
-    .then(res => axios.get('/api/cart'))
-    .then(res => dispatch(getCart(res.data)))
+    .then(() => dispatch(fetchCart()))
+    .then(() => dispatch(fetchTotals()))
     .catch(err => console.log(err))
 
 export const deleteLineItem = productId => dispatch =>
@@ -74,6 +75,15 @@ export const submitCart = orderInfo => (dispatch, getState) =>
     .then(dispatch(resetCart()))
     .catch(err => console.log(err))
 
+export const validatePromoCode = promoCode => dispatch =>
+  axios
+    .get(`/api/promo/${promoCode}`)
+    .then(() => dispatch(fetchTotals()))
+    .catch(err => {
+      dispatch(fetchTotals())
+      console.error(err)
+    })
+
 /**
  * REDUCER
  */
@@ -87,8 +97,8 @@ export default function(state = defaultCart, action) {
       return Object.assign({}, defaultCart, { lastOrder: action.lastOrder })
     case UPDATE_USER_INFO:
       return Object.assign({}, state, action.userInfo)
-    case UPDATE_ORDER_TOTAL:
-      return Object.assign({}, state, { orderTotal: action.orderTotal })
+    case GOT_ORDER_TOTALS:
+      return Object.assign({}, state, action.orderTotals)
     default:
       return state
   }

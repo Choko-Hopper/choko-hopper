@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import UpdateCart from './update-cart'
-import { deleteLineItem, updateOrderSubTotal, updateOrderTotal } from '../store'
+import { deleteLineItem, fetchTotals, validatePromoCode } from '../store'
 import Checkout from './checkout'
 
 class Cart extends Component {
@@ -11,24 +11,7 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    const {
-      cart,
-      orderSubTotal,
-      discount,
-      handleSubTotal,
-      handleTotal
-    } = this.props
-    if (cart.length) {
-      const newSubTotal = cart
-        .map(cartItem => {
-          return +cartItem.unitPrice * +cartItem.quantity
-        })
-        .reduce((a, b) => a + b)
-      handleSubTotal(newSubTotal)
-    }
-    const discountAmount = orderSubTotal * (discount / 100)
-    const newTotal = orderSubTotal - discountAmount
-    handleTotal(newTotal)
+    this.props.handleTotals()
   }
 
   render() {
@@ -117,7 +100,7 @@ class Cart extends Component {
                 </tr>
               </tbody>
             </table>
-            <form className="discount-code form-inline align-items-center">
+            <form onSubmit={props.handlePromo} className="discount-code form-inline align-items-center">
               <div className="form-row d-flex justify-content-between">
                 <label htmlFor="inputPromo" className="sr-only">
                   Apply Promo Code
@@ -125,6 +108,7 @@ class Cart extends Component {
                 <input
                   type="text"
                   className="form-control col-7"
+                  name="promoCode"
                   id="inputPromo"
                   placeholder="Promo Code"
                 />
@@ -163,11 +147,12 @@ const mapDispatch = dispatch => ({
     let productId = evt.target.value
     dispatch(deleteLineItem(productId))
   },
-  handleTotal(orderTotal) {
-    dispatch(updateOrderTotal(orderTotal))
+  handleTotals() {
+    dispatch(fetchTotals())
   },
-  handleSubTotal(orderSubTotal) {
-    dispatch(updateOrderSubTotal(orderSubTotal))
+  handlePromo(evt) {
+    evt.preventDefault()
+    dispatch(validatePromoCode(evt.target.promoCode.value))
   }
 })
 
