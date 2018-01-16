@@ -50,7 +50,6 @@ const mapDispatch = function(dispatch) {
         handleSubmit(evt){
             evt.preventDefault()
             const userId = evt.target.id
-            console.log(userId)
             dispatch(makeUserAdminThunk(userId))
         },
         handleRemoveAdmin(evt){
