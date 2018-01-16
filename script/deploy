@@ -44,3 +44,6 @@ git commit --allow-empty -m 'Deploying'
 
 # push your local "deploy" branch to the "master" branch on heroku
 git push --force heroku deploy:master
+
+# run seed file
+heroku run npm run seed
