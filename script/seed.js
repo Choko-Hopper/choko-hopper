@@ -36,7 +36,7 @@ async function seed () {
 
   const products = await Promise.all([
     Product.create({name: 'Milk Chocolate', price: 500, description: 'This milk chocolate is very good.', categoryId: 1, quantity: 5}),
-    Product.create({name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 32}),
+    Product.create({name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 0}),
     Product.create({name: 'White Chocolate', price: 525, description: 'This white chocolate is very good.', categoryId: 3, quantity: 30}),
     Product.create({name: 'Dark Chocolate with Nuts', price: 700, description: 'This dark chocolate with nuts is very good.', categoryId: 2, quantity: 75}),
     Product.create({name: 'Dark Chocolate with Raspberry', price: 750, isInStock: false, description: 'This dark chocolate with raspberry is very good.', categoryId: 2, quantity: 50}),
