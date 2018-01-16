@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const LineItems = require('./lineItems.js')
+const LineItem = require('./lineItem')
 
 const Order = db.define('order', {
   userEmail: {
@@ -18,14 +18,14 @@ const Order = db.define('order', {
       notEmpty: true
     }
   },
-  isCompleted: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
+  status: {
+    type: Sequelize.STRING,
+    defaultValue: 'Created'
   },
   totalPrice: {
     type: Sequelize.VIRTUAL,
     get() {
-      return LineItems.findAll({
+      return LineItem.findAll({
         where: { orderId: this.getDataValue('id') }
       }).reduce(
         (accumulator, lineItem) =>

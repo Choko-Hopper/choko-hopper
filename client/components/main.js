@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
-import {AllProducts, AllUsers, Homepage} from '../components'
+import {AllProducts, AllUsers, Homepage, AllOrders} from '../components'
 
 /**
  * COMPONENT
@@ -12,7 +12,7 @@ import {AllProducts, AllUsers, Homepage} from '../components'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn, cart} = props
+  const {children, handleClick, isLoggedIn, cart, user} = props
 
   return (
     <div>
@@ -34,13 +34,15 @@ const Main = (props) => {
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <Link to="/new-product">Add New Product</Link>
                   <Link to="/users">All Users</Link>
+                  <Link to="/orders">All Orders</Link>
                 </div>
               </li>
             }
             { isLoggedIn
                 ? <div>
                   {/* The navbar will show these links after you log in */}
-                  <a href="#" onClick={handleClick}>Logout</a>
+                  <li><Link to="/account"><i className="fa fa-cog" aria-hidden="true" /></Link></li>
+                  <li><a href="#" onClick={handleClick}>Logout</a></li>
                 </div>
                 : <div>
                   {/* The navbar will show these links before you log in */}

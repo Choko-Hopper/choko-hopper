@@ -16,9 +16,14 @@ import {
   Cart,
   Checkout,
   CheckoutConfirm,
-  Homepage
+  Homepage,
+  OrderHistory,
+  AllOrders,
+  Dashboard,
+  Graph,
+  OrderLineItems
 } from './components'
-import { me, products, cart, categories } from './store'
+import { me, products, fetchCart, categories, fetchAllOrders } from './store'
 
 /**
  * COMPONENT
@@ -32,7 +37,7 @@ class Routes extends Component {
     const { isLoggedIn, currentUser } = this.props
 
     return (
-      
+
       <Router history={history}>
         <Main>
           <Switch>
@@ -49,24 +54,25 @@ class Routes extends Component {
             <Route path="/products/:productId" component={SingleProduct} />
             <Route exact path="/new-product" component={NewProductForm} />
             <Route exact path="/users" component={AllUsers} />
+            <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/checkout" component={Checkout} />
-            <Route
-              exact
-              path="/checkout-confirm/:orderId"
-              component={CheckoutConfirm}
-            />
-            <Route component={Homepage} />
+            <Route exact path="/order-history/:userId" component={OrderHistory} />
+            <Route exact path="/graph" component={Graph} />
+            <Route exact path="/order-history/:userId/:orderId" component={OrderLineItems} />
+            <Route exact path="/checkout-confirm/:orderId" component={CheckoutConfirm} />
             {isLoggedIn && (
               <Switch>
-                {/* Routes placed here are only available after logging in */}
-                <Route path="/user-home" component={UserHome} />
+              {/* Routes placed here are only available after logging in */}
+              <Route exact path="/account" component={Dashboard} />
+              <Route exact path="/account/orders" component={Dashboard} />
+              <Route exact path="/account/orders/:orderId" component={Dashboard} />
+              <Route path="/user-home" component={UserHome} />
               </Switch>
             )}
-
+            
             {/* Displays our Login component as a fallback */}
-            
-            <Route component={Login} />
-            
+            <Route component={Homepage} />
+
           </Switch>
         </Main>
       </Router>
@@ -92,8 +98,9 @@ const mapDispatch = (dispatch, ownProps) => {
     loadInitialData() {
       dispatch(me())
       dispatch(products())
-      dispatch(cart())
+      dispatch(fetchCart())
       dispatch(categories())
+      dispatch(fetchAllOrders())
     }
   }
 }
