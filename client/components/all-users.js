@@ -17,11 +17,11 @@ function AllUsers(props) {
                     props.allUsers.map(user => {
                         return (
                             <li key={user.id}>
-                                <span>{user.email}     </span>
+                                <p><b>{user.email}     </b></p>
                                
-                                <button id={user.id} onClick={props.handleClick}>X</button>
-                                {(!user.isAdmin) && <button id={user.id} onClick={props.handleSubmit}>Make Admin</button>}
-                                {(user.isAdmin) && <button id={user.id} onClick={props.handleRemoveAdmin}>Remove Admin Status</button>}
+                                <button id={user.id} className="btn-danger" onClick={props.handleClick}>Delete</button>
+                                {(!user.isAdmin) && <button id={user.id} className="btn-success" onClick={props.handleSubmit}>Make Admin</button>}
+                                {(user.isAdmin) && <button id={user.id} className="btn-warning" onClick={props.handleRemoveAdmin}>Remove Admin Status</button>}
                             </li>
                         )
                     })
