@@ -15,6 +15,23 @@ function PromoCodes(props) {
       ) : (
         <div>
           <h1>Active Promo Codes</h1>
+          <form onSubmit={props.handleSubmit}>
+            <div>
+              <label htmlFor="promo">
+                <small>Add a New Code</small>
+              </label>
+              <input name="promo" type="text" />
+            </div>
+            <div>
+              <label htmlFor="discount">
+                <small>Percentage Off</small>
+              </label>
+              <input name="discount" type="text" />
+            </div>
+            <button type="submit" className="btn-success">
+              Submit
+            </button>
+          </form>
           <ul>
             {props.currentUser &&
               props.currentUser.isAdmin &&
@@ -40,23 +57,6 @@ function PromoCodes(props) {
                 );
               })}
           </ul>
-          <form onSubmit={props.handleSubmit}>
-            <div>
-              <label htmlFor="promo">
-                <small>Add a New Code</small>
-              </label>
-              <input name="promo" type="text" />
-            </div>
-            <div>
-              <label htmlFor="discount">
-                <small>Percentage Off</small>
-              </label>
-              <input name="discount" type="text" />
-            </div>
-            <button type="submit" className="btn-success">
-              Submit
-            </button>
-          </form>
         </div>
       )}
     </div>
