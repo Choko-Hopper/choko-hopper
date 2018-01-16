@@ -66,7 +66,7 @@ class Routes extends Component {
               <Route exact path="/account" component={Dashboard} />
               <Route exact path="/account/orders" component={Dashboard} />
               <Route exact path="/account/orders/:orderId" component={Dashboard} />
-              <Route path="/user-home" component={UserHome} />
+              <Route component={Homepage} />
               </Switch>
             )}
             

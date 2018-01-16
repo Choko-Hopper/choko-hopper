@@ -39,7 +39,7 @@ const Main = (props) => {
               </li>
             }
             { isLoggedIn
-                ? <div>
+                ? <div className="nav navbar-nav navbar-right">
                   {/* The navbar will show these links after you log in */}
                   <li><Link to="/account"><i className="fa fa-cog" aria-hidden="true" /></Link></li>
                   <li><a href="#" onClick={handleClick}>Logout</a></li>
