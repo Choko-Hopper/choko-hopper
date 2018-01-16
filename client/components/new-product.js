@@ -1,64 +1,90 @@
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addOrEditProductThunk } from '../store'
 
 /**
  * COMPONENT
  */
-const ProductForm = (props) => {
+class ProductForm extends Component {
+  constructor(props){
+    super(props)
+    console.log('loooooooooook', props)
+    this.state = {
+      name: '',
+      imageUrl: '',
+      price: '',
+      description: '',
+      quantity: 0
+    }
 
-  const product = props.products.find(
-    arrProduct => +arrProduct.id === +props.match.params.productId
-  ) || {}
-  return (
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-    <div>
-      {props.currentUser && !props.currentUser.isAdmin ?
-        <h3>Sorry, you don't have access to this page.</h3> :
-        <div>
-          <h3>{props.formTitle} {product.name || ''}</h3>
-          <form onSubmit={props.handleSubmit} name="newProductForm">
-            <div>
-              <label htmlFor="name"><small>Product Name</small></label>
-              <input name="name" type="text" />
-            </div>
-            <div>
-              <label htmlFor="imageUrl"><small>imageUrl</small></label>
-              <input name="imageUrl" type="text" />
-            </div>
-            <div>
-              <label htmlFor="price"><small>Price</small></label>
-              <input name="price" type="text" />
-            </div>
-            <div>
-              <label htmlFor="description"><small>Description</small></label>
-              <input name="description" type="text" />
-            </div>
+  handleChange(evt){
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
 
-            <div>
-              <select name= "category">
-              <option value='0'>Choose a category</option>
-              {props.categories.map(category => {
-                return <option key={category.id} value={category.id}>{category.name}</option>
-              })}
-              </select>
-            </div>
+  componentDidMount(){
+        this.setLocalState()
+  }
 
-            <div>
+  setLocalState(){
+    this.setState((prevState, props) => this.props.product);
+  }
+
+  render() {
+    const product = this.props.product
+    return (
+      <div>
+        {this.props.currentUser && !this.props.currentUser.isAdmin ?
+          <h3>Sorry, you don't have access to this page.</h3> :
+          <div>
+            <h3>{this.props.formTitle} {product.name || ''}</h3>
+            <form onSubmit={this.props.handleSubmit} name="newProductForm">
               <div>
-                <label htmlFor="quantity"><small>Quantity</small></label>
-                <input name="quantity" type="text" />
+                <label htmlFor="name"><small>Product Name</small></label>
+                <input onChange={this.handleChange} value={this.state.name} name="name" type="text" />
               </div>
-            </div>
-            <div>
-              <button type="submit">Save New Product</button>
-            </div>
-          </form>
-        </div>
-      }
-    </div>
-  )
+              <div>
+                <label htmlFor="imageUrl"><small>imageUrl</small></label>
+                <input onChange={this.handleChange} value={this.state.imageUrl} name="imageUrl" type="text" />
+              </div>
+              <div>
+                <label htmlFor="price"><small>Price</small></label>
+                <input onChange={this.handleChange} value={this.state.price} name="price" type="text" />
+              </div>
+              <div>
+                <label htmlFor="description"><small>Description</small></label>
+                <input onChange={this.handleChange} value={this.state.description} name="description" type="text" />
+              </div>
+  
+              <div>
+                <select name= "category">
+                <option value="0">Choose a category</option>
+                {this.props.categories.map(category => {
+                  return <option key={category.id} value={category.id}>{category.name}</option>
+                })}
+                </select>
+              </div>
+  
+              <div>
+                <div>
+                  <label htmlFor="quantity"><small>Quantity</small></label>
+                  <input name="quantity" type="text" />
+                </div>
+              </div>
+              <div>
+                <button type="submit">Save New Product</button>
+              </div>
+            </form>
+          </div>
+        }
+      </div>
+    )
+
+  }
+
 }
 
 const mapNewProduct = (state) => {
@@ -101,7 +127,7 @@ const mapDispatch = (dispatch, ownProps) => {
       evt.target.imageUrl.value = ''
       evt.target.price.value = ''
       evt.target.description.value = ''
-      evt.target.quantity.value = ''
+      evt.target.quantity.value = '0'
       evt.target.category.value = '0'
     }
   }
