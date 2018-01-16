@@ -34,6 +34,13 @@ router.put('/make-admin/:id', isAdmin, (req, res, next) => {
   .catch(next)
 })
 
+router.put('/remove-admin/:id', isAdmin, (req, res, next) => {
+  User.findById(req.params.id)
+  .then(user => user.update({isAdmin: false}))
+  .then(updatedUser => res.json(updatedUser))
+  .catch(next)
+})
+
 router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then(user => user.update(req.body))
