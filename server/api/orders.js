@@ -9,6 +9,11 @@ router.get('/', isAdmin, (req, res, next) => {
         .catch(next)
 })
 
+router.get('/line-items', isAdmin, (req, res, next) => {
+  LineItem.findAll()
+      .then(lineItems => res.json(lineItems))
+      .catch(next)
+})
 
 router.get('/:orderId', (req, res, next) => {
   const { orderId } = req.params
