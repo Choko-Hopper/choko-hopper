@@ -46,10 +46,14 @@ export default function(state = allUsers, action) {
       return state.filter(user => {
         return user.id !== +action.userId
             })
-    case MAKE_USER_ADMIN:
-      return [...state.filter(user => {
-      return user.id !== +action.user.id
-    }), action.user]
+case MAKE_USER_ADMIN:
+    let index = state.findIndex(user => {
+      return user.id === +action.user.id
+      })
+    let copyUsers = state.slice(0)   
+        copyUsers[index] = action.user
+          return copyUsers
+
     case REMOVE_ALL_USERS:
       return []
     default:
