@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactStars from 'react-stars'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ReviewForm from './review-form'
@@ -15,7 +16,7 @@ class SingleProduct extends Component {
   }
 
   render() {
-    const product = this.props.product || {}
+    const product = this.props.product || {price: 0}
     const reviews = this.props.reviews || []
 
     const isLoggedIn = !!this.props.user.id
@@ -45,7 +46,7 @@ class SingleProduct extends Component {
         {reviews.map(review => (
           <div key={review.id}>
             <h4>{review.title}</h4>
-            <h5>Rating: {review.rating}</h5>
+            <ReactStars count={5} size={20} value={review.rating} edit={false} />
             <p>{review.text}</p>
           </div>
         ))}
