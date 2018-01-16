@@ -164,3 +164,17 @@ h4.order-heading{
   color: red;
   font-style: italic;
 }
+#hero {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10%;
+}
+#hero #productInfo {
+  display: flex;
+}
+#hero #productInfo>div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
