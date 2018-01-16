@@ -31,9 +31,13 @@ export default function(state = allOrders, action) {
     case GET_ORDERS:
       return [...allOrders, ...action.orders]
     case UPDATE_ORDER_STATUS:
-    return state.filter(order => {
-      return order.id !== +action.order.id
-    }).concat([action.order])
+    let index = state.findIndex(order => {
+      return order.id === +action.order.id
+    })
+    let copyOrders = state.slice(0)
+        copyOrders[index] = action.order
+        return copyOrders
+    
     default:
       return state
   }
