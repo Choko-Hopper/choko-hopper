@@ -27,7 +27,9 @@ class SingleProduct extends Component {
         <h2>{product.name}</h2>
         <h4>${product.price.toFixed(2)}</h4>
         <p>{product.description}</p>
-        <UpdateCart product={product} />
+
+        { product.quantity === 0 ? <div className="alert" >Out Of Stock</div> : <UpdateCart product={product} />}
+
         {this.props.user &&
           this.props.user.isAdmin && (
             <div>
