@@ -60,6 +60,7 @@ class Routes extends Component {
             <Route exact path="/graph" component={Graph} />
             <Route exact path="/order-history/:userId/:orderId" component={OrderLineItems} />
             <Route exact path="/checkout-confirm/:orderId" component={CheckoutConfirm} />
+            <Route component={Homepage} />
             {isLoggedIn && (
               <Switch>
               {/* Routes placed here are only available after logging in */}
@@ -71,7 +72,7 @@ class Routes extends Component {
             )}
             
             {/* Displays our Login component as a fallback */}
-            <Route component={Homepage} />
+            <Route path="/" component={Homepage} />
 
           </Switch>
         </Main>
