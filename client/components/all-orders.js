@@ -8,7 +8,7 @@ function AllOrders(props) {
     return (
         <div>
         {props.currentUser && !props.currentUser.isAdmin ?
-            <h3>Sorry, you don't have access to this page.</h3> :   
+            <h3>Sorry, you don't have access to this page.</h3> :
             <div>
             <h1>All Orders</h1>
             <ul>
@@ -49,11 +49,8 @@ const mapDispatch = function(dispatch) {
     return {
         handleClick(evt){
             evt.preventDefault()
-            console.log(evt.target.value, "EVENT.target.value")
             const orderId = evt.target.id
             const status = evt.target.value
-            console.log(status, "status in mapDispatch")
-            console.log(orderId, "orderId in mapDispatch")
             dispatch(updateOrderStatusThunk(orderId, status))
         }
     }

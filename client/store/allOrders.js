@@ -19,8 +19,6 @@ export const fetchAllOrders = () => dispatch => {
 }
 
 export const updateOrderStatusThunk = (orderId, status) => dispatch => {
-  console.log(orderId, "ORDERID")
-  console.log(status, "STATUS!!!!")
   axios
     .put(`/api/orders/update-status/${orderId}`, {status})
     .then(res => dispatch(updateOrderStatus(res.data)))
@@ -28,7 +26,7 @@ export const updateOrderStatusThunk = (orderId, status) => dispatch => {
 }
 
 export default function(state = allOrders, action) {
-  console.log(action, "THIS IS THE ACTION")
+
   switch (action.type) {
     case GET_ORDERS:
       return [...allOrders, ...action.orders]
