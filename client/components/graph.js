@@ -11,28 +11,30 @@ class Graph extends Component {
 
   componentDidMount() {
     this.props.handleFetchLineItems()
-    console.log('sent off fetch for LineItems')
   }
 
   render() {
 
     const isLoggedIn = !!this.props.user.id
-    let graphData = []
+
 
     if (this.props.lineItems && !this.props.lineItems.length) {
       return <div>No lineItems just yet...</div>
     }
     else if (isLoggedIn && this.props.lineItems && this.props.lineItems.length && this.props.products && this.props.products.length) {
+      let graphData = []
       this.props.lineItems.forEach(lineItem => {
-        let index = graphData.findIndex(item => {
-          return item.productId === lineItem.productId
-        })
-        let relevantProd = this.props.products.find(product => {
-          return product.id === lineItem.productId
+
+        let productName = this.props.products.find(product => {
+          return +product.id === +lineItem.productId
         }).name
+
+        let index = graphData.findIndex(item => {
+          return item.product === productName
+        })
         if (index === -1) {
           graphData.push({
-            product: relevantProd,
+            product: productName,
             quantity: lineItem.quantity
           })
         } else {
@@ -45,7 +47,7 @@ class Graph extends Component {
           <Bar
             data={
               {
-                labels: graphData.map(obj => obj.product), //[1,2,3]
+                labels: [...graphData.map(obj => obj.product), ''],
                 datasets: [
                   {
                     label: '# of units sold',
@@ -54,7 +56,7 @@ class Graph extends Component {
                     borderWidth: 1,
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     hoverBorderColor: 'rgba(255,99,132,1)',
-                    data: graphData.map(obj => obj.quantity) //[10,1,2]
+                    data: [...graphData.map(obj => obj.quantity), 0]
                   }
                 ]
               }
@@ -77,7 +79,6 @@ const mapState = ({ user, products, lineItems }, ownProps) => ({ user, products,
 const mapDispatch = (dispatch, ownProps) => ({
 
   handleFetchLineItems() {
-    console.log('About to dispatch fetchLineItems fn')
     dispatch(fetchLineItems())
   }
 })
