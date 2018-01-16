@@ -36,7 +36,6 @@ export const makeUserAdminThunk = (userId) =>
 dispatch =>
   axios.put(`/api/users/make-admin/${userId}`, userId)
     .then(res => 
-      //console.log(res, "RES"))
     dispatch(makeUserAdmin(res.data)))
     .catch(err => console.log(err))
 

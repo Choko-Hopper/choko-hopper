@@ -49,7 +49,7 @@ router.put('/:id', isAdmin, (req, res, next) => {
 })
 
 // Admin Can Delete Code
-router.delete(':id', isAdmin, (req, res, next) => {
+router.delete('/:id', isAdmin, (req, res, next) => {
   PromoCode.findById(req.params.id)
     .then(promo => promo.destroy())
     .then(() => res.sendStatus(204))

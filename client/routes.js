@@ -21,9 +21,10 @@ import {
   AllOrders,
   Dashboard,
   Graph,
-  OrderLineItems
+  OrderLineItems,
+  PromoCodes
 } from './components'
-import { me, products, fetchCart, categories, fetchAllOrders } from './store'
+import { me, products, fetchCart, categories, fetchAllOrders, fetchAllPromoCodes } from './store'
 
 /**
  * COMPONENT
@@ -55,6 +56,7 @@ class Routes extends Component {
             <Route exact path="/new-product" component={NewProductForm} />
             <Route exact path="/users" component={AllUsers} />
             <Route exact path="/orders" component={AllOrders} />
+            <Route exact path="/promo-codes" component={PromoCodes} />
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/order-history/:userId" component={OrderHistory} />
             <Route exact path="/graph" component={Graph} />
@@ -101,6 +103,7 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(fetchCart())
       dispatch(categories())
       dispatch(fetchAllOrders())
+      dispatch(fetchAllPromoCodes())
     }
   }
 }
