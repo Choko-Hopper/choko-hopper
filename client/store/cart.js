@@ -9,6 +9,7 @@ const RESET_CART = 'RESET_CART'
 const GET_CART_ORDER = 'GET_CART_ORDER'
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 const UPDATE_ORDER_TOTAL = 'UPDATE_ORDER_TOTAL'
+const UPDATE_ORDER_SUBTOTAL = 'UPDATE_ORDER_SUBTOTAL'
 /**
  * INITIAL STATE
  */
@@ -17,7 +18,9 @@ const defaultCart = {
   shippingAddress: '',
   userEmail: '',
   lastOrder: null,
-  orderTotal: NaN
+  orderSubTotal: 0,
+  discount: 0,
+  orderTotal: 0
 }
 
 /**
@@ -27,6 +30,10 @@ const getCart = cart => ({ type: GET_CART, cart })
 const resetCart = () => ({ type: RESET_CART })
 const getCartOrder = lastOrder => ({ type: GET_CART_ORDER, lastOrder })
 export const updateUserInfo = userInfo => ({ type: UPDATE_USER_INFO, userInfo })
+export const updateOrderSubTotal = orderSubTotal => ({
+  type: UPDATE_ORDER_SUBTOTAL,
+  orderSubTotal
+})
 export const updateOrderTotal = orderTotal => ({
   type: UPDATE_ORDER_TOTAL,
   orderTotal
