@@ -16,15 +16,18 @@ router.get('/:code', (req, res, next) => {
   PromoCode.findOne({ where: { code } })
     .then(promo => {
       if (!promo) {
+        req.session.promo = null
         let err = new Error('Promo Code not found')
         err.status = 404
         throw err
       } else if (promo.expiration > new Date(Date.now())) {
+        req.session.promo = null
         let err = new Error('Promo Code expired')
         err.status = 410
         throw err
       } else {
-        res.json(promo)
+        req.session.promo = promo
+        res.sendStatus(202)
       }
     })
     .catch(next)

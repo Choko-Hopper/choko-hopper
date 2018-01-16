@@ -27,7 +27,10 @@ export const updateProduct = product => ({ type: UPDATE_PRODUCT, product })
 export const products = () => dispatch =>
   axios
     .get('/api/products')
-    .then(res => dispatch(getProducts(res.data)))
+    .then(res => {
+      console.log('Inside the products thunk')
+      dispatch(getProducts(res.data))
+    })
     .catch(err => console.log(err))
 
 export const addOrEditProductThunk = (product, productId) => dispatch => {

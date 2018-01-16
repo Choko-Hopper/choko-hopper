@@ -19,14 +19,28 @@ class ProductForm extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(evt){
     this.setState({ [evt.target.name]: evt.target.value })
   }
 
+  handleSubmit(evt) {
+    evt.preventDefault()
+    const productId = this.props.product.id ? +this.props.product.id : null
+    this.props.dispatch(addOrEditProductThunk(this.state, productId))
+    this.setState({
+      name: '',
+      imageUrl: '',
+      price: '',
+      description: '',
+      quantity: '0'
+    })
+  }
+
   componentDidMount(){
-        this.setLocalState()
+    this.setLocalState()
   }
 
   setLocalState(){
@@ -109,27 +123,7 @@ const mapEditProduct = (state) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const productId = ownProps.match.params.productId ? +ownProps.match.params.productId : null
-      const imageUrl = evt.target.imageUrl.value === '' ? "https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg" : evt.target.imageUrl.value
-      const product = {
-        name: evt.target.name.value,
-        imageUrl: imageUrl,
-        price: evt.target.price.value * 100,
-        description: evt.target.description.value,
-        quantity: evt.target.quantity.value,
-        categoryId: evt.target.category.value
-      }
-
-      dispatch(addOrEditProductThunk(product, productId))
-      evt.target.name.value = ''
-      evt.target.imageUrl.value = ''
-      evt.target.price.value = ''
-      evt.target.description.value = ''
-      evt.target.quantity.value = '0'
-      evt.target.category.value = '0'
-    }
+    
   }
 }
 

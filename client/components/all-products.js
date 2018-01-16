@@ -99,7 +99,7 @@ class AllProducts extends Component {
               </div>
             </Link>
             <div className="quantity d-flex justify-content-center">
-              <UpdateCart product={product} quantity={quantity} />
+            { product.quantity === 0 ? <div className="alert" >Out Of Stock</div> : <UpdateCart product={product} quantity={quantity} />}
             </div>
           </div>
         )

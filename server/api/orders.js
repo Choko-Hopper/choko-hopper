@@ -1,19 +1,20 @@
 const router = require('express').Router()
+const emailSender = require('./mailer')
 const { Order, LineItem, Product } = require('../db/models')
 const isAdmin = require('./isAdmin')
 module.exports = router
 
 router.get('/', isAdmin, (req, res, next) => {
-    Order.findAll()
-        .then(orders => res.json(orders))
-        .catch(next)
+  Order.findAll()
+    .then(orders => res.json(orders))
+    .catch(next)
 })
 
 
 router.get('/line-items', isAdmin, (req, res, next) => {
   LineItem.findAll()
-      .then(lineItems => res.json(lineItems))
-      .catch(next)
+    .then(lineItems => res.json(lineItems))
+    .catch(next)
 })
 
 router.get('/:orderId', (req, res, next) => {
@@ -38,10 +39,10 @@ router.get('/my-orders/:userId', (req, res, next) => {
     where: {
       userId
     },
-    include: [{model: Product, attributes: ['name', 'imageUrl']}]
+    include: [{ model: Product, attributes: ['name', 'imageUrl'] }]
   })
     .then(orders => {
-      if (!orders.length) {res.json([])}
+      if (!orders.length) { res.json([]) }
       else if (req.user && req.user.id === orders[0].userId) {
         res.json(orders)
       } else {
@@ -61,38 +62,70 @@ router.post('/', (req, res, next) => {
     shippingAddress: req.body.shippingAddress,
     userId: req.user.id
   }
+
+  emailSender(orderInfo.userEmail, 'Created')
+
   let cart = req.body.cart
 
-    Order.create(orderInfo)
-        .then(order => {
-          let orderId = order.id
-          cart.forEach(item => {
-            LineItem.create({...item, orderId})
-          })
-          res.json(order)
-        })
-        .catch(next)
+  Order.create(orderInfo)
+    .then(order => {
+      let orderId = order.id
+      cart.forEach(item => {
+        LineItem.create({ ...item, orderId })
+      })
+      res.json(order)
+    })
+    .catch(next)
 })
 
 router.put('/update-status/:id', isAdmin, (req, res, next) => {
+  const { status } = req.body
+  let amtsPurchased = []
+
   Order.findById(req.params.id)
-      .then(order => order.update({status: req.body.status})
-    )
-      .then(updatedOrder => 
-        res.json(updatedOrder))
-      .catch(next)
+    .then(order => {
+      emailSender(order.userEmail, status)
+      return order.update({ status })
+    })
+    .then(updatedOrder => {
+      if (updatedOrder.status === 'Completed') {
+        return LineItem.findAll({ where: { orderId: updatedOrder.id } })
+          .then(lineItems => {
+            return lineItems.map(lineItem => {
+              amtsPurchased.push(lineItem.quantity)
+              return Product.findById(lineItem.productId)
+            })
+          })
+          .then(findProds => {
+            return Promise.all(findProds)
+          })
+          .then(products => {
+            return products.map((product, i) => {
+              let stock = product.quantity
+              return product.update({ quantity: stock - amtsPurchased[i] })
+            })
+          })
+          .then(updatedProducts => {
+            return Promise.all(updatedProducts)
+          })
+          .then(res.json(updatedOrder))
+      } else {
+        res.json(updatedOrder)
+      }
+    })
+    .catch(next)
 })
 
 router.put('/:id', isAdmin, (req, res, next) => {
-    Order.findById(req.params.id)
-        .then(order => order.update(req.body))
-        .then(updatedOrder => res.json(updatedOrder))
-        .catch(next)
+  Order.findById(req.params.id)
+    .then(order => order.update(req.body))
+    .then(updatedOrder => res.json(updatedOrder))
+    .catch(next)
 })
 
 router.delete('/:id', isAdmin, (req, res, next) => {
-    Order.findById(req.params.id)
-        .then(order => order.destroy())
-        .then(() => res.send(204))
-        .catch(next)
+  Order.findById(req.params.id)
+    .then(order => order.destroy())
+    .then(() => res.send(204))
+    .catch(next)
 })

@@ -170,3 +170,7 @@ h4.order-heading{
 #accordion .product-card:hover {
   margin-bottom: 0!important;
 }
+.alert {
+  color: red;
+  font-style: italic;
+}

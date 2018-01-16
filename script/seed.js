@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User, Product, Order, Category, LineItem} = require('../server/db/models')
+const {User, Product, Order, Category, LineItem, PromoCode} = require('../server/db/models')
 async function seed () {
   await db.sync({force: true})
   console.log('db synced!')
@@ -36,7 +36,7 @@ async function seed () {
 
   const products = await Promise.all([
     Product.create({name: 'Milk Chocolate', price: 500, description: 'This milk chocolate is very good.', categoryId: 1, quantity: 5}),
-    Product.create({name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 32}),
+    Product.create({name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 0}),
     Product.create({name: 'White Chocolate', price: 525, description: 'This white chocolate is very good.', categoryId: 3, quantity: 30}),
     Product.create({name: 'Dark Chocolate with Nuts', price: 700, description: 'This dark chocolate with nuts is very good.', categoryId: 2, quantity: 75}),
     Product.create({name: 'Dark Chocolate with Raspberry', price: 750, isInStock: false, description: 'This dark chocolate with raspberry is very good.', categoryId: 2, quantity: 50}),
@@ -64,6 +64,12 @@ async function seed () {
     LineItem.create({orderId: 6, productId: 7, unitPrice: 12, quantity: 1}),
     LineItem.create({orderId: 7, productId: 2, unitPrice: 6.5, quantity: 4}),
   ])
+  const promoCodes = await Promise.all([
+    PromoCode.create({code: '25OFF', percentOff: 25}),
+    PromoCode.create({code: '30OFF', percentOff: 30}),
+    PromoCode.create({code: '50OFF', percentOff: 50}),
+    PromoCode.create({code: 'OOPSIES', percentOff: 20})
+  ])
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
@@ -72,6 +78,7 @@ async function seed () {
   console.log(`seeded ${orders.length} orders`)
   console.log(`seeded ${categories.length} categories`)
   console.log(`seeded ${lineItems.length} line items`)
+  console.log(`seeded ${promoCodes.length} promo codes`)
   console.log(`seeded successfully`)
 }
 // Execute the `seed` function
