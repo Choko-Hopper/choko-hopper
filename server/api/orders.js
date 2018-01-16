@@ -10,7 +10,7 @@ router.get('/', isAdmin, (req, res, next) => {
 })
 
 router.get('/line-items', isAdmin, (req, res, next) => {
-  LineItems.findAll()
+  LineItem.findAll()
       .then(lineItems => res.json(lineItems))
       .catch(next)
 })
