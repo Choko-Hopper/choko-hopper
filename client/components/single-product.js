@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ReviewForm from './review-form'
 import { deleteProductThunk, fetchProductReviews } from '../store'
-import UpdateCart  from './update-cart'
+import UpdateCart from './update-cart'
 
 class SingleProduct extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidMount() {
@@ -21,27 +21,33 @@ class SingleProduct extends Component {
 
     const isLoggedIn = !!this.props.user.id
     return (
-      <div>
-        <div>
+      <div id="hero">
+        <div id="productInfo">
           <img src={product.imageUrl} />
+          <div>
+            <h2>{product.name}</h2>
+            <h4>${product.price.toFixed(2)}</h4>
+            <p>{product.description}</p>
+
+            {product.quantity === 0 ? (
+              <div className="alert">Out Of Stock</div>
+            ) : (
+              <UpdateCart product={product} />
+            )}
+
+            {this.props.user &&
+              this.props.user.isAdmin && (
+                <div>
+                  <button id={product.id} onClick={this.props.handleClick}>
+                    X
+                  </button>
+                  <Link to={`/edit-product/${product.id}`}>
+                    <button id={product.id}>Edit</button>
+                  </Link>
+                </div>
+              )}
+          </div>
         </div>
-        <h2>{product.name}</h2>
-        <h4>${product.price.toFixed(2)}</h4>
-        <p>{product.description}</p>
-
-        { product.quantity === 0 ? <div className="alert" >Out Of Stock</div> : <UpdateCart product={product} />}
-
-        {this.props.user &&
-          this.props.user.isAdmin && (
-            <div>
-              <button id={product.id} onClick={this.props.handleClick}>
-                X
-              </button>
-              <Link to={`/edit-product/${product.id}`}>
-                <button id={product.id}>Edit</button>
-              </Link>
-            </div>
-          )}
         {isLoggedIn && <ReviewForm />}
         {reviews.map(review => (
           <div key={review.id}>
@@ -57,12 +63,12 @@ class SingleProduct extends Component {
 
 const mapState = ({ products, user, reviews }, ownProps) => ({
   product: products.find(
-        arrProduct => +arrProduct.id === +ownProps.match.params.productId
-      ),
+    arrProduct => +arrProduct.id === +ownProps.match.params.productId
+  ),
   user,
   reviews: reviews.filter(
-      arrReview => +arrReview.productId === +ownProps.match.params.productId
-    )
+    arrReview => +arrReview.productId === +ownProps.match.params.productId
+  )
 })
 const mapDispatch = (dispatch, ownProps) => ({
   handleClick(evt) {
