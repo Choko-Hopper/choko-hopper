@@ -47,6 +47,7 @@ const Main = (props) => {
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
                       <Link to={`/order-history/${user.id}`}>Previous Orders</Link>
+                      <Link to={`/graph`}>Product Graph</Link>
                     </div>
                   </li>
                   <li><a href="#" onClick={handleClick}>Logout</a></li>
