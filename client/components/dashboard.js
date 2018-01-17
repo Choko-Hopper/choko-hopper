@@ -8,6 +8,7 @@ import AllOrders from './all-orders'
 import AllProducts from './all-products'
 import Graph from './graph'
 import {NewProductForm} from './new-product'
+import PromoCodes from './promo-codes'
 
 /**
  * COMPONENT
@@ -35,7 +36,8 @@ const Dashboard = props => {
       'View All Orders',
       'Add Product',
       'Edit Products',
-      'Statistics'
+      'Statistics',
+      'Manage Promo Codes'
     ]
     panelArr = [
       orderDetails,
@@ -43,7 +45,8 @@ const Dashboard = props => {
       <AllOrders key="allorders" />,
       <NewProductForm key="newproduct"/>,
       <AllProducts key="allproducts" path={props.path} />,
-      <Graph key="graph"/>
+      <Graph key="graph" />,
+      <PromoCodes key="promo" />
     ]
   } else {
     orderDetails = props.match.params.orderId ? (
