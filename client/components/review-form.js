@@ -27,12 +27,14 @@ class ReviewForm extends Component {
     const props = this.props
     return (
       <form
+        className="col-6"
         id="reviewForm"
         onSubmit={evt => {
           props.handleSubmit(evt, this.state)
           this.setState({ rating: 0, title: '', text: '' })
         }}
       >
+        <h4>Leave A Review</h4>
         <div id="reviewRadios">
           <ReactStars
             count={5}

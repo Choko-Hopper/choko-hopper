@@ -26,19 +26,6 @@ const Main = (props) => {
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/products">Products</Link></li>
             <li><Link to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true" />({cart.length})</Link></li>
-            { props.user && props.user.isAdmin &&
-              <li className="dropdown">
-                <a className="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Admin
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link to="/new-product">Add New Product</Link>
-                  <Link to="/users">All Users</Link>
-                  <Link to="/orders">All Orders</Link>
-                  <Link to="/promo-codes">Manage Promo Codes</Link>
-                </div>
-              </li>
-            }
             { isLoggedIn
                 ? <div className="nav navbar-nav navbar-right">
                   {/* The navbar will show these links after you log in */}
