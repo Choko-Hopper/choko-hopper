@@ -9,16 +9,12 @@ class OrderLineItems extends Component {
   }
 
   render() {
-    console.log('i am props', this.props)
     let orderId = +this.props.match.params.orderId
     let orderHistory = this.props.orderHistory
     let currentOrder = orderHistory.find(order => order.id === orderId)
     let orderSubtotal = 0
     let discount = 0
     let orderTotal = orderSubtotal
-
-
-    console.log('currentOrder', currentOrder)
 
     return (
       <div>

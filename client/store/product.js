@@ -28,7 +28,6 @@ export const products = () => dispatch =>
   axios
     .get('/api/products')
     .then(res => {
-      console.log('Inside the products thunk')
       dispatch(getProducts(res.data))
     })
     .catch(err => console.log(err))
