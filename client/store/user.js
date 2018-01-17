@@ -4,7 +4,8 @@ import { fetchAllUsers, removeAllUsers } from './allUsers'
 import { fetchAllOrders } from './allOrders'
 import { fetchAllPromoCodes } from './promoCodes'
 import { updateUserInfo } from './cart'
-
+import { removeAllOrders } from './allOrders'
+import { removeAllPromoCodes } from './promoCodes'
 /**
  * ACTION TYPES
  */
@@ -63,6 +64,8 @@ export const logout = () => dispatch =>
       dispatch(removeUser())
       dispatch(removeAllUsers())
       dispatch(updateUserInfo({userEmail: ''}))
+      dispatch(removeAllOrders())
+      dispatch(removeAllPromoCodes())
       history.push('/login')
     })
     .catch(err => console.log(err))

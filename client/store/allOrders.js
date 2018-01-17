@@ -5,11 +5,11 @@ const allOrders = []
 
 const GET_ORDERS = 'GET_ORDERS'
 const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
-
+const REMOVE_ALL_ORDERS = 'REMOVE_ALL_ORDERS'
 
 export const getOrders = orders => ({ type: GET_ORDERS, orders })
 export const updateOrderStatus = order => ({ type: UPDATE_ORDER_STATUS, order})
-
+export const removeAllOrders = () => ({ type: REMOVE_ALL_ORDERS })
 
 export const fetchAllOrders = () => dispatch => {
   axios
@@ -37,6 +37,9 @@ export default function(state = allOrders, action) {
     let copyOrders = state.slice(0)
         copyOrders[index] = action.order
         return copyOrders
+
+    case REMOVE_ALL_ORDERS:
+      return []
 
     default:
       return state
