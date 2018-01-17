@@ -8,7 +8,6 @@ import { addOrEditProductThunk } from '../store'
 class ProductForm extends Component {
   constructor(props) {
     super(props)
-    console.log('loooooooooook', props)
     this.state = {
       name: '',
       imageUrl: 'https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg',
@@ -33,7 +32,6 @@ class ProductForm extends Component {
   }
 
   render() {
-    console.log('local state', this.state)
     const product = this.props.product
     const submitText = product ? 'Update Product' : 'Save New Product'
     return (
@@ -167,7 +165,6 @@ const mapEditProduct = state => {
 const mapDispatch = (dispatch, ownProps) => ({
   handleSubmit(evt, state, productId) {
     evt.preventDefault()
-    console.log('!!!!!state', productId)
     dispatch(addOrEditProductThunk(state, productId))
   }
 })

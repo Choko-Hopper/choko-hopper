@@ -14,7 +14,6 @@ import PromoCodes from './promo-codes'
  * COMPONENT
  */
 const Dashboard = props => {
-  console.log('PATH', props.path)
   let orderDetails
   let sidebarLinksArr
   let panelArr
