@@ -4,7 +4,6 @@ const isAdmin = require('./isAdmin')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-    console.log('req.user!!!!!', req.user)
     Product.findAll()
     .then(products => res.json(products))
     .catch(next)

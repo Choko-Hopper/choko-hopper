@@ -53,8 +53,6 @@ const mapDispatch = function(dispatch) {
             evt.preventDefault()
             const orderId = evt.target.id
             const status = evt.target.value
-            console.log('orderId', orderId)
-            console.log('orderStatus', status)
             dispatch(updateOrderStatusThunk(orderId, status))
         }
     }

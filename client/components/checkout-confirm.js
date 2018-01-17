@@ -6,7 +6,6 @@ import {submitCart} from '../store'
  * COMPONENT
  */
 const CheckoutConfirm = (props) => {
-  console.log('heres props.order on CheckoutConfirm', props.order)
   let thisOrder = props.order
   return (
     <div>
