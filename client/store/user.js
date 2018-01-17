@@ -1,6 +1,8 @@
 import axios from 'axios'
 import history from '../history'
 import { fetchAllUsers, removeAllUsers } from './allUsers'
+import { fetchAllOrders } from './allOrders'
+import { fetchAllPromoCodes } from './promoCodes'
 import { updateUserInfo } from './cart'
 
 /**
@@ -39,7 +41,11 @@ export const auth = (email, password, method) => dispatch =>
     .then(
       res => {
         dispatch(getUser(res.data))
-        if (res.data.isAdmin) dispatch(fetchAllUsers())
+        if (res.data.isAdmin) {
+          dispatch(fetchAllUsers())
+          dispatch(fetchAllOrders())
+          dispatch(fetchAllPromoCodes())
+        }
         dispatch(updateUserInfo({userEmail: res.data.email}))
         history.push('/home')
       },
