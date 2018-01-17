@@ -13,7 +13,6 @@ import {NewProductForm} from './new-product'
  * COMPONENT
  */
 const Dashboard = props => {
-  console.log('PATH', props.path)
   let orderDetails
   let sidebarLinksArr
   let panelArr
