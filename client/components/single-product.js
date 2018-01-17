@@ -16,46 +16,40 @@ class SingleProduct extends Component {
   }
 
   render() {
-    const product = this.props.product || {price: 0}
+    const product = this.props.product || { price: 0 }
     const reviews = this.props.reviews || []
 
     const isLoggedIn = !!this.props.user.id
     return (
-      <div id="hero">
-        <div id="productInfo">
-          <img src={product.imageUrl} />
-          <div>
-            <h2>{product.name}</h2>
-            <h4>${product.price.toFixed(2)}</h4>
-            <p>{product.description}</p>
+      <div className="container">
+        <div>
+          <div id="productInfo" className="row">
+            <div className="col-6">
+              <img src={product.imageUrl} />
+            </div>
+            <div className="col-6">
+              <h2>{product.name}</h2>
+              <h4>${product.price.toFixed(2)}</h4>
+              <p>{product.description}</p>
 
-            {product.quantity === 0 ? (
-              <div className="alert">Out Of Stock</div>
-            ) : (
-              <UpdateCart product={product} />
-            )}
+              {product.quantity === 0 ? (
+                <div className="alert">Out Of Stock</div>
+              ) : (
+                  <UpdateCart product={product} />
+                )}
 
-            {this.props.user &&
-              this.props.user.isAdmin && (
-                <div>
-                  <button id={product.id} onClick={this.props.handleClick}>
-                    X
-                  </button>
-                  <Link to={`/edit-product/${product.id}`}>
-                    <button id={product.id}>Edit</button>
-                  </Link>
-                </div>
-              )}
+            </div>
           </div>
+
+          {isLoggedIn && <ReviewForm />}
+          {reviews.map(review => (
+            <div key={review.id}>
+              <h4>{review.title}</h4>
+              <ReactStars count={5} size={20} value={review.rating} edit={false} />
+              <p>{review.text}</p>
+            </div>
+          ))}
         </div>
-        {isLoggedIn && <ReviewForm />}
-        {reviews.map(review => (
-          <div key={review.id}>
-            <h4>{review.title}</h4>
-            <ReactStars count={5} size={20} value={review.rating} edit={false} />
-            <p>{review.text}</p>
-          </div>
-        ))}
       </div>
     )
   }

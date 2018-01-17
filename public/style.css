@@ -27,6 +27,7 @@ form div {
 #reviewForm {
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
 }
 #reviewForm div {
   display: flex;
