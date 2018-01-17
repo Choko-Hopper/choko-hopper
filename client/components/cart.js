@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
-import UpdateCart from './update-cart'
 import { deleteLineItem, fetchTotals, validatePromoCode } from '../store'
 import Checkout from './checkout'
+import CartTable from './cart-table'
 
 class Cart extends Component {
   constructor(props) {
@@ -15,52 +14,8 @@ class Cart extends Component {
   }
 
   render() {
-    let cartTable
     const props = this.props
     const { orderSubTotal, discount, orderTotal } = this.props
-
-    if (props.cart.length === 0) {
-      cartTable = (
-        <tr className="line-item">
-          <th scope="row" className="line-item-img col-2" />
-          <td className="col-5">Your cart is empty</td>
-        </tr>
-      )
-    } else {
-      cartTable = props.cart.map(cartItem => {
-        const singleProduct = cartItem.cartProduct
-        let itemTotal = cartItem.unitPrice * cartItem.quantity
-
-        return (
-          singleProduct && (
-            <tr key={cartItem.productId} className="line-item">
-              <th scope="row" className="line-item-img col-2">
-                <Link to={`/products/${cartItem.productId}`}>
-                  <img src={singleProduct.imageUrl} />
-                </Link>
-              </th>
-              <td className="col-5">{singleProduct.name}</td>
-              <td className="col-3">
-                <UpdateCart
-                  product={singleProduct}
-                  quantity={cartItem.quantity}
-                />
-              </td>
-              <td className="col-1">${cartItem.unitPrice.toFixed(2)}</td>
-              <td className="col-1">${itemTotal.toFixed(2)}</td>
-              <td className="col-1">
-                <button
-                  type="button"
-                  className="deleteButton btn btn-link fa fa-times"
-                  value={cartItem.productId}
-                  onClick={props.handleClick}
-                />
-              </td>
-            </tr>
-          )
-        )
-      })
-    }
 
     return (
       <div className="container">
@@ -78,7 +33,7 @@ class Cart extends Component {
                   <th scope="col" />
                 </tr>
               </thead>
-              <tbody>{props.currentUser && cartTable}</tbody>
+              <tbody>{props.currentUser && <CartTable />}</tbody>
             </table>
           </div>
           <div className="col-1" />
@@ -100,7 +55,10 @@ class Cart extends Component {
                 </tr>
               </tbody>
             </table>
-            <form onSubmit={props.handlePromo} className="discount-code form-inline align-items-center">
+            <form
+              onSubmit={props.handlePromo}
+              className="discount-code form-inline align-items-center"
+            >
               <div className="form-row d-flex justify-content-between">
                 <label htmlFor="inputPromo" className="sr-only">
                   Apply Promo Code
