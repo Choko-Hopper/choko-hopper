@@ -71,7 +71,7 @@ class Routes extends Component {
               <Route component={Homepage} />
               </Switch>
             )}
-            
+
             {/* Displays our Login component as a fallback */}
             <Route component={Homepage} />
 
@@ -102,8 +102,6 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(products())
       dispatch(fetchCart())
       dispatch(categories())
-      dispatch(fetchAllOrders())
-      dispatch(fetchAllPromoCodes())
     }
   }
 }
