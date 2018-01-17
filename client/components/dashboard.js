@@ -8,7 +8,6 @@ import OrderLineItems from './order-line-items'
  * COMPONENT
  */
 const Dashboard = (props) => {
-    console.log(props)
     let orderDetails
     let sidebarLinksArr
 
