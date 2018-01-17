@@ -9,6 +9,7 @@ import AllProducts from './all-products'
 import Graph from './graph'
 import {NewProductForm} from './new-product'
 import PromoCodes from './promo-codes'
+import UserHome from './user-home'
 
 /**
  * COMPONENT
@@ -108,7 +109,7 @@ const Dashboard = props => {
               id="v-pills-userinfo"
               role="tabpanel"
               aria-labelledby="v-pills-userinfo-tab"
-            />
+            ><UserHome /></div>
             {panelArr.map((panel, i) => {
               return (
                 <div
