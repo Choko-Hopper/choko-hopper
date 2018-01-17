@@ -32,7 +32,7 @@ export const products = () => dispatch =>
     })
     .catch(err => console.log(err))
 
-export const addOrEditProductThunk = (product, productId) => dispatch => {
+export const addOrEditProductThunk = (product, productId) => dispatch => { 
   if (!productId) {
     axios
       .post('/api/products', product)
@@ -46,12 +46,11 @@ export const addOrEditProductThunk = (product, productId) => dispatch => {
   }
 }
 
-export const deleteProductThunk = (productId, history) => dispatch =>
+export const deleteProductThunk = (productId) => dispatch =>
   axios
     .delete(`/api/products/${productId}`)
     .then(res => {
       dispatch(removeProduct(productId))
-      history.push('/products')
     })
     .catch(err => console.log(err))
 
@@ -64,7 +63,8 @@ export default function(state = defaultProducts, action) {
       return [...products, ...action.products]
 
     case ADD_PRODUCT:
-      return [...products, ...action.product]
+      console.log('MEEEEEEEEEEEE', action)
+      return [...products, action.product]
 
     case REMOVE_PRODUCT:
       return state.filter(product => {
@@ -72,9 +72,12 @@ export default function(state = defaultProducts, action) {
       })
 
     case UPDATE_PRODUCT:
-      return state.filter(product => {
-        return product.id !== +action.productId
-      }).concat([action.product])
+      let index = state.findIndex(product => {
+        return product.id === +action.product.id
+      })
+      let copyProducts = state.slice(0)
+          copyProducts[index] = action.product
+          return copyProducts
 
     default:
       return state

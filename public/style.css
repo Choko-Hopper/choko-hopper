@@ -105,6 +105,9 @@ img {
 .line-item .deleteButton {
   color: #491119;
 }
+.deleteButton {
+  font-family: 'Open Sans', sans-serif;
+}
 .deleteButton:hover {
   text-decoration: none;
 }
@@ -159,6 +162,13 @@ h4.order-heading{
 }
 .order-header {
   margin: 2em auto;
+}
+#accordion .product-card {
+  margin-bottom: 0!important;
+  padding: 10px 1em;
+}
+#accordion .product-card:hover {
+  margin-bottom: 0!important;
 }
 .alert {
   color: red;

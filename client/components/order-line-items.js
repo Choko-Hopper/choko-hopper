@@ -101,7 +101,7 @@ const mapDispatch = (dispatch, ownProps) => ({
   handleClick(evt) {
     // on click change view
     evt.preventDefault()
-    ownProps.history.push('/account/orders')
+    ownProps.history.push('/account')
   }
 })
 
