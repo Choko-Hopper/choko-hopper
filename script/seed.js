@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User, Product, Order, Category, LineItem, PromoCode} = require('../server/db/models')
+const {User, Review, Product, Order, Category, LineItem, PromoCode} = require('../server/db/models')
 async function seed () {
   await db.sync({force: true})
   console.log('db synced!')
@@ -46,6 +46,50 @@ async function seed () {
     Product.create({name: 'Fancy White Chocolate', price: 1200, description: 'This fancy white chocolate is very good.', categoryId: 3, quantity: 72}),
     Product.create({name: 'Milk Chocolate with Almonds', price: 600, description: 'This milk chocolate with almonds is very good.', categoryId: 1, quantity: 20}),
   ])
+
+  const reviews = await Promise.all([
+  Review.create({title: 'Pretty Good for Milk Chocolate', rating: 4, text: 'Not usually a fan of milk chocolate but this was actually really good.', productId: 1, userId: 3}),
+  Review.create({title: 'WOW! Who would have guessed', rating: 5, text: 'I normally HATE milk chocolate! But this chocolate may have permanently changed my mind! So good!!!', productId: 1, userId: 4}),
+  Review.create({title: 'Milk Chocolate isn\'t real chocolate', rating: 2, text: 'I\'ll admit that it was actually not bad as far as milk chocolate goes otherwise I would have given it 1 start, but at the end of the day milk chocolate isn\'t real chocolate. YUCK', productId: 1, userId: 1}),
+  Review.create({title: "Can't agree with all the milk chocolate haters", rating: 5, text: "I LOVE THIS CHOCOLATE! I don't get why people are buying this chocolate if they hate milk chocolate... It says what it is in the name. Keep up the great work Choko, I'm a HUGE fan!", productId: 1, userId: 2}),
+  Review.create({title: 'Pretty Good for Milk Chocolate', rating: 4, text: 'Not usually a fan of milk chocolate but this was actually really good.', productId: 8, userId: 3}),
+  Review.create({title: 'WOW! Who would have guessed', rating: 5, text: 'I normally HATE milk chocolate! But this chocolate may have permanently changed my mind! So good!!!', productId: 8, userId: 4}),
+  Review.create({title: 'Milk Chocolate isn\'t real chocolate', rating: 2, text: 'I\'ll admit that it was actually not bad as far as milk chocolate goes otherwise I would have given it 1 start, but at the end of the day milk chocolate isn\'t real chocolate. YUCK', productId: 8, userId: 1}),
+  Review.create({title: "Can't agree with all the milk chocolate haters", rating: 5, text: "I LOVE THIS CHOCOLATE! I don't get why people are buying this chocolate if they hate milk chocolate... It says what it is in the name. Keep up the great work Choko, I'm a HUGE fan!", productId: 8, userId: 2}),
+  Review.create({title: 'Pretty Good for Milk Chocolate', rating: 4, text: 'Not usually a fan of milk chocolate but this was actually really good.', productId: 10, userId: 3}),
+  Review.create({title: 'WOW! Who would have guessed', rating: 5, text: 'I normally HATE milk chocolate! But this chocolate may have permanently changed my mind! So good!!!', productId: 10, userId: 4}),
+  Review.create({title: 'Milk Chocolate isn\'t real chocolate', rating: 2, text: 'I\'ll admit that it was actually not bad as far as milk chocolate goes otherwise I would have given it 1 start, but at the end of the day milk chocolate isn\'t real chocolate. YUCK', productId: 10, userId: 1}),
+  Review.create({title: "Can't agree with all the milk chocolate haters", rating: 5, text: "I LOVE THIS CHOCOLATE! I don't get why people are buying this chocolate if they hate milk chocolate... It says what it is in the name. Keep up the great work Choko, I'm a HUGE fan!", productId: 10, userId: 2}),
+  Review.create({title: "I LOVE THIS CHOCOLATE", rating: 5, text: "This is absolutely amazing! Love it.", productId: 7, userId: 2}),
+  Review.create({title: "Now that's a chocolate", rating: 5, text: "No words can describe how much I love this chocolate", productId: 7, userId: 1}),
+  Review.create({title: "It's alright", rating: 4, text: "... I'm a hater and I can't even find anything bad to say about it.", productId: 7, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "So bitter, why do people eat this stuff?", productId: 7, userId: 4}),
+  Review.create({title: "I LOVE THIS CHOCOLATE", rating: 5, text: "This is absolutely amazing! Love it.", productId: 2, userId: 2}),
+  Review.create({title: "Now that's a chocolate", rating: 5, text: "No words can describe how much I love this chocolate", productId: 2, userId: 1}),
+  Review.create({title: "It's alright", rating: 4, text: "... I'm a hater and I can't even find anything bad to say about it.", productId: 2, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "So bitter, why do people eat this stuff?", productId: 2, userId: 4}),
+  Review.create({title: "I LOVE THIS CHOCOLATE", rating: 5, text: "This is absolutely amazing! Love it.", productId: 4, userId: 2}),
+  Review.create({title: "Now that's a chocolate", rating: 5, text: "No words can describe how much I love this chocolate", productId: 4, userId: 1}),
+  Review.create({title: "It's alright", rating: 4, text: "... I'm a hater and I can't even find anything bad to say about it.", productId: 4, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "So bitter, why do people eat this stuff?", productId: 4, userId: 4}),
+  Review.create({title: "I LOVE THIS CHOCOLATE", rating: 5, text: "This is absolutely amazing! Love it.", productId: 5, userId: 2}),
+  Review.create({title: "Now that's a chocolate", rating: 5, text: "No words can describe how much I love this chocolate", productId: 5, userId: 1}),
+  Review.create({title: "It's alright", rating: 4, text: "... I'm a hater and I can't even find anything bad to say about it.", productId: 5, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "So bitter, why do people eat this stuff?", productId: 5, userId: 4}),
+  Review.create({title: "NOT EVEN CHOCOLATE", rating: 1, text: "This. Is. Not. Chocolate.", productId: 3, userId: 2}),
+  Review.create({title: "How can Choko even sell white chocolate", rating: 1, text: "Agree. Not Chocolate.", productId: 3, userId: 1}),
+  Review.create({title: "It's alright", rating: 2, text: "I still hate white chocolate, but this is okay...", productId: 3, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "YUCK", productId: 3, userId: 4}),
+  Review.create({title: "NOT EVEN CHOCOLATE", rating: 1, text: "This. Is. Not. Chocolate.", productId: 6, userId: 2}),
+  Review.create({title: "How can Choko even sell white chocolate", rating: 1, text: "Agree. Not Chocolate.", productId: 6, userId: 1}),
+  Review.create({title: "It's alright", rating: 2, text: "I still hate white chocolate, but this is okay...", productId: 6, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "YUCK", productId: 6, userId: 4}),
+  Review.create({title: "NOT EVEN CHOCOLATE", rating: 1, text: "This. Is. Not. Chocolate.", productId: 9, userId: 2}),
+  Review.create({title: "How can Choko even sell white chocolate", rating: 1, text: "Agree. Not Chocolate.", productId: 9, userId: 1}),
+  Review.create({title: "It's alright", rating: 2, text: "I still hate white chocolate, but this is okay...", productId: 9, userId: 3}),
+  Review.create({title: "EWWWWWWW", rating: 1, text: "YUCK", productId: 9, userId: 4}),
+  ])
+
   const orders = await Promise.all([
     Order.create({userId: 4, userEmail: 'katy@katy.com', shippingAddress: '5 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 2, unitPrice: 6.5, quantity: 1}]}),
     Order.create({userId: 3, userEmail: 'jazzy@jazzy.com', shippingAddress: '6 Hanover Square, Floor 25, New York, NY 10004', items: [{productId: 3, unitPrice: 5, quantity: 2}]}),
@@ -79,6 +123,7 @@ async function seed () {
   console.log(`seeded ${categories.length} categories`)
   console.log(`seeded ${lineItems.length} line items`)
   console.log(`seeded ${promoCodes.length} promo codes`)
+  console.log(`seeded ${reviews.length} reviews`)
   console.log(`seeded successfully`)
 }
 // Execute the `seed` function
