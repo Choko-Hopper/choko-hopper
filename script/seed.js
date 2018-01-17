@@ -35,16 +35,16 @@ async function seed () {
   ])
 
   const products = await Promise.all([
-    Product.create({imageUrl: 'https://images.unsplash.com/photo-1511381878266-349693efb20d?auto=format&fit=crop&w=1001&q=80', name: 'Milk Chocolate', price: 500, description: 'This milk chocolate is very good.', categoryId: 1, quantity: 5}),
-    Product.create({imageUrl: 'https://images.unsplash.com/photo-1511473235658-cb73f62c7a1b?auto=format&fit=crop&w=1050&q=80', name: 'Dark Chocolate', price: 650, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 0}),
-    Product.create({imageUrl: 'http://wafflesatnoon.com/wp-content/uploads/2013/08/white-chocolate.jpg', name: 'White Chocolate', price: 525, description: 'This white chocolate is very good.', categoryId: 3, quantity: 30}),
-    Product.create({imageUrl: 'https://static.pexels.com/photos/6345/dark-brown-milk-candy.jpg', name: 'Dark Chocolate with Nuts', price: 700, description: 'This dark chocolate with nuts is very good.', categoryId: 2, quantity: 75}),
-    Product.create({imageUrl: 'https://static.pexels.com/photos/40022/chocolates-white-chocolate-chocolate-nibble-40022.jpeg', name: 'Assorted Chocolates with Raspberries', price: 750, isInStock: false, description: 'So much variety', categoryId: 2, quantity: 50}),
-    Product.create({imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/White_chocolate_with_rose_petals.jpg/1200px-White_chocolate_with_rose_petals.jpg', name: 'White Chocolate Crunch', price: 500, description: 'This white chocolate crunch is very good.', categoryId: 3, quantity: 78}),
-    Product.create({imageUrl: 'https://images.unsplash.com/photo-1492203888859-e57aced099e3?auto=format&fit=crop&w=1650&q=80', name: 'Fancy Dark Chocolate', price: 1200, description: 'This fancy dark chocolate is very good.', categoryId: 2, quantity: 50}),
-    Product.create({imageUrl: 'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1138&q=80', name: 'Fancy Milk Chocolate', price: 1200, isInStock: false, description: 'This fancy milk chocolate is very good.', categoryId: 1, quantity: 43}),
-    Product.create({imageUrl: 'https://static.pexels.com/photos/207082/pexels-photo-207082.jpeg', name: 'Fancy White Chocolate', price: 1200, description: 'This fancy white chocolate is very good.', categoryId: 3, quantity: 72}),
-    Product.create({imageUrl: 'https://static.pexels.com/photos/80562/chocolate-80562.jpeg', name: 'Milk Chocolate with Almonds', price: 600, description: 'This milk chocolate with almonds is very good.', categoryId: 1, quantity: 20}),
+    Product.create({imageUrl: 'https://images.unsplash.com/photo-1511381878266-349693efb20d?auto=format&fit=crop&w=1001&q=80', name: 'Milk Chocolate', price: 5, description: 'This milk chocolate is very good.', categoryId: 1, quantity: 5}),
+    Product.create({imageUrl: 'https://images.unsplash.com/photo-1511473235658-cb73f62c7a1b?auto=format&fit=crop&w=1050&q=80', name: 'Dark Chocolate', price: 6.5, description: 'This dark chocolate is very good.', categoryId: 2, quantity: 0}),
+    Product.create({imageUrl: 'http://wafflesatnoon.com/wp-content/uploads/2013/08/white-chocolate.jpg', name: 'White Chocolate', price: 5.25, description: 'This white chocolate is very good.', categoryId: 3, quantity: 30}),
+    Product.create({imageUrl: 'https://static.pexels.com/photos/6345/dark-brown-milk-candy.jpg', name: 'Dark Chocolate with Nuts', price: 7, description: 'This dark chocolate with nuts is very good.', categoryId: 2, quantity: 75}),
+    Product.create({imageUrl: 'https://static.pexels.com/photos/40022/chocolates-white-chocolate-chocolate-nibble-40022.jpeg', name: 'Assorted Chocolates with Raspberries', price: 7.5, isInStock: false, description: 'So much variety', categoryId: 2, quantity: 50}),
+    Product.create({imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/White_chocolate_with_rose_petals.jpg/1200px-White_chocolate_with_rose_petals.jpg', name: 'White Chocolate Crunch', price: 5, description: 'This white chocolate crunch is very good.', categoryId: 3, quantity: 78}),
+    Product.create({imageUrl: 'https://images.unsplash.com/photo-1492203888859-e57aced099e3?auto=format&fit=crop&w=1650&q=80', name: 'Fancy Dark Chocolate', price: 12, description: 'This fancy dark chocolate is very good.', categoryId: 2, quantity: 50}),
+    Product.create({imageUrl: 'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1138&q=80', name: 'Fancy Milk Chocolate', price: 12, isInStock: false, description: 'This fancy milk chocolate is very good.', categoryId: 1, quantity: 43}),
+    Product.create({imageUrl: 'https://static.pexels.com/photos/207082/pexels-photo-207082.jpeg', name: 'Fancy White Chocolate', price: 12, description: 'This fancy white chocolate is very good.', categoryId: 3, quantity: 72}),
+    Product.create({imageUrl: 'https://static.pexels.com/photos/80562/chocolate-80562.jpeg', name: 'Milk Chocolate with Almonds', price: 6, description: 'This milk chocolate with almonds is very good.', categoryId: 1, quantity: 20}),
   ])
 
   const reviews = await Promise.all([
