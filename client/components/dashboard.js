@@ -6,6 +6,8 @@ import OrderLineItems from './order-line-items'
 import AllUsers from './all-users'
 import AllOrders from './all-orders'
 import AllProducts from './all-products'
+import Graph from './graph'
+import {NewProductForm} from './new-product'
 
 /**
  * COMPONENT
@@ -29,15 +31,19 @@ const Dashboard = props => {
     )
     sidebarLinksArr = [
       'Order History',
-      'Authorized Users',
+      'Manage Users',
       'View All Orders',
-      'Edit Products'
+      'Add Product',
+      'Edit Products',
+      'Statistics'
     ]
     panelArr = [
       orderDetails,
       <AllUsers key="allusers" />,
       <AllOrders key="allorders" />,
-      <AllProducts key="allproducts" path={props.path} />
+      <NewProductForm key="newproduct"/>,
+      <AllProducts key="allproducts" path={props.path} />,
+      <Graph key="graph"/>
     ]
   } else {
     orderDetails = props.match.params.orderId ? (

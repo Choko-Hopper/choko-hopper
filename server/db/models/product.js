@@ -24,6 +24,9 @@ const Product = db.define('product', {
     get() {
       let price = this.getDataValue('price')
       return price / 100
+    },
+    set(value) {
+      this.setDataValue('price', value * 100)
     }
   },
   quantity: {

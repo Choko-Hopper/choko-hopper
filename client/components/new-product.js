@@ -11,8 +11,8 @@ class ProductForm extends Component {
     console.log('loooooooooook', props)
     this.state = {
       name: '',
-      imageUrl: '',
-      price: '',
+      imageUrl: 'https://www.thechocolatetherapist.com/wp-content/themes/blankspace-child/images/header-chocolate-shavings.jpg',
+      price: 0,
       description: '',
       quantity: 0
     }
@@ -33,7 +33,9 @@ class ProductForm extends Component {
   }
 
   render() {
+    console.log('local state', this.state)
     const product = this.props.product
+    const submitText = product ? 'Update Product' : 'Save New Product'
     return (
       <div>
         {this.props.currentUser && !this.props.currentUser.isAdmin ? (
@@ -41,18 +43,19 @@ class ProductForm extends Component {
         ) : (
           <div>
             <h3>
-              {this.props.formTitle} {product.name || ''}
+              {this.props.formTitle} {product && product.name || ''}
             </h3>
             <form
               onSubmit={evt => {
-                const productId = this.props.product.id
+                const productId = this.props.product
                   ? +this.props.product.id
-                  : null
+                  : ''
                 this.props.handleSubmit(evt, this.state, productId)
-                this.setState({
+                const updatedProduct = this.props.products.filter(product => product.id === productId)
+                this.setState( {
                   name: '',
                   imageUrl: '',
-                  price: '',
+                  price: 0,
                   description: '',
                   quantity: '0'
                 })
@@ -89,7 +92,8 @@ class ProductForm extends Component {
                   onChange={this.handleChange}
                   value={this.state.price}
                   name="price"
-                  type="text"
+                  type="number"
+                  step=".01"
                 />
               </div>
               <div>
@@ -106,7 +110,7 @@ class ProductForm extends Component {
 
               <div>
                 <select name="category">
-                  <option value="0">Choose a category</option>
+                  <option onChange={this.handleChange} value="0" >Choose a category</option>
                   {this.props.categories.map(category => {
                     return (
                       <option key={category.id} value={category.id}>
@@ -116,17 +120,21 @@ class ProductForm extends Component {
                   })}
                 </select>
               </div>
-
               <div>
                 <div>
                   <label htmlFor="quantity">
                     <small>Quantity</small>
                   </label>
-                  <input name="quantity" type="text" />
+                  <input
+                  onChange={this.handleChange}
+                  value={this.state.quantity}
+                  name="quantity"
+                  type="number"
+                  />
                 </div>
               </div>
               <div>
-                <button type="submit">Save New Product</button>
+                <button type="submit">{submitText}</button>
               </div>
             </form>
           </div>
@@ -159,6 +167,7 @@ const mapEditProduct = state => {
 const mapDispatch = (dispatch, ownProps) => ({
   handleSubmit(evt, state, productId) {
     evt.preventDefault()
+    console.log('!!!!!state', productId)
     dispatch(addOrEditProductThunk(state, productId))
   }
 })

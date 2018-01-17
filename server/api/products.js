@@ -24,7 +24,8 @@ router.post('/', isAdmin, (req, res, next) => {
 router.put('/:id', isAdmin, (req, res, next) => {
     Product.findById(req.params.id)
     .then(product => product.update(req.body))
-    .then(updatedProduct => res.json(updatedProduct))
+    .then(updatedProduct => {console.log('i am the response body', updatedProduct)
+        res.json(updatedProduct)})
     .catch(next)
 })
 
